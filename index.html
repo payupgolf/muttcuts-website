@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mutt Cuts — Dog Grooming</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ee;
+    --accent: #f5c842;
+    --gray: #1c1c1c;
+    --mid: #888;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #222;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+    text-decoration: none;
+  }
+  .nav-logo img {
+    width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+  }
+  .nav-logo span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.08em;
+    color: var(--white);
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--mid); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: var(--black);
+    padding: 0.55rem 1.4rem; border-radius: 2rem;
+    text-decoration: none; font-size: 0.85rem;
+    font-weight: 500; letter-spacing: 0.06em;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,200,66,0.35); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 70% 50%, rgba(245,200,66,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-text { z-index: 1; }
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--accent); color: var(--black);
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.9rem; border-radius: 2rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 9vw, 8rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: normal; color: var(--accent);
+  }
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: 1.05rem; line-height: 1.7;
+    color: #aaa; max-width: 400px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--black);
+    padding: 0.85rem 2rem; border-radius: 3rem;
+    font-size: 0.9rem; font-weight: 500;
+    text-decoration: none; letter-spacing: 0.05em;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(245,200,66,0.4); }
+  .btn-secondary {
+    border: 1px solid #444; color: var(--white);
+    padding: 0.85rem 2rem; border-radius: 3rem;
+    font-size: 0.9rem; text-decoration: none; letter-spacing: 0.05em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-visual {
+    display: flex; justify-content: center; align-items: center;
+    position: relative; z-index: 1;
+    animation: fadeIn 0.8s 0.2s ease both;
+  }
+  .hero-visual .logo-ring {
+    width: min(420px, 42vw);
+    height: min(420px, 42vw);
+    border-radius: 50%;
+    border: 1px solid #333;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: spin 60s linear infinite;
+  }
+  .hero-visual .logo-ring::before {
+    content: '';
+    position: absolute; inset: -16px;
+    border-radius: 50%;
+    border: 1px dashed #2a2a2a;
+  }
+  .hero-visual img {
+    width: 82%; height: 82%; object-fit: contain;
+    border-radius: 50%;
+    animation: spin 60s linear infinite reverse;
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 6rem 3rem;
+    border-top: 1px solid #1e1e1e;
+  }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1; margin-bottom: 3.5rem;
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5px; background: #1a1a1a;
+    border: 1.5px solid #1a1a1a;
+    border-radius: 1rem; overflow: hidden;
+  }
+  .service-card {
+    background: var(--black); padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .service-card:hover { background: #111; }
+  .service-icon {
+    font-size: 2rem; margin-bottom: 1rem;
+    display: block;
+  }
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+  }
+  .service-card p { color: #888; font-size: 0.9rem; line-height: 1.65; }
+  .service-price {
+    margin-top: 1.2rem;
+    color: var(--accent); font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── GALLERY ── */
+  .gallery {
+    padding: 6rem 3rem;
+    border-top: 1px solid #1e1e1e;
+  }
+  .gallery-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  }
+  .gallery-item {
+    border-radius: 0.75rem; overflow: hidden;
+    background: #111;
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+  }
+  .gallery-item:first-child {
+    grid-row: span 2;
+    aspect-ratio: unset;
+  }
+  .gallery-item .placeholder {
+    width: 100%; height: 100%; min-height: 200px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.5rem; color: #333;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .gallery-item .placeholder span { font-size: 2.5rem; }
+  .gallery-item:hover .placeholder { color: #555; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.75));
+    padding: 1.5rem 1rem 0.8rem;
+    font-size: 0.8rem; color: #ddd; opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .gallery-item:hover .gallery-caption { opacity: 1; }
+
+  /* ── BOOKING ── */
+  .booking {
+    padding: 6rem 3rem;
+    border-top: 1px solid #1e1e1e;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .booking-info h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .booking-info p { color: #888; line-height: 1.75; margin-bottom: 2rem; }
+  .hours { display: flex; flex-direction: column; gap: 0.6rem; }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    padding-bottom: 0.6rem; border-bottom: 1px solid #1e1e1e;
+    font-size: 0.9rem;
+  }
+  .hours-row .day { color: #aaa; }
+  .hours-row .time { color: var(--white); }
+
+  .booking-form {
+    background: #111; border: 1px solid #222;
+    border-radius: 1.25rem; padding: 2.5rem;
+  }
+  .booking-form h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 0.04em;
+    margin-bottom: 1.8rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.75rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #666; margin-bottom: 0.45rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; background: var(--black);
+    border: 1px solid #2a2a2a; border-radius: 0.6rem;
+    color: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; padding: 0.75rem 1rem;
+    outline: none; transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group select option { background: #111; }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit {
+    width: 100%; margin-top: 0.5rem;
+    background: var(--accent); color: var(--black);
+    border: none; border-radius: 3rem;
+    padding: 1rem; font-size: 0.95rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.06em; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .form-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,200,66,0.35); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid #1e1e1e;
+    padding: 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .footer-logo img { width: 40px; height: 40px; border-radius: 50%; }
+  .footer-logo span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem; letter-spacing: 0.08em;
+  }
+  footer p { color: #444; font-size: 0.8rem; }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    color: #555; font-size: 0.8rem; text-decoration: none;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(6rem);
+    background: var(--accent); color: var(--black);
+    padding: 0.9rem 2rem; border-radius: 3rem;
+    font-weight: 500; font-size: 0.9rem;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 999; pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    .services, .gallery, .booking { padding: 4rem 1.5rem; }
+    .booking { grid-template-columns: 1fr; gap: 3rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-row: span 1; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="68AF05DA-28C2-4740-9DC3-2FD48B535C1E.png" alt="Mutt Cuts logo" onerror="this.style.display='none'"/>
+    <span>Mutt Cuts</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Booking</a></li>
+  </ul>
+  <a class="nav-cta" href="#booking">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <span class="hero-eyebrow">✂️ Professional Dog Grooming</span>
+    <h1>Your pup<br/>deserves <em>fresh</em><br/>cuts.</h1>
+    <p class="hero-sub">Every dog gets the royal treatment — bath, trim, and a whole lot of love. Locally owned, tail-waggingly good.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#booking">Book an Appointment</a>
+      <a class="btn-secondary" href="#gallery">See Our Work</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="logo-ring">
+      <img src="68AF05DA-28C2-4740-9DC3-2FD48B535C1E.png" alt="Mutt Cuts" />
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="section-label">What We Offer</p>
+  <h2 class="section-title">Services</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🛁</span>
+      <h3>Bath & Brush</h3>
+      <p>Full shampoo, blow-dry, brush-out, nail trim, and ear cleaning. Smelling fresh from nose to tail.</p>
+      <p class="service-price">Starting at $45</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✂️</span>
+      <h3>Full Groom</h3>
+      <p>Everything in the Bath & Brush plus a full haircut styled to breed standards or your preference.</p>
+      <p class="service-price">Starting at $65</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">💅</span>
+      <h3>Nail Trim</h3>
+      <p>Quick, stress-free nail trimming and optional grinding for smooth edges. Walk-ins welcome.</p>
+      <p class="service-price">Starting at $15</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🌟</span>
+      <h3>Puppy's First Groom</h3>
+      <p>A gentle introduction to grooming for pups under 6 months. We make it fun and stress-free.</p>
+      <p class="service-price">Starting at $35</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <div>
+      <p class="section-label">Fresh Cuts</p>
+      <h2 class="section-title">The Work</h2>
+    </div>
+    <p style="color:#555; font-size:0.85rem; max-width:220px; text-align:right;">Before &amp; afters coming soon. Every pup, a masterpiece.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="placeholder"><span>🐾</span>Add your photos here</div>
+      <div class="gallery-caption">Add a caption</div>
+    </div>
+    <div class="gallery-item">
+      <div class="placeholder"><span>🐶</span>Photo 2</div>
+      <div class="gallery-caption">Add a caption</div>
+    </div>
+    <div class="gallery-item">
+      <div class="placeholder"><span>✂️</span>Photo 3</div>
+      <div class="gallery-caption">Add a caption</div>
+    </div>
+    <div class="gallery-item">
+      <div class="placeholder"><span>🛁</span>Photo 4</div>
+      <div class="gallery-caption">Add a caption</div>
+    </div>
+    <div class="gallery-item">
+      <div class="placeholder"><span>🐕</span>Photo 5</div>
+      <div class="gallery-caption">Add a caption</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="booking-info">
+    <p class="section-label">Ready to Book?</p>
+    <h2>Let's get your pup in.</h2>
+    <p>Fill out the form and we'll confirm your appointment within 24 hours. Have questions? Give us a call.</p>
+    <div class="hours">
+      <div class="hours-row"><span class="day">Monday – Friday</span><span class="time">9am – 6pm</span></div>
+      <div class="hours-row"><span class="day">Saturday</span><span class="time">9am – 4pm</span></div>
+      <div class="hours-row"><span class="day">Sunday</span><span class="time">Closed</span></div>
+    </div>
+    <br/>
+    <p style="font-size:0.85rem; color:#555;">📍 Your address here &nbsp;|&nbsp; 📞 (555) 000-0000</p>
+  </div>
+
+  <div class="booking-form">
+    <h3>Request an Appointment</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Smith"/>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="(555) 000-0000"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Dog's Name</label>
+        <input type="text" placeholder="Biscuit"/>
+      </div>
+      <div class="form-group">
+        <label>Breed</label>
+        <input type="text" placeholder="Golden Retriever"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Service</label>
+      <select>
+        <option value="">Select a service…</option>
+        <option>Bath & Brush</option>
+        <option>Full Groom</option>
+        <option>Nail Trim</option>
+        <option>Puppy's First Groom</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Preferred Date</label>
+      <input type="date"/>
+    </div>
+    <div class="form-group">
+      <label>Notes (optional)</label>
+      <textarea placeholder="Any special requests or things we should know about your pup?"></textarea>
+    </div>
+    <button class="form-submit" onclick="submitForm()">Request Booking ✦</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="68AF05DA-28C2-4740-9DC3-2FD48B535C1E.png" alt="Mutt Cuts" onerror="this.style.display='none'"/>
+    <span>Mutt Cuts</span>
+  </div>
+  <p>© 2025 Mutt Cuts. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#booking">Book</a>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
+
+<script>
+  function submitForm() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // Scroll-reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
