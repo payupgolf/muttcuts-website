@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --black: #1a1410;
+    --black: #2a1f17;
     --white: #faf7f2;
     --accent: #d4820a;
     --gray: #e8e0d5;
@@ -17,8 +17,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    background: #faf7f2;
-    color: #1a1410;
+    background: #2a1f17;
+    color: #f0e6d8;
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     overflow-x: hidden;
@@ -29,9 +29,9 @@
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
     padding: 1.2rem 3rem;
-    background: rgba(250,247,242,0.92);
+    background: rgba(30,22,15,0.92);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid #e2d9cc;
+    border-bottom: 1px solid #3d2e22;
   }
   .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
   .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
@@ -48,13 +48,13 @@
   }
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a {
-    color: #8a7968; text-decoration: none;
+    color: #a08878; text-decoration: none;
     font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--accent); }
   .nav-cta {
-    background: #1a1410; color: #faf7f2;
+    background: #f0e6d8; color: #2a1f17;
     padding: 0.55rem 1.4rem; border-radius: 2rem;
     text-decoration: none; font-size: 0.85rem;
     font-weight: 500; letter-spacing: 0.06em;
@@ -73,7 +73,7 @@
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 70% 50%, rgba(212,130,10,0.08) 0%, transparent 65%);
+    background: radial-gradient(ellipse at 70% 50%, rgba(212,130,10,0.12) 0%, transparent 65%);
     pointer-events: none;
   }
   .hero-text { z-index: 1; }
@@ -95,7 +95,7 @@
   .hero h1 em { font-style: normal; color: var(--accent); }
   .hero-sub {
     margin-top: 1.8rem; font-size: 1.05rem; line-height: 1.7;
-    color: #7a6a55; max-width: 400px;
+    color: #a08878; max-width: 400px;
     animation: fadeUp 0.6s 0.2s ease both;
   }
   .hero-actions {
@@ -124,9 +124,9 @@
   }
   .hero-visual .logo-ring {
     width: min(420px, 42vw); height: min(420px, 42vw);
-    border-radius: 50%; border: 1px solid #333;
+    border-radius: 50%; border: 1px solid #4a3828;
     display: flex; align-items: center; justify-content: center;
-    position: relative; background: #f0e9de; overflow: hidden;
+    position: relative; background: #1e150f; overflow: hidden;
   }
   .hero-visual .logo-ring::before {
     content: ''; position: absolute; inset: -16px;
@@ -138,14 +138,14 @@
   .ticker {
     border-top: 1px solid #1a1a1a;
     border-bottom: 1px solid #1a1a1a;
-    background: #f0e9de;
+    background: #211610;
     padding: 1rem 0; overflow: hidden; position: relative;
   }
   .ticker::before, .ticker::after {
     content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
   }
-  .ticker::before { left: 0; background: linear-gradient(to right, #f0e9de, transparent); }
-  .ticker::after { right: 0; background: linear-gradient(to left, #f0e9de, transparent); }
+  .ticker::before { left: 0; background: linear-gradient(to right, #211610, transparent); }
+  .ticker::after { right: 0; background: linear-gradient(to left, #211610, transparent); }
   .ticker-track {
     display: flex; width: max-content;
     animation: ticker 35s linear infinite;
@@ -154,30 +154,30 @@
   .ticker-item {
     display: flex; align-items: center; gap: 0.6rem;
     padding: 0 1.5rem; white-space: nowrap;
-    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: #b0a090;
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: #5a4535;
   }
-  .ticker-item .dog-name { color: #1a1410; font-weight: 400; }
+  .ticker-item .dog-name { color: #f0e6d8; font-weight: 400; }
   .ticker-item .paw { color: var(--accent); font-size: 0.7rem; }
 
   /* ── SERVICES ── */
-  .services { padding: 6rem 3rem; border-top: 1px solid #e2d9cc; }
+  .services { padding: 6rem 3rem; border-top: 1px solid #3d2e22; }
   .section-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 3.5rem; }
   .services-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5px; background: #1a1a1a; border: 1.5px solid #1a1a1a; border-radius: 1rem; overflow: hidden;
   }
-  .service-card { background: #faf7f2; padding: 2.5rem 2rem; transition: background 0.2s; }
-  .service-card:hover { background: #f2ebe0; }
+  .service-card { background: #2a1f17; padding: 2.5rem 2rem; transition: background 0.2s; }
+  .service-card:hover { background: #321e14; }
   .service-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
   .service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
-  .service-card p { color: #7a6a55; font-size: 0.9rem; line-height: 1.65; }
+  .service-card p { color: #a08878; font-size: 0.9rem; line-height: 1.65; }
   .service-price { margin-top: 1.2rem; color: var(--accent); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; }
 
   /* ── BEFORE/AFTER ── */
-  .beforeafter { padding: 6rem 3rem; border-top: 1px solid #e2d9cc; }
+  .beforeafter { padding: 6rem 3rem; border-top: 1px solid #3d2e22; }
   .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
-  .ba-card { border-radius: 1rem; overflow: hidden; position: relative; background: #f0e9de; }
+  .ba-card { border-radius: 1rem; overflow: hidden; position: relative; background: #1e150f; }
   .ba-slider {
     position: relative; width: 100%; aspect-ratio: 4/3;
     overflow: hidden; cursor: col-resize; user-select: none;
@@ -186,10 +186,10 @@
     position: absolute; inset: 0;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
   }
-  .ba-before { background: #e8e0d5; color: #b0a090; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .ba-before { background: #e8e0d5; color: #5a4535; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
   .ba-before span { font-size: 2.5rem; }
   .ba-after {
-    background: #d4c9b8; color: #8a7968; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    background: #2e2018; color: #7a5a45; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
     clip-path: inset(0 50% 0 0);
   }
   .ba-after span { font-size: 2.5rem; }
@@ -209,43 +209,43 @@
   .ba-label.after { background: var(--accent); color: var(--black); }
   .ba-info { padding: 1rem 1.2rem; }
   .ba-info h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
-  .ba-info p { color: #8a7968; font-size: 0.8rem; }
+  .ba-info p { color: #a08878; font-size: 0.8rem; }
 
   /* ── ABOUT ── */
-  .about { padding: 6rem 3rem; border-top: 1px solid #e2d9cc; }
+  .about { padding: 6rem 3rem; border-top: 1px solid #3d2e22; }
   .about-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
   .about-photo { position: relative; }
   .about-photo-placeholder {
-    width: 100%; aspect-ratio: 3/4; background: #ede5d8; border: 1px dashed #c8bfb0; border-radius: 1.5rem;
+    width: 100%; aspect-ratio: 3/4; background: #1e150f; border: 1px dashed #4a3828; border-radius: 1.5rem;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 0.75rem; color: #333; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
   }
   .about-photo-placeholder span { font-size: 3rem; }
-  .about-photo::before { content: ''; position: absolute; inset: -8px; border-radius: 1.8rem; border: 1px solid #d8cfc4; z-index: -1; }
+  .about-photo::before { content: ''; position: absolute; inset: -8px; border-radius: 1.8rem; border: 1px solid #3d2e22; z-index: -1; }
   .about-name { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 1.2rem; }
-  .about-bio { color: #7a6a55; line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem; }
-  .about-stats { display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e2d9cc; }
+  .about-bio { color: #a08878; line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem; }
+  .about-stats { display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #3d2e22; }
   .stat { display: flex; flex-direction: column; gap: 0.25rem; }
   .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); letter-spacing: 0.04em; }
-  .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a7968; }
+  .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7a6050; }
 
   /* ── BOOKING ── */
-  .booking { padding: 6rem 3rem; border-top: 1px solid #e2d9cc; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .booking { padding: 6rem 3rem; border-top: 1px solid #3d2e22; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
   .booking-info h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 1.5rem; }
-  .booking-info p { color: #7a6a55; line-height: 1.75; margin-bottom: 2rem; }
+  .booking-info p { color: #a08878; line-height: 1.75; margin-bottom: 2rem; }
   .hours { display: flex; flex-direction: column; gap: 0.6rem; }
-  .hours-row { display: flex; justify-content: space-between; padding-bottom: 0.6rem; border-bottom: 1px solid #e2d9cc; font-size: 0.9rem; }
-  .hours-row .day { color: #8a7968; }
-  .booking-form { background: #f0e9de; border: 1px solid #ddd3c4; border-radius: 1.25rem; padding: 2.5rem; }
+  .hours-row { display: flex; justify-content: space-between; padding-bottom: 0.6rem; border-bottom: 1px solid #3d2e22; font-size: 0.9rem; }
+  .hours-row .day { color: #a08878; }
+  .booking-form { background: #1e150f; border: 1px solid #3d2e22; border-radius: 1.25rem; padding: 2.5rem; }
   .booking-form h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 1.8rem; }
   .form-group { margin-bottom: 1.2rem; }
-  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: #8a7968; margin-bottom: 0.45rem; }
+  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7a6050; margin-bottom: 0.45rem; }
   .form-group input, .form-group select, .form-group textarea {
-    width: 100%; background: #faf7f2; border: 1px solid #d8cfc4; border-radius: 0.6rem;
-    color: #1a1410; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 0.75rem 1rem;
+    width: 100%; background: #2a1f17; border: 1px solid #d8cfc4; border-radius: 0.6rem;
+    color: #f0e6d8; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 0.75rem 1rem;
     outline: none; transition: border-color 0.2s; appearance: none;
   }
-  .form-group select option { background: #faf7f2; }
+  .form-group select option { background: #2a1f17; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-group textarea { resize: vertical; min-height: 90px; }
@@ -258,13 +258,13 @@
   .form-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,200,66,0.35); }
 
   /* ── FOOTER ── */
-  footer { border-top: 1px solid #e2d9cc; padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  footer { border-top: 1px solid #3d2e22; padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
   .footer-logo { display: flex; align-items: center; gap: 0.75rem; }
   .footer-logo img { width: 40px; height: 40px; border-radius: 50%; }
   .footer-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; }
-  footer p { color: #8a7968; font-size: 0.8rem; }
+  footer p { color: #7a6050; font-size: 0.8rem; }
   .footer-links { display: flex; gap: 2rem; }
-  .footer-links a { color: #8a7968; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+  .footer-links a { color: #7a6050; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 
   /* ── TOAST ── */
