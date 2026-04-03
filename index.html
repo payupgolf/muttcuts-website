@@ -15,9 +15,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--black);
     color: var(--white);
@@ -35,22 +33,15 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid #222;
   }
-  .nav-logo {
-    display: flex; align-items: center; gap: 0.75rem;
-    text-decoration: none;
-  }
-  .nav-logo img {
-    width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
-  }
+  .nav-logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+  .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
   .nav-logo span {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.6rem; letter-spacing: 0.08em;
-    color: var(--white);
-    line-height: 1;
+    color: var(--white); line-height: 1;
   }
   .nav-logo small {
-    display: block;
-    font-family: 'DM Sans', sans-serif;
+    display: block; font-family: 'DM Sans', sans-serif;
     font-size: 0.65rem; letter-spacing: 0.12em;
     text-transform: uppercase; color: var(--mid);
     font-weight: 300; margin-top: -2px;
@@ -98,16 +89,12 @@
   .hero h1 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(4.5rem, 9vw, 8rem);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
+    line-height: 0.92; letter-spacing: 0.02em;
     animation: fadeUp 0.6s 0.1s ease both;
   }
-  .hero h1 em {
-    font-style: normal; color: var(--accent);
-  }
+  .hero h1 em { font-style: normal; color: var(--accent); }
   .hero-sub {
-    margin-top: 1.8rem;
-    font-size: 1.05rem; line-height: 1.7;
+    margin-top: 1.8rem; font-size: 1.05rem; line-height: 1.7;
     color: #aaa; max-width: 400px;
     animation: fadeUp 0.6s 0.2s ease both;
   }
@@ -130,285 +117,178 @@
     transition: border-color 0.2s, color 0.2s;
   }
   .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
-
   .hero-visual {
     display: flex; justify-content: center; align-items: center;
     position: relative; z-index: 1;
     animation: fadeIn 0.8s 0.2s ease both;
   }
   .hero-visual .logo-ring {
-    width: min(420px, 42vw);
-    height: min(420px, 42vw);
-    border-radius: 50%;
-    border: 1px solid #333;
+    width: min(420px, 42vw); height: min(420px, 42vw);
+    border-radius: 50%; border: 1px solid #333;
     display: flex; align-items: center; justify-content: center;
-    position: relative;
-    background: #111;
-    overflow: hidden;
+    position: relative; background: #111; overflow: hidden;
   }
   .hero-visual .logo-ring::before {
-    content: '';
-    position: absolute; inset: -16px;
-    border-radius: 50%;
-    border: 1px dashed #2a2a2a;
+    content: ''; position: absolute; inset: -16px;
+    border-radius: 50%; border: 1px dashed #2a2a2a;
   }
-  .hero-visual img {
-    width: 100%; height: 100%; object-fit: cover;
-    border-radius: 50%;
+  .hero-visual img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+  /* ── TICKER ── */
+  .ticker {
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+    background: #0d0d0d;
+    padding: 1rem 0; overflow: hidden; position: relative;
   }
+  .ticker::before, .ticker::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+  }
+  .ticker::before { left: 0; background: linear-gradient(to right, #0d0d0d, transparent); }
+  .ticker::after { right: 0; background: linear-gradient(to left, #0d0d0d, transparent); }
+  .ticker-track {
+    display: flex; width: max-content;
+    animation: ticker 35s linear infinite;
+  }
+  .ticker-track:hover { animation-play-state: paused; }
+  .ticker-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0 1.5rem; white-space: nowrap;
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: #444;
+  }
+  .ticker-item .dog-name { color: var(--white); font-weight: 400; }
+  .ticker-item .paw { color: var(--accent); font-size: 0.7rem; }
 
   /* ── SERVICES ── */
-  .services {
-    padding: 6rem 3rem;
-    border-top: 1px solid #1e1e1e;
-  }
-  .section-label {
-    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    line-height: 1; margin-bottom: 3.5rem;
-  }
+  .services { padding: 6rem 3rem; border-top: 1px solid #1e1e1e; }
+  .section-label { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 3.5rem; }
   .services-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5px; background: #1a1a1a;
-    border: 1.5px solid #1a1a1a;
-    border-radius: 1rem; overflow: hidden;
+    gap: 1.5px; background: #1a1a1a; border: 1.5px solid #1a1a1a; border-radius: 1rem; overflow: hidden;
   }
-  .service-card {
-    background: var(--black); padding: 2.5rem 2rem;
-    transition: background 0.2s;
-  }
+  .service-card { background: var(--black); padding: 2.5rem 2rem; transition: background 0.2s; }
   .service-card:hover { background: #111; }
-  .service-icon {
-    font-size: 2rem; margin-bottom: 1rem;
-    display: block;
-  }
-  .service-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.6rem; letter-spacing: 0.04em;
-    margin-bottom: 0.5rem;
-  }
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .service-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
   .service-card p { color: #888; font-size: 0.9rem; line-height: 1.65; }
-  .service-price {
-    margin-top: 1.2rem;
-    color: var(--accent); font-size: 0.85rem; font-weight: 500;
-    letter-spacing: 0.05em;
-  }
+  .service-price { margin-top: 1.2rem; color: var(--accent); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; }
 
-  /* ── GALLERY ── */
-  .gallery {
-    padding: 6rem 3rem;
-    border-top: 1px solid #1e1e1e;
+  /* ── BEFORE/AFTER ── */
+  .beforeafter { padding: 6rem 3rem; border-top: 1px solid #1e1e1e; }
+  .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1rem; }
+  .ba-card { border-radius: 1rem; overflow: hidden; position: relative; background: #111; }
+  .ba-slider {
+    position: relative; width: 100%; aspect-ratio: 4/3;
+    overflow: hidden; cursor: col-resize; user-select: none;
   }
-  .gallery-header {
-    display: flex; justify-content: space-between; align-items: flex-end;
-    margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+  .ba-before, .ba-after {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
   }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 10px;
+  .ba-before { background: #1a1a1a; color: #333; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .ba-before span { font-size: 2.5rem; }
+  .ba-after {
+    background: #222; color: #555; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    clip-path: inset(0 50% 0 0);
   }
-  .gallery-item {
-    border-radius: 0.75rem; overflow: hidden;
-    background: #111;
-    aspect-ratio: 1;
-    position: relative;
-    cursor: pointer;
+  .ba-after span { font-size: 2.5rem; }
+  .ba-divider { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--accent); left: 50%; transform: translateX(-50%); z-index: 10; pointer-events: none; }
+  .ba-handle {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; z-index: 11;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5); pointer-events: none;
+    letter-spacing: 0;
   }
-  .gallery-item:first-child {
-    grid-row: span 2;
-    aspect-ratio: unset;
-  }
-  .gallery-item .placeholder {
-    width: 100%; height: 100%; min-height: 200px;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.5rem; color: #333;
-    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-  }
-  .gallery-item .placeholder span { font-size: 2.5rem; }
-  .gallery-item:hover .placeholder { color: #555; }
-  .gallery-item img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-  .gallery-item:hover img { transform: scale(1.04); }
-  .gallery-caption {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.75));
-    padding: 1.5rem 1rem 0.8rem;
-    font-size: 0.8rem; color: #ddd; opacity: 0;
-    transition: opacity 0.25s;
-  }
-  .gallery-item:hover .gallery-caption { opacity: 1; }
+  .ba-labels { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0.6rem 0.8rem; z-index: 9; pointer-events: none; }
+  .ba-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2rem; font-weight: 500; }
+  .ba-label.before { background: rgba(0,0,0,0.6); color: #888; }
+  .ba-label.after { background: var(--accent); color: var(--black); }
+  .ba-info { padding: 1rem 1.2rem; }
+  .ba-info h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.2rem; }
+  .ba-info p { color: #666; font-size: 0.8rem; }
 
   /* ── ABOUT ── */
-  .about {
-    padding: 6rem 3rem;
-    border-top: 1px solid #1e1e1e;
-  }
-  .about-inner {
-    display: grid; grid-template-columns: 1fr 1.4fr;
-    gap: 5rem; align-items: center;
-  }
-  .about-photo {
-    position: relative;
-  }
+  .about { padding: 6rem 3rem; border-top: 1px solid #1e1e1e; }
+  .about-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
+  .about-photo { position: relative; }
   .about-photo-placeholder {
-    width: 100%; aspect-ratio: 3/4;
-    background: #111; border: 1px dashed #2a2a2a;
-    border-radius: 1.5rem;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.75rem; color: #333;
-    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    width: 100%; aspect-ratio: 3/4; background: #111; border: 1px dashed #2a2a2a; border-radius: 1.5rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.75rem; color: #333; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
   }
   .about-photo-placeholder span { font-size: 3rem; }
-  .about-photo::before {
-    content: '';
-    position: absolute; inset: -8px;
-    border-radius: 1.8rem;
-    border: 1px solid #1a1a1a;
-    z-index: -1;
-  }
-  .about-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem; letter-spacing: 0.06em;
-    color: var(--accent); margin-bottom: 1.2rem;
-  }
-  .about-bio {
-    color: #888; line-height: 1.8; font-size: 0.95rem;
-    margin-bottom: 1rem;
-  }
-  .about-stats {
-    display: flex; gap: 2.5rem; margin-top: 2rem;
-    padding-top: 2rem; border-top: 1px solid #1e1e1e;
-  }
+  .about-photo::before { content: ''; position: absolute; inset: -8px; border-radius: 1.8rem; border: 1px solid #1a1a1a; z-index: -1; }
+  .about-name { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 1.2rem; }
+  .about-bio { color: #888; line-height: 1.8; font-size: 0.95rem; margin-bottom: 1rem; }
+  .about-stats { display: flex; gap: 2.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #1e1e1e; }
   .stat { display: flex; flex-direction: column; gap: 0.25rem; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem; color: var(--white); letter-spacing: 0.04em;
-  }
-  .stat-label {
-    font-size: 0.72rem; letter-spacing: 0.12em;
-    text-transform: uppercase; color: #555;
-  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); letter-spacing: 0.04em; }
+  .stat-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #555; }
 
   /* ── BOOKING ── */
-  .booking {
-    padding: 6rem 3rem;
-    border-top: 1px solid #1e1e1e;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 5rem; align-items: start;
-  }
-  .booking-info h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.8rem, 5vw, 4.5rem);
-    line-height: 1; margin-bottom: 1.5rem;
-  }
+  .booking { padding: 6rem 3rem; border-top: 1px solid #1e1e1e; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .booking-info h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 1.5rem; }
   .booking-info p { color: #888; line-height: 1.75; margin-bottom: 2rem; }
   .hours { display: flex; flex-direction: column; gap: 0.6rem; }
-  .hours-row {
-    display: flex; justify-content: space-between;
-    padding-bottom: 0.6rem; border-bottom: 1px solid #1e1e1e;
-    font-size: 0.9rem;
-  }
+  .hours-row { display: flex; justify-content: space-between; padding-bottom: 0.6rem; border-bottom: 1px solid #1e1e1e; font-size: 0.9rem; }
   .hours-row .day { color: #aaa; }
-  .hours-row .time { color: var(--white); }
-
-  .booking-form {
-    background: #111; border: 1px solid #222;
-    border-radius: 1.25rem; padding: 2.5rem;
-  }
-  .booking-form h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem; letter-spacing: 0.04em;
-    margin-bottom: 1.8rem;
-  }
+  .booking-form { background: #111; border: 1px solid #222; border-radius: 1.25rem; padding: 2.5rem; }
+  .booking-form h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 1.8rem; }
   .form-group { margin-bottom: 1.2rem; }
-  .form-group label {
-    display: block; font-size: 0.75rem;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: #666; margin-bottom: 0.45rem;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%; background: var(--black);
-    border: 1px solid #2a2a2a; border-radius: 0.6rem;
-    color: var(--white); font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem; padding: 0.75rem 1rem;
-    outline: none; transition: border-color 0.2s;
-    appearance: none;
+  .form-group label { display: block; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 0.45rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: var(--black); border: 1px solid #2a2a2a; border-radius: 0.6rem;
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 0.75rem 1rem;
+    outline: none; transition: border-color 0.2s; appearance: none;
   }
   .form-group select option { background: #111; }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   .form-group textarea { resize: vertical; min-height: 90px; }
   .form-submit {
-    width: 100%; margin-top: 0.5rem;
-    background: var(--accent); color: var(--black);
-    border: none; border-radius: 3rem;
-    padding: 1rem; font-size: 0.95rem; font-weight: 500;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.06em; cursor: pointer;
+    width: 100%; margin-top: 0.5rem; background: var(--accent); color: var(--black);
+    border: none; border-radius: 3rem; padding: 1rem; font-size: 0.95rem; font-weight: 500;
+    font-family: 'DM Sans', sans-serif; letter-spacing: 0.06em; cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
   }
   .form-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,200,66,0.35); }
 
   /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid #1e1e1e;
-    padding: 3rem;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 1.5rem;
-  }
-  .footer-logo {
-    display: flex; align-items: center; gap: 0.75rem;
-  }
+  footer { border-top: 1px solid #1e1e1e; padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { display: flex; align-items: center; gap: 0.75rem; }
   .footer-logo img { width: 40px; height: 40px; border-radius: 50%; }
-  .footer-logo span {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem; letter-spacing: 0.08em;
-  }
+  .footer-logo span { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; }
   footer p { color: #444; font-size: 0.8rem; }
   .footer-links { display: flex; gap: 2rem; }
-  .footer-links a {
-    color: #555; font-size: 0.8rem; text-decoration: none;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    transition: color 0.2s;
-  }
+  .footer-links a { color: #555; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 
   /* ── TOAST ── */
   .toast {
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(6rem);
-    background: var(--accent); color: var(--black);
-    padding: 0.9rem 2rem; border-radius: 3rem;
+    background: var(--accent); color: var(--black); padding: 0.9rem 2rem; border-radius: 3rem;
     font-weight: 500; font-size: 0.9rem;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 999; pointer-events: none;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.65s ease, transform 0.65s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
   /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; } to { opacity: 1; }
-  }
-  @keyframes spin {
-    from { transform: rotate(0deg); } to { transform: rotate(360deg); }
-  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
@@ -416,11 +296,10 @@
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
     .hero-visual { display: none; }
-    .services, .gallery, .about, .booking { padding: 4rem 1.5rem; }
-    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .services, .beforeafter, .gallery, .about, .booking { padding: 4rem 1.5rem; }
     .booking { grid-template-columns: 1fr; gap: 3rem; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .gallery-item:first-child { grid-row: span 1; }
+    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .ba-grid { grid-template-columns: 1fr; }
     footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
   }
 </style>
@@ -460,30 +339,35 @@
   </div>
 </section>
 
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker-track"></div>
+</div>
+
 <!-- SERVICES -->
 <section class="services" id="services">
-  <p class="section-label">What We Offer</p>
-  <h2 class="section-title">Services</h2>
+  <p class="section-label reveal">What We Offer</p>
+  <h2 class="section-title reveal reveal-delay-1">Services</h2>
   <div class="services-grid">
-    <div class="service-card">
+    <div class="service-card reveal">
       <span class="service-icon">🛁</span>
       <h3>Bath & Brush</h3>
       <p>Full shampoo, blow-dry, brush-out, nail trim, and ear cleaning. Smelling fresh from nose to tail.</p>
       <p class="service-price">Starting at $45</p>
     </div>
-    <div class="service-card">
+    <div class="service-card reveal reveal-delay-1">
       <span class="service-icon">✂️</span>
       <h3>Full Groom</h3>
       <p>Everything in the Bath & Brush plus a full haircut styled to breed standards or your preference.</p>
       <p class="service-price">Starting at $65</p>
     </div>
-    <div class="service-card">
+    <div class="service-card reveal reveal-delay-2">
       <span class="service-icon">💅</span>
       <h3>Nail Trim</h3>
       <p>Quick, stress-free nail trimming and optional grinding for smooth edges. Walk-ins welcome.</p>
       <p class="service-price">Starting at $15</p>
     </div>
-    <div class="service-card">
+    <div class="service-card reveal reveal-delay-3">
       <span class="service-icon">🌟</span>
       <h3>Puppy's First Groom</h3>
       <p>A gentle introduction to grooming for pups under 6 months. We make it fun and stress-free.</p>
@@ -492,35 +376,50 @@
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="gallery" id="gallery">
-  <div class="gallery-header">
-    <div>
-      <p class="section-label">Fresh Cuts</p>
-      <h2 class="section-title">The Work</h2>
+<!-- BEFORE & AFTER -->
+<section class="beforeafter" id="gallery">
+  <p class="section-label reveal">Glow Ups</p>
+  <h2 class="section-title reveal reveal-delay-1">Before & After</h2>
+  <p style="color:#666; margin-bottom:2.5rem; font-size:0.9rem;" class="reveal reveal-delay-2">Drag the slider to reveal the transformation ✦</p>
+  <div class="ba-grid">
+    <div class="ba-card reveal">
+      <div class="ba-slider" data-slider>
+        <div class="ba-before"><span>🐶</span>Before photo</div>
+        <div class="ba-after"><span>✨</span>After photo</div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle">⇔</div>
+        <div class="ba-labels">
+          <span class="ba-label before">Before</span>
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="ba-info"><h4>Dog Name</h4><p>Breed · Service type</p></div>
     </div>
-    <p style="color:#555; font-size:0.85rem; max-width:220px; text-align:right;">Before &amp; afters coming soon. Every pup, a masterpiece.</p>
-  </div>
-  <div class="gallery-grid">
-    <div class="gallery-item">
-      <div class="placeholder"><span>🐾</span>Add your photos here</div>
-      <div class="gallery-caption">Add a caption</div>
+    <div class="ba-card reveal reveal-delay-1">
+      <div class="ba-slider" data-slider>
+        <div class="ba-before"><span>🐶</span>Before photo</div>
+        <div class="ba-after"><span>✨</span>After photo</div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle">⇔</div>
+        <div class="ba-labels">
+          <span class="ba-label before">Before</span>
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="ba-info"><h4>Dog Name</h4><p>Breed · Service type</p></div>
     </div>
-    <div class="gallery-item">
-      <div class="placeholder"><span>🐶</span>Photo 2</div>
-      <div class="gallery-caption">Add a caption</div>
-    </div>
-    <div class="gallery-item">
-      <div class="placeholder"><span>✂️</span>Photo 3</div>
-      <div class="gallery-caption">Add a caption</div>
-    </div>
-    <div class="gallery-item">
-      <div class="placeholder"><span>🛁</span>Photo 4</div>
-      <div class="gallery-caption">Add a caption</div>
-    </div>
-    <div class="gallery-item">
-      <div class="placeholder"><span>🐕</span>Photo 5</div>
-      <div class="gallery-caption">Add a caption</div>
+    <div class="ba-card reveal reveal-delay-2">
+      <div class="ba-slider" data-slider>
+        <div class="ba-before"><span>🐶</span>Before photo</div>
+        <div class="ba-after"><span>✨</span>After photo</div>
+        <div class="ba-divider"></div>
+        <div class="ba-handle">⇔</div>
+        <div class="ba-labels">
+          <span class="ba-label before">Before</span>
+          <span class="ba-label after">After</span>
+        </div>
+      </div>
+      <div class="ba-info"><h4>Dog Name</h4><p>Breed · Service type</p></div>
     </div>
   </div>
 </section>
@@ -528,31 +427,22 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-inner">
-    <div class="about-photo">
+    <div class="about-photo reveal">
       <div class="about-photo-placeholder">
         <span>📸</span>
         <p>Add your photo here</p>
       </div>
     </div>
     <div class="about-text">
-      <p class="section-label">The Human Behind the Clippers</p>
-      <h2 class="section-title">Meet Your Groomer</h2>
-      <p class="about-name">Emily Devereaux</p>
-      <p class="about-bio">Hey there! I'm Emily — add your bio here. Tell your clients a little about yourself, how you got into grooming, what you love about working with dogs, and anything else that helps them feel confident leaving their pup in your hands.</p>
-      <p class="about-bio">This is also a great place to mention any certifications, training, or fun facts — like whether you have your own dog! 🐾</p>
-      <div class="about-stats">
-        <div class="stat">
-          <span class="stat-num">—</span>
-          <span class="stat-label">Years Experience</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">—</span>
-          <span class="stat-label">Dogs Groomed</span>
-        </div>
-        <div class="stat">
-          <span class="stat-num">—</span>
-          <span class="stat-label">Happy Clients</span>
-        </div>
+      <p class="section-label reveal">The Human Behind the Clippers</p>
+      <h2 class="section-title reveal reveal-delay-1">Meet Your Groomer</h2>
+      <p class="about-name reveal reveal-delay-2">Emily Devereaux</p>
+      <p class="about-bio reveal reveal-delay-3">Hey there! I'm Emily — add your bio here. Tell your clients a little about yourself, how you got into grooming, what you love about working with dogs, and anything else that helps them feel confident leaving their pup in your hands.</p>
+      <p class="about-bio reveal reveal-delay-4">This is also a great place to mention any certifications, training, or fun facts — like whether you have your own dog! 🐾</p>
+      <div class="about-stats reveal">
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">Years Experience</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">Dogs Groomed</span></div>
+        <div class="stat"><span class="stat-num">—</span><span class="stat-label">Happy Clients</span></div>
       </div>
     </div>
   </div>
@@ -560,7 +450,7 @@
 
 <!-- BOOKING -->
 <section class="booking" id="booking">
-  <div class="booking-info">
+  <div class="booking-info reveal">
     <p class="section-label">Ready to Book?</p>
     <h2>Let's get your pup in.</h2>
     <p>Fill out the form and we'll confirm your appointment within 24 hours. Have questions? Give us a call.</p>
@@ -572,28 +462,15 @@
     <br/>
     <p style="font-size:0.85rem; color:#555;">📍 Your address here &nbsp;|&nbsp; 📞 (555) 000-0000</p>
   </div>
-
-  <div class="booking-form">
+  <div class="booking-form reveal reveal-delay-2">
     <h3>Request an Appointment</h3>
     <div class="form-row">
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" placeholder="Jane Smith"/>
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="tel" placeholder="(555) 000-0000"/>
-      </div>
+      <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
+      <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="(555) 000-0000"/></div>
     </div>
     <div class="form-row">
-      <div class="form-group">
-        <label>Dog's Name</label>
-        <input type="text" placeholder="Biscuit"/>
-      </div>
-      <div class="form-group">
-        <label>Breed</label>
-        <input type="text" placeholder="Golden Retriever"/>
-      </div>
+      <div class="form-group"><label>Dog's Name</label><input type="text" placeholder="Biscuit"/></div>
+      <div class="form-group"><label>Breed</label><input type="text" placeholder="Golden Retriever"/></div>
     </div>
     <div class="form-group">
       <label>Service</label>
@@ -605,10 +482,7 @@
         <option>Puppy's First Groom</option>
       </select>
     </div>
-    <div class="form-group">
-      <label>Preferred Date</label>
-      <input type="date"/>
-    </div>
+    <div class="form-group"><label>Preferred Date</label><input type="date"/></div>
     <div class="form-group">
       <label>Notes (optional)</label>
       <textarea placeholder="Any special requests or things we should know about your pup?"></textarea>
@@ -623,7 +497,7 @@
     <img src="logo.png" alt="Mutt Cuts"/>
     <span>Mutt Cuts</span>
   </div>
-  <p>© 2025 Mutt Cuts. All rights reserved.</p>
+  <p>© 2026 Mutt Cuts. All rights reserved.</p>
   <div class="footer-links">
     <a href="#services">Services</a>
     <a href="#gallery">Gallery</a>
@@ -631,33 +505,54 @@
   </div>
 </footer>
 
-<!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
 <script>
+  /* ── TICKER ── */
+  const dogs = ['Biscuit','Mango','Duke','Princess','Thor','Bella','Coco','Peanut','Moose','Daisy','Gizmo','Luna','Bruno','Rosie','Archie','Pepper','Zeus','Lola','Bear','Stella','Beau','Nala','Scout','Waffles','Pretzel','Pickles','Nugget','Maple'];
+  const track = document.getElementById('ticker-track');
+  const items = [...dogs, ...dogs].map(name =>
+    `<span class="ticker-item"><span class="paw">✦</span><span class="dog-name">${name}</span></span>`
+  ).join('');
+  track.innerHTML = items + items;
+
+  /* ── SCROLL REVEAL ── */
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  /* ── BEFORE/AFTER SLIDER ── */
+  document.querySelectorAll('[data-slider]').forEach(slider => {
+    const after = slider.querySelector('.ba-after');
+    const divider = slider.querySelector('.ba-divider');
+    const handle = slider.querySelector('.ba-handle');
+    let dragging = false;
+
+    function setPosition(x) {
+      const rect = slider.getBoundingClientRect();
+      let pct = Math.min(Math.max((x - rect.left) / rect.width, 0.02), 0.98);
+      after.style.clipPath = `inset(0 ${(100 - pct * 100).toFixed(1)}% 0 0)`;
+      divider.style.left = handle.style.left = (pct * 100).toFixed(1) + '%';
+    }
+
+    setPosition(slider.getBoundingClientRect().left + slider.getBoundingClientRect().width * 0.5);
+    slider.addEventListener('mousedown', e => { dragging = true; setPosition(e.clientX); });
+    slider.addEventListener('touchstart', e => { dragging = true; setPosition(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mousemove', e => { if (dragging) setPosition(e.clientX); });
+    window.addEventListener('touchmove', e => { if (dragging) setPosition(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mouseup', () => dragging = false);
+    window.addEventListener('touchend', () => dragging = false);
+  });
+
+  /* ── FORM ── */
   function submitForm() {
     const toast = document.getElementById('toast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4000);
   }
-
-  // Scroll-reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.service-card, .gallery-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
 </script>
-
 </body>
 </html>
