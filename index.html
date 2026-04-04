@@ -171,13 +171,14 @@
   /* ── DOG ── */
   #site-dog {
     position: fixed;
-    bottom: 0px;
+    bottom: 20px;
     left: 40px;
     width: 110px;
     height: 110px;
     z-index: 9999;
     pointer-events: none;
-    will-change: left, transform;
+    will-change: left, bottom, transform;
+    transition: none;
   }
   #site-dog svg { overflow: visible; }
   /* ── RESPONSIVE ── */
@@ -422,75 +423,34 @@
 
 </div><!-- end page-about -->
 
-
 <!-- DOG -->
 <div id="site-dog">
 <svg id="dog-svg" viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
   <defs>
-    <!-- Body shading -->
-    <radialGradient id="g-body" cx="40%" cy="35%" r="60%">
-      <stop offset="0%" stop-color="#6a6a6a"/>
-      <stop offset="100%" stop-color="#2e2e2e"/>
-    </radialGradient>
-    <!-- Belly -->
-    <radialGradient id="g-belly" cx="50%" cy="40%" r="55%">
-      <stop offset="0%" stop-color="#f0f0f0"/>
-      <stop offset="100%" stop-color="#c0c0c0"/>
-    </radialGradient>
-    <!-- Head shading -->
-    <radialGradient id="g-head" cx="38%" cy="32%" r="58%">
-      <stop offset="0%" stop-color="#686868"/>
-      <stop offset="100%" stop-color="#2c2c2c"/>
-    </radialGradient>
-    <!-- Ear shading -->
-    <radialGradient id="g-ear" cx="40%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#555"/>
-      <stop offset="100%" stop-color="#222"/>
-    </radialGradient>
-    <!-- Leg shading -->
-    <radialGradient id="g-leg" cx="35%" cy="20%" r="70%">
-      <stop offset="0%" stop-color="#5e5e5e"/>
-      <stop offset="100%" stop-color="#282828"/>
-    </radialGradient>
-    <!-- Face patch -->
-    <radialGradient id="g-face" cx="45%" cy="35%" r="60%">
-      <stop offset="0%" stop-color="#e8e8e8"/>
-      <stop offset="100%" stop-color="#b8b8b8"/>
-    </radialGradient>
-    <!-- Nose -->
-    <radialGradient id="g-nose" cx="35%" cy="30%" r="60%">
-      <stop offset="0%" stop-color="#3a3a3a"/>
-      <stop offset="100%" stop-color="#111"/>
-    </radialGradient>
-    <!-- Eye -->
-    <radialGradient id="g-eye" cx="35%" cy="30%" r="65%">
-      <stop offset="0%" stop-color="#3a3a3a"/>
-      <stop offset="100%" stop-color="#0a0a0a"/>
-    </radialGradient>
+    <radialGradient id="g-body" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="100%" stop-color="#2c2c2c"/></radialGradient>
+    <radialGradient id="g-belly" cx="50%" cy="38%" r="56%"><stop offset="0%" stop-color="#f0f0f0"/><stop offset="100%" stop-color="#bebebe"/></radialGradient>
+    <radialGradient id="g-head" cx="36%" cy="28%" r="60%"><stop offset="0%" stop-color="#686868"/><stop offset="100%" stop-color="#2a2a2a"/></radialGradient>
+    <radialGradient id="g-ear" cx="38%" cy="28%" r="66%"><stop offset="0%" stop-color="#545454"/><stop offset="100%" stop-color="#1e1e1e"/></radialGradient>
+    <radialGradient id="g-leg" cx="32%" cy="18%" r="72%"><stop offset="0%" stop-color="#5e5e5e"/><stop offset="100%" stop-color="#262626"/></radialGradient>
+    <radialGradient id="g-face" cx="44%" cy="33%" r="62%"><stop offset="0%" stop-color="#e8e8e8"/><stop offset="100%" stop-color="#b6b6b6"/></radialGradient>
+    <radialGradient id="g-nose" cx="33%" cy="28%" r="62%"><stop offset="0%" stop-color="#3a3a3a"/><stop offset="100%" stop-color="#0e0e0e"/></radialGradient>
+    <radialGradient id="g-eye" cx="33%" cy="28%" r="66%"><stop offset="0%" stop-color="#383838"/><stop offset="100%" stop-color="#080808"/></radialGradient>
   </defs>
 
-  <!-- SHADOW -->
   <ellipse id="d-shadow" cx="55" cy="107" rx="24" ry="5" fill="rgba(0,0,0,0.22)"/>
 
-  <!-- TAIL — pivots from base at ~75,68 -->
   <g id="d-tail" style="transform-origin:72px 65px">
     <ellipse cx="76" cy="54" rx="6.5" ry="11" fill="url(#g-body)" transform="rotate(25 76 54)"/>
     <ellipse cx="83" cy="42" rx="5" ry="8" fill="url(#g-ear)" transform="rotate(10 83 42)"/>
-    <!-- tip highlight -->
     <ellipse cx="85" cy="37" rx="2.5" ry="3.5" fill="#888" opacity="0.5" transform="rotate(5 85 37)"/>
   </g>
 
-  <!-- BACK LEFT LEG -->
   <g id="d-leg-bl" style="transform-origin:38px 80px">
     <ellipse cx="38" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
-    <!-- shin highlight -->
     <ellipse cx="35" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
-    <!-- paw -->
     <ellipse cx="38" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
     <ellipse cx="36" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
-
-  <!-- BACK RIGHT LEG -->
   <g id="d-leg-br" style="transform-origin:68px 80px">
     <ellipse cx="68" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="65" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
@@ -498,24 +458,17 @@
     <ellipse cx="66" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
 
-  <!-- BODY -->
   <ellipse cx="53" cy="73" rx="27" ry="20" fill="url(#g-body)"/>
-  <!-- Body top highlight -->
-  <ellipse cx="46" cy="62" rx="12" ry="6" fill="#888" opacity="0.18"/>
-  <!-- Belly -->
+  <ellipse cx="46" cy="62" rx="12" ry="6" fill="#888" opacity="0.16"/>
   <ellipse cx="53" cy="78" rx="16" ry="13" fill="url(#g-belly)"/>
-  <!-- Belly highlight -->
-  <ellipse cx="50" cy="74" rx="7" ry="5" fill="white" opacity="0.3"/>
+  <ellipse cx="50" cy="74" rx="7" ry="5" fill="white" opacity="0.28"/>
 
-  <!-- FRONT LEFT LEG -->
   <g id="d-leg-fl" style="transform-origin:40px 80px">
     <ellipse cx="40" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="37" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
     <ellipse cx="40" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
     <ellipse cx="38" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
-
-  <!-- FRONT RIGHT LEG -->
   <g id="d-leg-fr" style="transform-origin:66px 80px">
     <ellipse cx="66" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="63" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
@@ -523,69 +476,43 @@
     <ellipse cx="64" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
 
-  <!-- NECK -->
   <ellipse cx="53" cy="59" rx="13" ry="11" fill="url(#g-body)"/>
-  <ellipse cx="49" cy="53" rx="5" ry="4" fill="#888" opacity="0.15"/>
+  <ellipse cx="49" cy="53" rx="5" ry="4" fill="#888" opacity="0.14"/>
 
-  <!-- HEAD -->
-  <ellipse cx="53" cy="40" rx="22" ry="21" fill="url(#g-head)"/>
-  <!-- Head top highlight -->
-  <ellipse cx="46" cy="26" rx="10" ry="7" fill="#999" opacity="0.22"/>
-
-  <!-- LEFT EAR (floppy) -->
-  <g id="d-ear-l" style="transform-origin:32px 28px">
-    <ellipse cx="32" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(10 32 30)"/>
-    <!-- ear highlight -->
-    <ellipse cx="29" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.25" transform="rotate(10 29 24)"/>
+  <!-- head group for sniff tilt -->
+  <g id="d-head-grp" style="transform-origin:53px 40px">
+    <ellipse cx="53" cy="40" rx="22" ry="21" fill="url(#g-head)"/>
+    <ellipse cx="46" cy="26" rx="10" ry="7" fill="#999" opacity="0.2"/>
+    <g id="d-ear-l" style="transform-origin:32px 28px">
+      <ellipse cx="32" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(10 32 30)"/>
+      <ellipse cx="29" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.22" transform="rotate(10 29 24)"/>
+    </g>
+    <ellipse cx="74" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(-10 74 30)"/>
+    <ellipse cx="71" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.22" transform="rotate(-10 71 24)"/>
+    <ellipse cx="53" cy="45" rx="14" ry="12" fill="url(#g-face)"/>
+    <ellipse cx="49" cy="39" rx="6" ry="4" fill="white" opacity="0.22"/>
+    <ellipse cx="53" cy="27" rx="5.5" ry="9" fill="#d8d8d8" opacity="0.42"/>
+    <circle cx="45" cy="39" r="5" fill="url(#g-eye)"/>
+    <circle cx="61" cy="39" r="5" fill="url(#g-eye)"/>
+    <circle cx="45" cy="39" r="3" fill="#1a1a1a"/>
+    <circle cx="61" cy="39" r="3" fill="#1a1a1a"/>
+    <circle cx="46.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
+    <circle cx="62.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
+    <circle cx="43.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
+    <circle cx="59.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
+    <ellipse cx="53" cy="49" rx="5.5" ry="4" fill="url(#g-nose)"/>
+    <ellipse cx="51" cy="47.5" rx="1.8" ry="1.2" fill="white" opacity="0.38"/>
+    <path d="M48 53 Q53 58.5 58 53" stroke="#2a2a2a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <ellipse cx="41" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.14"/>
+    <ellipse cx="65" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.14"/>
+    <g id="d-tongue" opacity="0">
+      <ellipse cx="53" cy="58" rx="5" ry="6.5" fill="#d96878"/>
+      <ellipse cx="53" cy="61" rx="5" ry="4" fill="#c05060"/>
+      <ellipse cx="53" cy="56" rx="5" ry="3" fill="#e07888"/>
+      <line x1="53" y1="53" x2="53" y2="64" stroke="#b04050" stroke-width="1"/>
+      <ellipse cx="51" cy="56" rx="1.5" ry="2.5" fill="white" opacity="0.2"/>
+    </g>
   </g>
-
-  <!-- RIGHT EAR -->
-  <ellipse cx="74" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(-10 74 30)"/>
-  <ellipse cx="71" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.25" transform="rotate(-10 71 24)"/>
-
-  <!-- FACE PATCH -->
-  <ellipse cx="53" cy="45" rx="14" ry="12" fill="url(#g-face)"/>
-  <!-- Face patch highlight -->
-  <ellipse cx="49" cy="39" rx="6" ry="4" fill="white" opacity="0.25"/>
-
-  <!-- HEAD STRIPE -->
-  <ellipse cx="53" cy="27" rx="5.5" ry="9" fill="#d8d8d8" opacity="0.45"/>
-
-  <!-- EYES -->
-  <circle cx="45" cy="39" r="5" fill="url(#g-eye)"/>
-  <circle cx="61" cy="39" r="5" fill="url(#g-eye)"/>
-  <!-- Iris -->
-  <circle cx="45" cy="39" r="3" fill="#1a1a1a"/>
-  <circle cx="61" cy="39" r="3" fill="#1a1a1a"/>
-  <!-- Eye shine main -->
-  <circle cx="46.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
-  <circle cx="62.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
-  <!-- Eye shine small -->
-  <circle cx="43.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
-  <circle cx="59.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
-
-  <!-- NOSE -->
-  <ellipse cx="53" cy="49" rx="5.5" ry="4" fill="url(#g-nose)"/>
-  <!-- Nose highlight -->
-  <ellipse cx="51" cy="47.5" rx="1.8" ry="1.2" fill="white" opacity="0.4"/>
-
-  <!-- MOUTH -->
-  <path d="M48 53 Q53 58.5 58 53" stroke="#2a2a2a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-
-  <!-- CHEEK blush -->
-  <ellipse cx="41" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.15"/>
-  <ellipse cx="65" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.15"/>
-
-  <!-- TONGUE (hidden at rest) -->
-  <g id="d-tongue" opacity="0">
-    <ellipse cx="53" cy="58" rx="5" ry="6.5" fill="#d96878"/>
-    <ellipse cx="53" cy="61" rx="5" ry="4" fill="#c05060"/>
-    <ellipse cx="53" cy="56" rx="5" ry="3" fill="#e07888"/>
-    <line x1="53" y1="53" x2="53" y2="64" stroke="#b04050" stroke-width="1"/>
-    <!-- tongue highlight -->
-    <ellipse cx="51" cy="56" rx="1.5" ry="2.5" fill="white" opacity="0.2"/>
-  </g>
-
 </svg>
 </div>
 <!-- TOAST -->
@@ -659,123 +586,169 @@
 
 
 
+
   /* ── DOG ENGINE ── */
   (function() {
-    const wrap   = document.getElementById('site-dog');
-    const svg    = document.getElementById('dog-svg');
-    const shadow = document.getElementById('d-shadow');
-    const tail   = document.getElementById('d-tail');
-    const tongue = document.getElementById('d-tongue');
-    const earL   = document.getElementById('d-ear-l');
-    const legFL  = document.getElementById('d-leg-fl');
-    const legFR  = document.getElementById('d-leg-fr');
-    const legBL  = document.getElementById('d-leg-bl');
-    const legBR  = document.getElementById('d-leg-br');
+    const wrap    = document.getElementById('site-dog');
+    const svg     = document.getElementById('dog-svg');
+    const shadow  = document.getElementById('d-shadow');
+    const tail    = document.getElementById('d-tail');
+    const tongue  = document.getElementById('d-tongue');
+    const earL    = document.getElementById('d-ear-l');
+    const legFL   = document.getElementById('d-leg-fl');
+    const legFR   = document.getElementById('d-leg-fr');
+    const legBL   = document.getElementById('d-leg-bl');
+    const legBR   = document.getElementById('d-leg-br');
+    const headGrp = document.getElementById('d-head-grp');
 
-    let posX        = 40;
-    let velX        = 0;
-    let isRunning   = false;
+    /* position */
+    let px = 60, py = window.innerHeight - 130;
+    let vx = 0,  vy = 0;
+    let targetX = px, targetY = py;
+    let phase = 0, wagPhase = 0, sniffPhase = 0;
+    let raf = null;
+    let state = 'sit'; /* sit | run | sniff | spin | zoom */
+    let stateTimer = null;
     let facingRight = true;
-    let phase       = 0;
-    let wagPhase    = 0;
-    let stopTimer   = null;
-    let raf         = null;
-    let lastScroll  = window.scrollY;
-    let returning   = false;
+    let spinAngle = 0;
+    let zoomSpeed = 0;
 
-    function setRot(el, deg) { el.style.transform = `rotate(${deg}deg)`; }
+    const setRot = (el, d) => el.style.transform = `rotate(${d}deg)`;
 
-    function wagTick() {
-      wagPhase += 0.065;
-      const wag = Math.sin(wagPhase) * 38;
-      tail.style.transform = `rotate(${wag}deg)`;
-      earL.style.transform = `rotate(${Math.sin(wagPhase * 0.45) * 6}deg)`;
-      const bob = Math.sin(wagPhase * 0.38) * 1.2;
-      svg.style.transform = `translateY(${bob}px)`;
-      setRot(legFL, 0); setRot(legFR, 0);
-      setRot(legBL, 0); setRot(legBR, 0);
-      tongue.setAttribute('opacity', '0');
-      shadow.setAttribute('rx', '24');
-      if (!isRunning) raf = requestAnimationFrame(wagTick);
+    /* ── STATES ── */
+    const states = {
+      sit: { duration: [2000, 4000] },
+      run: { duration: [1500, 3500] },
+      sniff: { duration: [1500, 2500] },
+      spin: { duration: [800, 1400] },
+      zoom: { duration: [1000, 2000] },
+    };
+
+    function pickState() {
+      const options = ['sit','sit','run','run','sniff','spin','zoom','run','sit'];
+      return options[Math.floor(Math.random() * options.length)];
     }
 
-    function runTick() {
-      phase += 0.2;
-      const s = Math.sin(phase) * 34;
-      setRot(legFL,  s);
-      setRot(legBR,  s);
-      setRot(legFR, -s);
-      setRot(legBL, -s);
-      const bounce = Math.abs(Math.sin(phase * 2)) * 7;
-      svg.style.transform = `translateY(${-bounce}px)`;
-      shadow.setAttribute('rx', 24 - bounce * 0.9);
-      tail.style.transform = `rotate(${-28 + Math.sin(phase) * 14}deg)`;
-      earL.style.transform  = `rotate(${-6 + Math.sin(phase) * 8}deg)`;
-      tongue.setAttribute('opacity', '1');
-      tongue.style.transform = `translateY(${Math.sin(phase * 2) * 2}px)`;
+    function enterState(s) {
+      state = s;
+      const [min, max] = states[s].duration;
+      const dur = min + Math.random() * (max - min);
 
-      /* drift toward target */
-      posX += velX * 0.1;
-      posX  = Math.max(10, Math.min(window.innerWidth - 120, posX));
-      wrap.style.left = posX + 'px';
-
-      if (returning && posX <= 42) {
-        posX = 40; wrap.style.left = '40px';
-        returning   = false;
-        isRunning   = false;
-        facingRight = true;
-        wrap.style.transform = 'scaleX(1)';
-        velX = 0;
-        cancelAnimationFrame(raf);
-        startWag();
-        return;
+      if (s === 'run' || s === 'zoom') {
+        /* pick a random spot on screen */
+        targetX = 60 + Math.random() * (window.innerWidth - 180);
+        targetY = window.innerHeight * 0.35 + Math.random() * (window.innerHeight * 0.55);
+        zoomSpeed = s === 'zoom' ? 2.8 : 1;
       }
-      if (isRunning) raf = requestAnimationFrame(runTick);
+      if (s === 'spin') { spinAngle = 0; }
+
+      clearTimeout(stateTimer);
+      stateTimer = setTimeout(() => enterState(pickState()), dur);
     }
 
-    function startWag() {
-      isRunning = false; returning = false;
-      cancelAnimationFrame(raf);
-      svg.style.transform = '';
-      tongue.setAttribute('opacity', '0');
-      wagTick();
-    }
+    /* ── ANIMATION LOOP ── */
+    function tick() {
+      raf = requestAnimationFrame(tick);
+      phase    += 0.2;
+      wagPhase += 0.07;
+      sniffPhase += 0.12;
 
-    function startRun() {
-      if (!isRunning) {
-        isRunning = true;
-        cancelAnimationFrame(raf);
-        runTick();
+      if (state === 'sit') {
+        /* idle wag + gentle bob */
+        const wag = Math.sin(wagPhase) * 40;
+        tail.style.transform = `rotate(${wag}deg)`;
+        setRot(earL, Math.sin(wagPhase * 0.4) * 5);
+        headGrp.style.transform = `rotate(${Math.sin(wagPhase * 0.3) * 3}deg)`;
+        svg.style.transform = `translateY(${Math.sin(wagPhase * 0.4) * 1.5}px)`;
+        setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
+        tongue.setAttribute('opacity','0');
+        shadow.setAttribute('rx','24');
+        /* drift gently back toward last pos */
+        vx *= 0.85; vy *= 0.85;
+        px += vx; py += vy;
+
+      } else if (state === 'sniff') {
+        /* head bobs down like sniffing ground */
+        const sniff = Math.sin(sniffPhase * 2) * 12;
+        headGrp.style.transform = `rotate(${sniff}deg) translateY(${Math.abs(Math.sin(sniffPhase * 2)) * 4}px)`;
+        tail.style.transform = `rotate(${Math.sin(wagPhase * 1.5) * 20 + 10}deg)`;
+        setRot(earL, Math.sin(sniffPhase) * 8);
+        tongue.setAttribute('opacity','0');
+        svg.style.transform = '';
+        setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
+        shadow.setAttribute('rx','24');
+        vx *= 0.9; vy *= 0.9;
+        px += vx; py += vy;
+
+      } else if (state === 'spin') {
+        /* spin in a circle */
+        spinAngle += 8;
+        wrap.style.transform = `rotate(${spinAngle}deg) scaleX(1)`;
+        tail.style.transform = `rotate(${Math.sin(phase * 2) * 50}deg)`;
+        tongue.setAttribute('opacity','1');
+        const s = Math.sin(phase) * 30;
+        setRot(legFL, s); setRot(legBR, s);
+        setRot(legFR,-s); setRot(legBL,-s);
+        shadow.setAttribute('rx','18');
+        svg.style.transform = `translateY(${-Math.abs(Math.sin(phase * 2)) * 5}px)`;
+
+      } else if (state === 'run' || state === 'zoom') {
+        /* run toward target */
+        const dx = targetX - px;
+        const dy = targetY - py;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+
+        if (dist < 15) {
+          /* reached target — pick new state */
+          enterState(pickState());
+        } else {
+          const spd = Math.min(dist * 0.08 * zoomSpeed, state === 'zoom' ? 22 : 12);
+          vx = (dx / dist) * spd;
+          vy = (dy / dist) * spd;
+          px += vx; py += vy;
+
+          /* face direction */
+          const goRight = vx > 0;
+          if (goRight !== facingRight) {
+            facingRight = goRight;
+            if (state !== 'spin') wrap.style.transform = goRight ? 'scaleX(1)' : 'scaleX(-1)';
+          }
+
+          /* leg gait */
+          const s = Math.sin(phase) * 34;
+          setRot(legFL, s); setRot(legBR, s);
+          setRot(legFR,-s); setRot(legBL,-s);
+
+          /* body bounce */
+          const bounce = Math.abs(Math.sin(phase * 2)) * 7;
+          svg.style.transform = `translateY(${-bounce}px)`;
+          shadow.setAttribute('rx', 24 - bounce * 0.9);
+
+          /* tail streams */
+          tail.style.transform = `rotate(${-25 + Math.sin(phase) * 14}deg)`;
+          setRot(earL, -5 + Math.sin(phase) * 9);
+          headGrp.style.transform = '';
+
+          /* tongue out when zooming */
+          tongue.setAttribute('opacity', state === 'zoom' ? '1' : '0.7');
+          tongue.style.transform = `translateY(${Math.sin(phase * 2) * 2}px)`;
+        }
       }
+
+      /* clamp to viewport */
+      px = Math.max(10, Math.min(window.innerWidth - 120, px));
+      py = Math.max(80, Math.min(window.innerHeight - 120, py));
+
+      wrap.style.left   = px + 'px';
+      wrap.style.top    = py + 'px';
+      wrap.style.bottom = 'auto';
     }
 
-    function trotHome() {
-      if (posX <= 42) { startWag(); return; }
-      returning   = true;
-      facingRight = false;
-      wrap.style.transform = 'scaleX(-1)';
-      velX = -200;
-      startRun();
-    }
-
-    window.addEventListener('scroll', () => {
-      const delta = window.scrollY - lastScroll;
-      lastScroll  = window.scrollY;
-      if (Math.abs(delta) < 1) return;
-
-      returning = false;
-      velX = Math.max(-350, Math.min(350, delta * 4));
-      const goRight = delta > 0;
-      if (goRight !== facingRight) {
-        facingRight = goRight;
-        wrap.style.transform = goRight ? 'scaleX(1)' : 'scaleX(-1)';
-      }
-      startRun();
-      clearTimeout(stopTimer);
-      stopTimer = setTimeout(trotHome, 380);
-    });
-
-    startWag();
+    /* boot */
+    wrap.style.top    = py + 'px';
+    wrap.style.bottom = 'auto';
+    enterState('sit');
+    tick();
   })();
 
   /* ── FORM ── */
