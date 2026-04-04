@@ -306,6 +306,15 @@
     footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
   }
 
+
+  /* ── PAGE TRANSITIONS ── */
+  #page-main, #page-about {
+    animation: pageFade 0.4s ease both;
+  }
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   /* ── TAB PAGES ── */
   #page-main { display: block; }
   #page-about { display: none; }
@@ -323,7 +332,7 @@
   <ul class="nav-links">
     <li><a href="#services" onclick="showMain('services')">Services</a></li>
     <li><a href="#gallery" onclick="showMain('gallery')">Gallery</a></li>
-    <li><a href="#" id="nav-about" onclick="showAbout(); return false;">About</a></li>
+    <li><a href="#" id="nav-about" onclick="showAbout(); return false;">Meet Your Groomer</a></li>
     <li><a href="#booking" onclick="showMain('booking')">Booking</a></li>
   </ul>
   <a class="nav-cta" href="#booking" onclick="showMain('booking')">Book Now</a>
