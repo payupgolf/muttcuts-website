@@ -171,16 +171,15 @@
   /* ── SVG DOG ── */
   #svg-dog {
     position: fixed;
-    bottom: 20px;
+    bottom: 18px;
     left: 40px;
-    width: 90px;
-    height: 90px;
+    width: 88px;
+    height: 88px;
     z-index: 9999;
     pointer-events: none;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-    transition: left 0.15s ease-out;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+    will-change: transform, left, bottom;
   }
-  #svg-dog.flip { transform: scaleX(-1); }
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
@@ -424,68 +423,83 @@
 </div><!-- end page-about -->
 
 
+
 <!-- SVG DOG -->
 <div id="svg-dog">
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<svg id="dog-svg" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+  <g id="dog-root">
     <!-- Shadow -->
-    <ellipse cx="50" cy="96" rx="28" ry="5" fill="rgba(0,0,0,0.15)"/>
+    <ellipse id="dog-shadow" cx="50" cy="107" rx="22" ry="4" fill="rgba(0,0,0,0.18)"/>
 
     <!-- Tail -->
-    <g id="dog-tail">
-      <ellipse cx="82" cy="58" rx="10" ry="6" rx="6" ry="10" fill="#555" transform="rotate(-30 82 58)"/>
-      <ellipse cx="88" cy="44" rx="5" ry="8" fill="#666" transform="rotate(-10 88 44)"/>
+    <g id="dog-tail-grp" style="transform-origin:72px 68px">
+      <ellipse cx="78" cy="58" rx="7" ry="5" fill="#4a4a4a" transform="rotate(-35 78 58)"/>
+      <ellipse cx="84" cy="46" rx="5" ry="7" fill="#555" transform="rotate(-15 84 46)"/>
+    </g>
+
+    <!-- Back legs -->
+    <g id="dog-leg-bl" style="transform-origin:38px 85px">
+      <rect x="31" y="84" width="13" height="18" rx="6" fill="#4a4a4a"/>
+      <ellipse cx="37" cy="102" rx="7" ry="4" fill="#3a3a3a"/>
+    </g>
+    <g id="dog-leg-br" style="transform-origin:62px 85px">
+      <rect x="56" y="84" width="13" height="18" rx="6" fill="#4a4a4a"/>
+      <ellipse cx="62" cy="102" rx="7" ry="4" fill="#3a3a3a"/>
     </g>
 
     <!-- Body -->
-    <ellipse cx="50" cy="72" rx="28" ry="20" fill="#555"/>
-    <!-- White chest -->
-    <ellipse cx="50" cy="76" rx="16" ry="13" fill="#f0f0f0"/>
-
-    <!-- Back legs -->
-    <rect x="27" y="83" width="11" height="16" rx="5" fill="#555"/>
-    <rect x="62" y="83" width="11" height="16" rx="5" fill="#555"/>
+    <ellipse cx="50" cy="74" rx="26" ry="19" fill="#555"/>
+    <!-- Chest -->
+    <ellipse cx="50" cy="79" rx="15" ry="12" fill="#e8e8e8"/>
 
     <!-- Front legs -->
-    <rect x="35" y="85" width="11" height="15" rx="5" fill="#666" id="leg-left"/>
-    <rect x="54" y="85" width="11" height="15" rx="5" fill="#666" id="leg-right"/>
+    <g id="dog-leg-fl" style="transform-origin:40px 85px">
+      <rect x="33" y="84" width="13" height="18" rx="6" fill="#5a5a5a"/>
+      <ellipse cx="39" cy="102" rx="7" ry="4" fill="#4a4a4a"/>
+    </g>
+    <g id="dog-leg-fr" style="transform-origin:60px 85px">
+      <rect x="54" y="84" width="13" height="18" rx="6" fill="#5a5a5a"/>
+      <ellipse cx="60" cy="102" rx="7" ry="4" fill="#4a4a4a"/>
+    </g>
 
     <!-- Neck -->
-    <ellipse cx="50" cy="58" rx="14" ry="12" fill="#555"/>
+    <ellipse cx="50" cy="60" rx="13" ry="11" fill="#555"/>
 
     <!-- Head -->
-    <ellipse cx="50" cy="44" rx="22" ry="20" fill="#555"/>
+    <ellipse cx="50" cy="44" rx="21" ry="19" fill="#555"/>
 
-    <!-- Left ear (floppy) -->
-    <g id="ear-left">
-      <ellipse cx="31" cy="36" rx="9" ry="13" fill="#444" transform="rotate(15 31 36)"/>
+    <!-- Ears -->
+    <g id="dog-ear-l" style="transform-origin:30px 38px">
+      <ellipse cx="30" cy="34" rx="9" ry="13" fill="#444" transform="rotate(12 30 34)"/>
     </g>
-    <!-- Right ear -->
-    <ellipse cx="69" cy="36" rx="9" ry="13" fill="#444" transform="rotate(-15 69 36)"/>
+    <ellipse cx="70" cy="34" rx="9" ry="13" fill="#444" transform="rotate(-12 70 34)"/>
 
-    <!-- White face patch -->
-    <ellipse cx="50" cy="48" rx="14" ry="11" fill="#e8e8e8"/>
+    <!-- Face patch -->
+    <ellipse cx="50" cy="48" rx="13" ry="10" fill="#e0e0e0"/>
+
+    <!-- Head stripe -->
+    <ellipse cx="50" cy="33" rx="5" ry="8" fill="#e0e0e0" opacity="0.6"/>
 
     <!-- Eyes -->
-    <circle cx="43" cy="42" r="4" fill="#1a1a1a"/>
-    <circle cx="57" cy="42" r="4" fill="#1a1a1a"/>
-    <!-- Eye shine -->
-    <circle cx="44.5" cy="40.5" r="1.2" fill="white"/>
-    <circle cx="58.5" cy="40.5" r="1.2" fill="white"/>
+    <circle cx="43" cy="42" r="4.5" fill="#1a1a1a"/>
+    <circle cx="57" cy="42" r="4.5" fill="#1a1a1a"/>
+    <circle cx="44.5" cy="40.5" r="1.4" fill="white"/>
+    <circle cx="58.5" cy="40.5" r="1.4" fill="white"/>
 
     <!-- Nose -->
-    <ellipse cx="50" cy="50" rx="5" ry="3.5" fill="#1a1a1a"/>
-    <!-- Nose shine -->
-    <circle cx="48" cy="49" r="1" fill="rgba(255,255,255,0.4)"/>
+    <ellipse cx="50" cy="51" rx="5" ry="3.5" fill="#1a1a1a"/>
+    <circle cx="48.5" cy="50" r="1" fill="rgba(255,255,255,0.35)"/>
 
     <!-- Mouth -->
-    <path d="M46 54 Q50 58 54 54" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M46 55 Q50 59 54 55" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 
-    <!-- White stripe on head -->
-    <ellipse cx="50" cy="34" rx="5" ry="8" fill="#e8e8e8" opacity="0.7"/>
-
-    <!-- Tongue (hidden by default, shown on run) -->
-    <ellipse cx="50" cy="58" rx="4" ry="5" fill="#e07070" id="dog-tongue" opacity="0"/>
-  </svg>
+    <!-- Tongue -->
+    <g id="dog-tongue-grp" opacity="0">
+      <ellipse cx="50" cy="60" rx="4.5" ry="5.5" fill="#e07080"/>
+      <ellipse cx="50" cy="62" rx="4.5" ry="3" fill="#d06070"/>
+    </g>
+  </g>
+</svg>
 </div>
 
 <!-- TOAST -->
@@ -556,83 +570,145 @@
 
 
 
+
   /* ── SVG DOG ── */
   (function() {
-    const dog = document.getElementById('svg-dog');
-    const tail = document.getElementById('dog-tail');
-    const tongue = document.getElementById('dog-tongue');
-    const earLeft = document.getElementById('ear-left');
-    const legLeft = document.getElementById('leg-left');
-    const legRight = document.getElementById('leg-right');
+    const dogEl    = document.getElementById('svg-dog');
+    const root     = document.getElementById('dog-root');
+    const tail     = document.getElementById('dog-tail-grp');
+    const tongue   = document.getElementById('dog-tongue-grp');
+    const earL     = document.getElementById('dog-ear-l');
+    const legFL    = document.getElementById('dog-leg-fl');
+    const legFR    = document.getElementById('dog-leg-fr');
+    const legBL    = document.getElementById('dog-leg-bl');
+    const legBR    = document.getElementById('dog-leg-br');
+    const shadow   = document.getElementById('dog-shadow');
 
-    let dogX = 40;
-    let isRunning = false;
-    let stopTimer = null;
-    let animFrame = null;
-    let tailAngle = 0;
-    let tailDir = 1;
-    let runPhase = 0;
-    let lastScrollY = window.scrollY;
+    let dogX       = 40;
+    let dogBottom  = 18;
+    let isRunning  = false;
+    let phase      = 0;
+    let tailPhase  = 0;
+    let stopTimer  = null;
+    let raf        = null;
+    let lastScroll = window.scrollY;
+    let facingRight = true;
 
-    // WAG animation
-    function wagTail() {
-      tailAngle += tailDir * 4;
-      if (tailAngle > 28 || tailAngle < -28) tailDir *= -1;
-      tail.setAttribute('transform', `rotate(${tailAngle}, 75, 65)`);
-      earLeft.setAttribute('transform', `rotate(${15 + Math.sin(tailAngle * 0.1) * 3} 31 36)`);
-      if (!isRunning) animFrame = requestAnimationFrame(wagTail);
+    /* ── WAG LOOP ── */
+    function wagLoop() {
+      tailPhase += 0.08;
+      const wag = Math.sin(tailPhase) * 32;
+      tail.style.transform = `rotate(${wag}deg)`;
+      earL.style.transform = `rotate(${Math.sin(tailPhase * 0.5) * 6}deg)`;
+      // Gentle body bob while sitting
+      const bob = Math.sin(tailPhase * 0.4) * 1.2;
+      root.style.transform = `translateY(${bob}px)`;
+      // Reset legs to standing
+      legFL.style.transform = 'rotate(0deg)';
+      legFR.style.transform = 'rotate(0deg)';
+      legBL.style.transform = 'rotate(0deg)';
+      legBR.style.transform = 'rotate(0deg)';
+      tongue.setAttribute('opacity', '0');
+      if (!isRunning) raf = requestAnimationFrame(wagLoop);
     }
 
-    // RUN animation
-    function runDog() {
-      runPhase += 0.25;
-      const legSwing = Math.sin(runPhase) * 10;
-      legLeft.setAttribute('transform', `rotate(${legSwing}, 40, 85)`);
-      legRight.setAttribute('transform', `rotate(${-legSwing}, 60, 85)`);
-      tail.setAttribute('transform', `rotate(${20 + Math.sin(runPhase) * 15}, 75, 65)`);
-      tongue.setAttribute('opacity', '0.9');
-      if (isRunning) animFrame = requestAnimationFrame(runDog);
+    /* ── RUN LOOP ── */
+    function runLoop() {
+      phase += 0.22;
+
+      // Leg cycling — opposite pairs move together
+      const frontSwing = Math.sin(phase) * 30;
+      const backSwing  = Math.sin(phase + Math.PI) * 28;
+      legFL.style.transform = `rotate(${frontSwing}deg)`;
+      legFR.style.transform = `rotate(${-frontSwing}deg)`;
+      legBL.style.transform = `rotate(${backSwing}deg)`;
+      legBR.style.transform = `rotate(${-backSwing}deg)`;
+
+      // Body bounce up and down
+      const bounce = Math.abs(Math.sin(phase * 2)) * 5;
+      dogBottom = 18 + bounce;
+      dogEl.style.bottom = dogBottom + 'px';
+      root.style.transform = `translateY(0px)`;
+
+      // Tail streams back while running
+      tail.style.transform = `rotate(${-20 + Math.sin(phase) * 10}deg)`;
+
+      // Ear flap
+      earL.style.transform = `rotate(${Math.sin(phase) * 8}deg)`;
+
+      // Tongue out while running
+      tongue.setAttribute('opacity', '1');
+
+      // Shadow shrinks/grows with bounce
+      const shadowScale = 1 - bounce * 0.04;
+      shadow.setAttribute('rx', 22 * shadowScale);
+
+      if (isRunning) raf = requestAnimationFrame(runLoop);
     }
 
     function startWag() {
       isRunning = false;
+      cancelAnimationFrame(raf);
       tongue.setAttribute('opacity', '0');
-      legLeft.setAttribute('transform', '');
-      legRight.setAttribute('transform', '');
-      cancelAnimationFrame(animFrame);
-      wagTail();
+      dogEl.style.bottom = '18px';
+      wagLoop();
     }
 
     function startRun() {
       if (!isRunning) {
         isRunning = true;
-        cancelAnimationFrame(animFrame);
-        runDog();
+        cancelAnimationFrame(raf);
+        runLoop();
       }
     }
 
-    // Start with wag
+    // Boot up wagging
     startWag();
 
-    // Scroll handler
     window.addEventListener('scroll', () => {
-      const delta = window.scrollY - lastScrollY;
-      lastScrollY = window.scrollY;
+      const delta = window.scrollY - lastScroll;
+      lastScroll  = window.scrollY;
 
       startRun();
 
-      // Move dog horizontally
-      const dir = delta > 0 ? 1 : -1;
-      dog.style.transform = dir < 0 ? 'scaleX(-1)' : 'scaleX(1)';
-      dogX = Math.min(Math.max(dogX + delta * 0.35, 10), window.innerWidth - 100);
-      dog.style.left = dogX + 'px';
+      // Direction flip
+      const goingRight = delta > 0;
+      if (goingRight !== facingRight) {
+        facingRight = goingRight;
+        dogEl.style.transform = facingRight ? 'scaleX(1)' : 'scaleX(-1)';
+      }
 
-      // Stop running after scroll ends
+      // Move dog — speed tied to scroll velocity
+      const speed = Math.min(Math.abs(delta) * 0.5, 12);
+      dogX += facingRight ? speed : -speed;
+      dogX  = Math.max(10, Math.min(window.innerWidth - 100, dogX));
+      dogEl.style.left = dogX + 'px';
+
+      // Stop after scroll ends
       clearTimeout(stopTimer);
       stopTimer = setTimeout(() => {
-        dog.style.transform = 'scaleX(1)';
-        startWag();
-      }, 500);
+        // Trot back to resting spot near left
+        facingRight = false;
+        dogEl.style.transform = 'scaleX(-1)';
+        isRunning = true;
+        cancelAnimationFrame(raf);
+        runLoop();
+
+        const returnInterval = setInterval(() => {
+          dogX -= 4;
+          dogEl.style.left = dogX + 'px';
+          if (dogX <= 40) {
+            dogX = 40;
+            dogEl.style.left = dogX + 'px';
+            clearInterval(returnInterval);
+            facingRight = true;
+            dogEl.style.transform = 'scaleX(1)';
+            startWag();
+          }
+        }, 16);
+
+        stopTimer = null;
+      }, 400);
     });
   })();
 
