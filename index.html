@@ -173,11 +173,11 @@
     position: fixed;
     bottom: 0px;
     left: 40px;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     z-index: 9999;
     pointer-events: none;
-    will-change: left;
+    will-change: left, transform;
   }
   #site-dog svg { overflow: visible; }
   /* ── RESPONSIVE ── */
@@ -423,86 +423,167 @@
 </div><!-- end page-about -->
 
 
-
 <!-- DOG -->
 <div id="site-dog">
-<svg id="dog-svg" viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+<svg id="dog-svg" viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+  <defs>
+    <!-- Body shading -->
+    <radialGradient id="g-body" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#6a6a6a"/>
+      <stop offset="100%" stop-color="#2e2e2e"/>
+    </radialGradient>
+    <!-- Belly -->
+    <radialGradient id="g-belly" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#f0f0f0"/>
+      <stop offset="100%" stop-color="#c0c0c0"/>
+    </radialGradient>
+    <!-- Head shading -->
+    <radialGradient id="g-head" cx="38%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#686868"/>
+      <stop offset="100%" stop-color="#2c2c2c"/>
+    </radialGradient>
+    <!-- Ear shading -->
+    <radialGradient id="g-ear" cx="40%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#555"/>
+      <stop offset="100%" stop-color="#222"/>
+    </radialGradient>
+    <!-- Leg shading -->
+    <radialGradient id="g-leg" cx="35%" cy="20%" r="70%">
+      <stop offset="0%" stop-color="#5e5e5e"/>
+      <stop offset="100%" stop-color="#282828"/>
+    </radialGradient>
+    <!-- Face patch -->
+    <radialGradient id="g-face" cx="45%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#e8e8e8"/>
+      <stop offset="100%" stop-color="#b8b8b8"/>
+    </radialGradient>
+    <!-- Nose -->
+    <radialGradient id="g-nose" cx="35%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#111"/>
+    </radialGradient>
+    <!-- Eye -->
+    <radialGradient id="g-eye" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+  </defs>
 
-  <!-- shadow -->
-  <ellipse id="d-shadow" cx="50" cy="98" rx="20" ry="4" fill="rgba(0,0,0,0.2)"/>
+  <!-- SHADOW -->
+  <ellipse id="d-shadow" cx="55" cy="107" rx="24" ry="5" fill="rgba(0,0,0,0.22)"/>
 
-  <!-- tail group - pivots from base -->
-  <g id="d-tail" style="transform-origin:68px 62px">
-    <ellipse cx="74" cy="52" rx="6" ry="10" fill="#3d3d3d" transform="rotate(20 74 52)"/>
-    <ellipse cx="80" cy="42" rx="4.5" ry="7" fill="#4a4a4a" transform="rotate(10 80 42)"/>
+  <!-- TAIL — pivots from base at ~75,68 -->
+  <g id="d-tail" style="transform-origin:72px 65px">
+    <ellipse cx="76" cy="54" rx="6.5" ry="11" fill="url(#g-body)" transform="rotate(25 76 54)"/>
+    <ellipse cx="83" cy="42" rx="5" ry="8" fill="url(#g-ear)" transform="rotate(10 83 42)"/>
+    <!-- tip highlight -->
+    <ellipse cx="85" cy="37" rx="2.5" ry="3.5" fill="#888" opacity="0.5" transform="rotate(5 85 37)"/>
   </g>
 
-  <!-- back left leg -->
-  <g id="d-leg-bl" style="transform-origin:36px 78px">
-    <rect x="30" y="78" width="12" height="20" rx="6" fill="#3a3a3a"/>
-    <ellipse cx="36" cy="98" rx="8" ry="3.5" fill="#2e2e2e"/>
+  <!-- BACK LEFT LEG -->
+  <g id="d-leg-bl" style="transform-origin:38px 80px">
+    <ellipse cx="38" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
+    <!-- shin highlight -->
+    <ellipse cx="35" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
+    <!-- paw -->
+    <ellipse cx="38" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
+    <ellipse cx="36" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
 
-  <!-- back right leg -->
-  <g id="d-leg-br" style="transform-origin:60px 78px">
-    <rect x="54" y="78" width="12" height="20" rx="6" fill="#3a3a3a"/>
-    <ellipse cx="60" cy="98" rx="8" ry="3.5" fill="#2e2e2e"/>
+  <!-- BACK RIGHT LEG -->
+  <g id="d-leg-br" style="transform-origin:68px 80px">
+    <ellipse cx="68" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
+    <ellipse cx="65" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
+    <ellipse cx="68" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
+    <ellipse cx="66" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
 
-  <!-- body -->
-  <ellipse cx="50" cy="70" rx="25" ry="18" fill="#4a4a4a"/>
-  <!-- belly patch -->
-  <ellipse cx="50" cy="74" rx="14" ry="11" fill="#d8d8d8"/>
+  <!-- BODY -->
+  <ellipse cx="53" cy="73" rx="27" ry="20" fill="url(#g-body)"/>
+  <!-- Body top highlight -->
+  <ellipse cx="46" cy="62" rx="12" ry="6" fill="#888" opacity="0.18"/>
+  <!-- Belly -->
+  <ellipse cx="53" cy="78" rx="16" ry="13" fill="url(#g-belly)"/>
+  <!-- Belly highlight -->
+  <ellipse cx="50" cy="74" rx="7" ry="5" fill="white" opacity="0.3"/>
 
-  <!-- front left leg -->
-  <g id="d-leg-fl" style="transform-origin:38px 78px">
-    <rect x="32" y="78" width="12" height="20" rx="6" fill="#525252"/>
-    <ellipse cx="38" cy="98" rx="8" ry="3.5" fill="#3e3e3e"/>
+  <!-- FRONT LEFT LEG -->
+  <g id="d-leg-fl" style="transform-origin:40px 80px">
+    <ellipse cx="40" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
+    <ellipse cx="37" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
+    <ellipse cx="40" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
+    <ellipse cx="38" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
 
-  <!-- front right leg -->
-  <g id="d-leg-fr" style="transform-origin:62px 78px">
-    <rect x="56" y="78" width="12" height="20" rx="6" fill="#525252"/>
-    <ellipse cx="62" cy="98" rx="8" ry="3.5" fill="#3e3e3e"/>
+  <!-- FRONT RIGHT LEG -->
+  <g id="d-leg-fr" style="transform-origin:66px 80px">
+    <ellipse cx="66" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
+    <ellipse cx="63" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
+    <ellipse cx="66" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
+    <ellipse cx="64" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
 
-  <!-- neck -->
-  <ellipse cx="50" cy="57" rx="13" ry="10" fill="#4a4a4a"/>
+  <!-- NECK -->
+  <ellipse cx="53" cy="59" rx="13" ry="11" fill="url(#g-body)"/>
+  <ellipse cx="49" cy="53" rx="5" ry="4" fill="#888" opacity="0.15"/>
 
-  <!-- head -->
-  <ellipse cx="50" cy="40" rx="20" ry="19" fill="#4a4a4a"/>
+  <!-- HEAD -->
+  <ellipse cx="53" cy="40" rx="22" ry="21" fill="url(#g-head)"/>
+  <!-- Head top highlight -->
+  <ellipse cx="46" cy="26" rx="10" ry="7" fill="#999" opacity="0.22"/>
 
-  <!-- left ear - floppy -->
-  <g id="d-ear-l" style="transform-origin:31px 30px">
-    <ellipse cx="31" cy="32" rx="9" ry="14" fill="#383838" transform="rotate(8 31 32)"/>
+  <!-- LEFT EAR (floppy) -->
+  <g id="d-ear-l" style="transform-origin:32px 28px">
+    <ellipse cx="32" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(10 32 30)"/>
+    <!-- ear highlight -->
+    <ellipse cx="29" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.25" transform="rotate(10 29 24)"/>
   </g>
-  <!-- right ear -->
-  <ellipse cx="69" cy="32" rx="9" ry="14" fill="#383838" transform="rotate(-8 69 32)"/>
 
-  <!-- face patch -->
-  <ellipse cx="50" cy="44" rx="13" ry="11" fill="#d0d0d0"/>
+  <!-- RIGHT EAR -->
+  <ellipse cx="74" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(-10 74 30)"/>
+  <ellipse cx="71" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.25" transform="rotate(-10 71 24)"/>
 
-  <!-- head stripe -->
-  <ellipse cx="50" cy="28" rx="5" ry="9" fill="#d8d8d8" opacity="0.55"/>
+  <!-- FACE PATCH -->
+  <ellipse cx="53" cy="45" rx="14" ry="12" fill="url(#g-face)"/>
+  <!-- Face patch highlight -->
+  <ellipse cx="49" cy="39" rx="6" ry="4" fill="white" opacity="0.25"/>
 
-  <!-- eyes -->
-  <circle cx="43" cy="38" r="4.5" fill="#111"/>
-  <circle cx="57" cy="38" r="4.5" fill="#111"/>
-  <circle cx="44.5" cy="36.8" r="1.5" fill="white"/>
-  <circle cx="58.5" cy="36.8" r="1.5" fill="white"/>
+  <!-- HEAD STRIPE -->
+  <ellipse cx="53" cy="27" rx="5.5" ry="9" fill="#d8d8d8" opacity="0.45"/>
 
-  <!-- nose -->
-  <ellipse cx="50" cy="47" rx="5" ry="3.5" fill="#111"/>
-  <ellipse cx="48.5" cy="46" rx="1.2" ry="0.8" fill="rgba(255,255,255,0.35)"/>
+  <!-- EYES -->
+  <circle cx="45" cy="39" r="5" fill="url(#g-eye)"/>
+  <circle cx="61" cy="39" r="5" fill="url(#g-eye)"/>
+  <!-- Iris -->
+  <circle cx="45" cy="39" r="3" fill="#1a1a1a"/>
+  <circle cx="61" cy="39" r="3" fill="#1a1a1a"/>
+  <!-- Eye shine main -->
+  <circle cx="46.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
+  <circle cx="62.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
+  <!-- Eye shine small -->
+  <circle cx="43.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
+  <circle cx="59.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
 
-  <!-- mouth -->
-  <path d="M46 51 Q50 56 54 51" stroke="#222" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- NOSE -->
+  <ellipse cx="53" cy="49" rx="5.5" ry="4" fill="url(#g-nose)"/>
+  <!-- Nose highlight -->
+  <ellipse cx="51" cy="47.5" rx="1.8" ry="1.2" fill="white" opacity="0.4"/>
 
-  <!-- tongue (hidden at rest) -->
+  <!-- MOUTH -->
+  <path d="M48 53 Q53 58.5 58 53" stroke="#2a2a2a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+
+  <!-- CHEEK blush -->
+  <ellipse cx="41" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.15"/>
+  <ellipse cx="65" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.15"/>
+
+  <!-- TONGUE (hidden at rest) -->
   <g id="d-tongue" opacity="0">
-    <ellipse cx="50" cy="56" rx="4" ry="5" fill="#d96878"/>
-    <ellipse cx="50" cy="58.5" rx="4" ry="3" fill="#c05060"/>
-    <line x1="50" y1="53" x2="50" y2="61" stroke="#b04050" stroke-width="0.8"/>
+    <ellipse cx="53" cy="58" rx="5" ry="6.5" fill="#d96878"/>
+    <ellipse cx="53" cy="61" rx="5" ry="4" fill="#c05060"/>
+    <ellipse cx="53" cy="56" rx="5" ry="3" fill="#e07888"/>
+    <line x1="53" y1="53" x2="53" y2="64" stroke="#b04050" stroke-width="1"/>
+    <!-- tongue highlight -->
+    <ellipse cx="51" cy="56" rx="1.5" ry="2.5" fill="white" opacity="0.2"/>
   </g>
 
 </svg>
@@ -577,6 +658,7 @@
 
 
 
+
   /* ── DOG ENGINE ── */
   (function() {
     const wrap   = document.getElementById('site-dog');
@@ -590,82 +672,72 @@
     const legBL  = document.getElementById('d-leg-bl');
     const legBR  = document.getElementById('d-leg-br');
 
-    /* state */
     let posX        = 40;
     let velX        = 0;
     let isRunning   = false;
     let facingRight = true;
     let phase       = 0;
     let wagPhase    = 0;
-    let bodyBob     = 0;
     let stopTimer   = null;
     let raf         = null;
     let lastScroll  = window.scrollY;
+    let returning   = false;
 
-    /* helpers */
     function setRot(el, deg) { el.style.transform = `rotate(${deg}deg)`; }
-    function setTranslate(el, x, y) { el.style.transform = `translate(${x}px,${y}px)`; }
 
-    /* SIT & WAG */
     function wagTick() {
-      wagPhase += 0.07;
-      const wag = Math.sin(wagPhase) * 35;
-      setRot(tail, wag);
-      setRot(earL, Math.sin(wagPhase * 0.5) * 5);
-      /* tiny sit bob */
-      const bob = Math.sin(wagPhase * 0.4) * 0.8;
+      wagPhase += 0.065;
+      const wag = Math.sin(wagPhase) * 38;
+      tail.style.transform = `rotate(${wag}deg)`;
+      earL.style.transform = `rotate(${Math.sin(wagPhase * 0.45) * 6}deg)`;
+      const bob = Math.sin(wagPhase * 0.38) * 1.2;
       svg.style.transform = `translateY(${bob}px)`;
-      /* legs at rest */
       setRot(legFL, 0); setRot(legFR, 0);
       setRot(legBL, 0); setRot(legBR, 0);
       tongue.setAttribute('opacity', '0');
-      shadow.setAttribute('rx', '20');
+      shadow.setAttribute('rx', '24');
       if (!isRunning) raf = requestAnimationFrame(wagTick);
     }
 
-    /* RUN */
     function runTick() {
-      phase += 0.18;
-
-      /* leg gait — diagonal pairs */
-      const s = Math.sin(phase) * 32;
-      setRot(legFL, s);
-      setRot(legBR, s);
+      phase += 0.2;
+      const s = Math.sin(phase) * 34;
+      setRot(legFL,  s);
+      setRot(legBR,  s);
       setRot(legFR, -s);
       setRot(legBL, -s);
-
-      /* body bounce */
-      bodyBob = Math.abs(Math.sin(phase * 2)) * 6;
-      svg.style.transform = `translateY(${-bodyBob}px)`;
-
-      /* shadow shrinks on upswing */
-      shadow.setAttribute('rx', 20 - bodyBob * 0.8);
-
-      /* tail streams back */
-      setRot(tail, -25 + Math.sin(phase) * 12);
-
-      /* ears flap */
-      setRot(earL, -8 + Math.sin(phase) * 6);
-
-      /* tongue flaps */
+      const bounce = Math.abs(Math.sin(phase * 2)) * 7;
+      svg.style.transform = `translateY(${-bounce}px)`;
+      shadow.setAttribute('rx', 24 - bounce * 0.9);
+      tail.style.transform = `rotate(${-28 + Math.sin(phase) * 14}deg)`;
+      earL.style.transform  = `rotate(${-6 + Math.sin(phase) * 8}deg)`;
       tongue.setAttribute('opacity', '1');
-      tongue.style.transform = `translateY(${Math.sin(phase * 2) * 1.5}px)`;
+      tongue.style.transform = `translateY(${Math.sin(phase * 2) * 2}px)`;
 
-      /* drift position toward target */
-      posX += velX * 0.12;
-      posX = Math.max(10, Math.min(window.innerWidth - 110, posX));
+      /* drift toward target */
+      posX += velX * 0.1;
+      posX  = Math.max(10, Math.min(window.innerWidth - 120, posX));
       wrap.style.left = posX + 'px';
 
+      if (returning && posX <= 42) {
+        posX = 40; wrap.style.left = '40px';
+        returning   = false;
+        isRunning   = false;
+        facingRight = true;
+        wrap.style.transform = 'scaleX(1)';
+        velX = 0;
+        cancelAnimationFrame(raf);
+        startWag();
+        return;
+      }
       if (isRunning) raf = requestAnimationFrame(runTick);
     }
 
     function startWag() {
-      isRunning = false;
+      isRunning = false; returning = false;
       cancelAnimationFrame(raf);
       svg.style.transform = '';
       tongue.setAttribute('opacity', '0');
-      setRot(legFL,0); setRot(legFR,0);
-      setRot(legBL,0); setRot(legBR,0);
       wagTick();
     }
 
@@ -677,53 +749,32 @@
       }
     }
 
-    /* trot back home */
     function trotHome() {
-      if (posX <= 40) { posX = 40; wrap.style.left = '40px'; startWag(); return; }
-      velX = -180;
+      if (posX <= 42) { startWag(); return; }
+      returning   = true;
       facingRight = false;
       wrap.style.transform = 'scaleX(-1)';
+      velX = -200;
       startRun();
-      const check = setInterval(() => {
-        if (posX <= 40) {
-          clearInterval(check);
-          posX = 40;
-          wrap.style.left = '40px';
-          wrap.style.transform = 'scaleX(1)';
-          facingRight = true;
-          velX = 0;
-          startWag();
-        }
-      }, 50);
     }
 
-    /* scroll handler */
     window.addEventListener('scroll', () => {
       const delta = window.scrollY - lastScroll;
       lastScroll  = window.scrollY;
       if (Math.abs(delta) < 1) return;
 
-      /* velocity from scroll speed */
-      velX = delta * 3.5;
-      velX = Math.max(-320, Math.min(320, velX));
-
-      /* flip direction */
+      returning = false;
+      velX = Math.max(-350, Math.min(350, delta * 4));
       const goRight = delta > 0;
       if (goRight !== facingRight) {
         facingRight = goRight;
         wrap.style.transform = goRight ? 'scaleX(1)' : 'scaleX(-1)';
       }
-
       startRun();
-
       clearTimeout(stopTimer);
-      stopTimer = setTimeout(() => {
-        velX = 0;
-        trotHome();
-      }, 350);
+      stopTimer = setTimeout(trotHome, 380);
     });
 
-    /* boot */
     startWag();
   })();
 
