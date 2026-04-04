@@ -339,10 +339,10 @@
     <span>Mutt Cuts<small>by Emily Devereaux</small></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('main'); return false;">Services</a></li>
-    <li><a href="#" onclick="showPage('main'); return false;">Gallery</a></li>
+    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('services').scrollIntoView({behavior:'smooth'}),50); return false;">Services</a></li>
+    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('gallery').scrollIntoView({behavior:'smooth'}),50); return false;">Gallery</a></li>
     <li><a href="#" onclick="showPage('about'); return false;" id="nav-about">About</a></li>
-    <li><a href="#" onclick="showPage('main'); return false;">Booking</a></li>
+    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),50); return false;">Booking</a></li>
   </ul>
   <a class="nav-cta" href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),50); return false;">Book Now</a>
 </nav>
