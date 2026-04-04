@@ -181,6 +181,21 @@
     transition: none;
   }
   #site-dog svg { overflow: visible; }
+
+  /* ── DOG ── */
+  #site-dog {
+    position: fixed;
+    width: 110px;
+    height: 110px;
+    z-index: 9999;
+    pointer-events: none;
+    will-change: left, top, transform;
+    transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1), top 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  #site-dog svg { overflow: visible; }
+  #site-dog.jump {
+    transition: left 0.5s cubic-bezier(0.34,1.56,0.64,1), top 0.45s cubic-bezier(0.22,1.8,0.36,1);
+  }
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
@@ -422,7 +437,6 @@
   </footer>
 
 </div><!-- end page-about -->
-
 <!-- DOG -->
 <div id="site-dog">
 <svg id="dog-svg" viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
@@ -436,50 +450,37 @@
     <radialGradient id="g-nose" cx="33%" cy="28%" r="62%"><stop offset="0%" stop-color="#3a3a3a"/><stop offset="100%" stop-color="#0e0e0e"/></radialGradient>
     <radialGradient id="g-eye" cx="33%" cy="28%" r="66%"><stop offset="0%" stop-color="#383838"/><stop offset="100%" stop-color="#080808"/></radialGradient>
   </defs>
-
   <ellipse id="d-shadow" cx="55" cy="107" rx="24" ry="5" fill="rgba(0,0,0,0.22)"/>
-
   <g id="d-tail" style="transform-origin:72px 65px">
     <ellipse cx="76" cy="54" rx="6.5" ry="11" fill="url(#g-body)" transform="rotate(25 76 54)"/>
     <ellipse cx="83" cy="42" rx="5" ry="8" fill="url(#g-ear)" transform="rotate(10 83 42)"/>
     <ellipse cx="85" cy="37" rx="2.5" ry="3.5" fill="#888" opacity="0.5" transform="rotate(5 85 37)"/>
   </g>
-
   <g id="d-leg-bl" style="transform-origin:38px 80px">
     <ellipse cx="38" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="35" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
     <ellipse cx="38" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-    <ellipse cx="36" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
   <g id="d-leg-br" style="transform-origin:68px 80px">
     <ellipse cx="68" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="65" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
     <ellipse cx="68" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-    <ellipse cx="66" cy="102" rx="4" ry="2" fill="#888" opacity="0.2"/>
   </g>
-
   <ellipse cx="53" cy="73" rx="27" ry="20" fill="url(#g-body)"/>
   <ellipse cx="46" cy="62" rx="12" ry="6" fill="#888" opacity="0.16"/>
   <ellipse cx="53" cy="78" rx="16" ry="13" fill="url(#g-belly)"/>
   <ellipse cx="50" cy="74" rx="7" ry="5" fill="white" opacity="0.28"/>
-
   <g id="d-leg-fl" style="transform-origin:40px 80px">
     <ellipse cx="40" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="37" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
     <ellipse cx="40" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-    <ellipse cx="38" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
   <g id="d-leg-fr" style="transform-origin:66px 80px">
     <ellipse cx="66" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
     <ellipse cx="63" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
     <ellipse cx="66" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-    <ellipse cx="64" cy="102" rx="4" ry="2" fill="#aaa" opacity="0.18"/>
   </g>
-
   <ellipse cx="53" cy="59" rx="13" ry="11" fill="url(#g-body)"/>
-  <ellipse cx="49" cy="53" rx="5" ry="4" fill="#888" opacity="0.14"/>
-
-  <!-- head group for sniff tilt -->
   <g id="d-head-grp" style="transform-origin:53px 40px">
     <ellipse cx="53" cy="40" rx="22" ry="21" fill="url(#g-head)"/>
     <ellipse cx="46" cy="26" rx="10" ry="7" fill="#999" opacity="0.2"/>
@@ -587,6 +588,7 @@
 
 
 
+
   /* ── DOG ENGINE ── */
   (function() {
     const wrap    = document.getElementById('site-dog');
@@ -601,154 +603,141 @@
     const legBR   = document.getElementById('d-leg-br');
     const headGrp = document.getElementById('d-head-grp');
 
-    /* position */
-    let px = 60, py = window.innerHeight - 130;
-    let vx = 0,  vy = 0;
-    let targetX = px, targetY = py;
-    let phase = 0, wagPhase = 0, sniffPhase = 0;
-    let raf = null;
-    let state = 'sit'; /* sit | run | sniff | spin | zoom */
-    let stateTimer = null;
-    let facingRight = true;
-    let spinAngle = 0;
-    let zoomSpeed = 0;
+    const setRot = (el, d) => { if(el) el.style.transform = `rotate(${d}deg)`; };
 
-    const setRot = (el, d) => el.style.transform = `rotate(${d}deg)`;
+    /* ── WAYPOINTS ── */
+    /* Each waypoint: { sectionId, side, label }
+       side: 'right' = dog sits to the right of section heading
+             'left'  = dog sits to the left                      */
+    const waypoints = [
+      { sectionId: 'home',     xRatio: 0.82, yOffset: 0.42  },  /* end of hero headline */
+      { sectionId: 'services', xRatio: 0.08, yOffset: 0.18  },  /* left of Services heading */
+      { sectionId: 'gallery',  xRatio: 0.88, yOffset: 0.15  },  /* right of Before & After */
+      { sectionId: 'booking',  xRatio: 0.06, yOffset: 0.22  },  /* left of Let's get your pup in */
+    ];
 
-    /* ── STATES ── */
-    const states = {
-      sit: { duration: [2000, 4000] },
-      run: { duration: [1500, 3500] },
-      sniff: { duration: [1500, 2500] },
-      spin: { duration: [800, 1400] },
-      zoom: { duration: [1000, 2000] },
-    };
+    let currentWP = 0;
+    let wagPhase  = 0;
+    let runPhase  = 0;
+    let isRunning = false;
+    let isJumping = false;
+    let raf       = null;
 
-    function pickState() {
-      const options = ['sit','sit','run','run','sniff','spin','zoom','run','sit'];
-      return options[Math.floor(Math.random() * options.length)];
+    /* compute absolute position for a waypoint */
+    function wpPos(wp) {
+      const el = document.getElementById(wp.sectionId);
+      if (!el) return { x: 80, y: window.innerHeight / 2 };
+      const rect = el.getBoundingClientRect();
+      const x = window.innerWidth * wp.xRatio;
+      const y = rect.top + rect.height * wp.yOffset - 60;
+      return { x, y };
     }
 
-    function enterState(s) {
-      state = s;
-      const [min, max] = states[s].duration;
-      const dur = min + Math.random() * (max - min);
-
-      if (s === 'run' || s === 'zoom') {
-        /* pick a random spot on screen */
-        targetX = 60 + Math.random() * (window.innerWidth - 180);
-        targetY = window.innerHeight * 0.35 + Math.random() * (window.innerHeight * 0.55);
-        zoomSpeed = s === 'zoom' ? 2.8 : 1;
-      }
-      if (s === 'spin') { spinAngle = 0; }
-
-      clearTimeout(stateTimer);
-      stateTimer = setTimeout(() => enterState(pickState()), dur);
+    /* place dog at waypoint instantly (no transition) */
+    function snapTo(wp) {
+      const {x, y} = wpPos(wp);
+      wrap.style.transition = 'none';
+      wrap.style.left = x + 'px';
+      wrap.style.top  = y + 'px';
     }
 
-    /* ── ANIMATION LOOP ── */
-    function tick() {
-      raf = requestAnimationFrame(tick);
-      phase    += 0.2;
+    /* jump dog to waypoint with bouncy CSS transition */
+    function jumpTo(wp, facingRight) {
+      const {x, y} = wpPos(wp);
+      isJumping = true;
+      wrap.classList.add('jump');
+      wrap.style.transition = '';
+      wrap.style.transform  = facingRight ? 'scaleX(1)' : 'scaleX(-1)';
+
+      /* quick run anim before landing */
+      isRunning = true;
+      setTimeout(() => {
+        wrap.style.left = x + 'px';
+        wrap.style.top  = y + 'px';
+      }, 20);
+
+      setTimeout(() => {
+        isJumping  = false;
+        isRunning  = false;
+        wrap.classList.remove('jump');
+      }, 650);
+    }
+
+    /* ── WAG TICK ── */
+    function wagTick() {
       wagPhase += 0.07;
-      sniffPhase += 0.12;
-
-      if (state === 'sit') {
-        /* idle wag + gentle bob */
-        const wag = Math.sin(wagPhase) * 40;
-        tail.style.transform = `rotate(${wag}deg)`;
-        setRot(earL, Math.sin(wagPhase * 0.4) * 5);
-        headGrp.style.transform = `rotate(${Math.sin(wagPhase * 0.3) * 3}deg)`;
-        svg.style.transform = `translateY(${Math.sin(wagPhase * 0.4) * 1.5}px)`;
-        setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
-        tongue.setAttribute('opacity','0');
-        shadow.setAttribute('rx','24');
-        /* drift gently back toward last pos */
-        vx *= 0.85; vy *= 0.85;
-        px += vx; py += vy;
-
-      } else if (state === 'sniff') {
-        /* head bobs down like sniffing ground */
-        const sniff = Math.sin(sniffPhase * 2) * 12;
-        headGrp.style.transform = `rotate(${sniff}deg) translateY(${Math.abs(Math.sin(sniffPhase * 2)) * 4}px)`;
-        tail.style.transform = `rotate(${Math.sin(wagPhase * 1.5) * 20 + 10}deg)`;
-        setRot(earL, Math.sin(sniffPhase) * 8);
-        tongue.setAttribute('opacity','0');
-        svg.style.transform = '';
-        setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
-        shadow.setAttribute('rx','24');
-        vx *= 0.9; vy *= 0.9;
-        px += vx; py += vy;
-
-      } else if (state === 'spin') {
-        /* spin in a circle */
-        spinAngle += 8;
-        wrap.style.transform = `rotate(${spinAngle}deg) scaleX(1)`;
-        tail.style.transform = `rotate(${Math.sin(phase * 2) * 50}deg)`;
-        tongue.setAttribute('opacity','1');
-        const s = Math.sin(phase) * 30;
-        setRot(legFL, s); setRot(legBR, s);
-        setRot(legFR,-s); setRot(legBL,-s);
-        shadow.setAttribute('rx','18');
-        svg.style.transform = `translateY(${-Math.abs(Math.sin(phase * 2)) * 5}px)`;
-
-      } else if (state === 'run' || state === 'zoom') {
-        /* run toward target */
-        const dx = targetX - px;
-        const dy = targetY - py;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-
-        if (dist < 15) {
-          /* reached target — pick new state */
-          enterState(pickState());
-        } else {
-          const spd = Math.min(dist * 0.08 * zoomSpeed, state === 'zoom' ? 22 : 12);
-          vx = (dx / dist) * spd;
-          vy = (dy / dist) * spd;
-          px += vx; py += vy;
-
-          /* face direction */
-          const goRight = vx > 0;
-          if (goRight !== facingRight) {
-            facingRight = goRight;
-            if (state !== 'spin') wrap.style.transform = goRight ? 'scaleX(1)' : 'scaleX(-1)';
-          }
-
-          /* leg gait */
-          const s = Math.sin(phase) * 34;
-          setRot(legFL, s); setRot(legBR, s);
-          setRot(legFR,-s); setRot(legBL,-s);
-
-          /* body bounce */
-          const bounce = Math.abs(Math.sin(phase * 2)) * 7;
-          svg.style.transform = `translateY(${-bounce}px)`;
-          shadow.setAttribute('rx', 24 - bounce * 0.9);
-
-          /* tail streams */
-          tail.style.transform = `rotate(${-25 + Math.sin(phase) * 14}deg)`;
-          setRot(earL, -5 + Math.sin(phase) * 9);
-          headGrp.style.transform = '';
-
-          /* tongue out when zooming */
-          tongue.setAttribute('opacity', state === 'zoom' ? '1' : '0.7');
-          tongue.style.transform = `translateY(${Math.sin(phase * 2) * 2}px)`;
-        }
-      }
-
-      /* clamp to viewport */
-      px = Math.max(10, Math.min(window.innerWidth - 120, px));
-      py = Math.max(80, Math.min(window.innerHeight - 120, py));
-
-      wrap.style.left   = px + 'px';
-      wrap.style.top    = py + 'px';
-      wrap.style.bottom = 'auto';
+      tail.style.transform   = `rotate(${Math.sin(wagPhase) * 42}deg)`;
+      setRot(earL, Math.sin(wagPhase * 0.45) * 6);
+      headGrp.style.transform = `rotate(${Math.sin(wagPhase * 0.3) * 4}deg)`;
+      svg.style.transform    = `translateY(${Math.sin(wagPhase * 0.38) * 1.8}px)`;
+      setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
+      tongue.setAttribute('opacity','0');
+      shadow.setAttribute('rx','24');
     }
 
-    /* boot */
-    wrap.style.top    = py + 'px';
+    /* ── RUN TICK ── */
+    function runTick() {
+      runPhase += 0.22;
+      const s = Math.sin(runPhase) * 34;
+      setRot(legFL, s); setRot(legBR, s);
+      setRot(legFR,-s); setRot(legBL,-s);
+      const bounce = Math.abs(Math.sin(runPhase * 2)) * 7;
+      svg.style.transform = `translateY(${-bounce}px)`;
+      shadow.setAttribute('rx', 24 - bounce * 0.9);
+      tail.style.transform = `rotate(${-28 + Math.sin(runPhase) * 14}deg)`;
+      setRot(earL, -6 + Math.sin(runPhase) * 9);
+      headGrp.style.transform = '';
+      tongue.setAttribute('opacity','0.8');
+      tongue.style.transform = `translateY(${Math.sin(runPhase * 2) * 2}px)`;
+    }
+
+    /* ── MAIN LOOP ── */
+    function loop() {
+      raf = requestAnimationFrame(loop);
+      if (isRunning || isJumping) {
+        runTick();
+      } else {
+        wagTick();
+      }
+    }
+
+    /* ── SCROLL WATCHER ── */
+    const sectionIds = waypoints.map(w => w.sectionId);
+
+    function getActiveWP() {
+      /* find which waypoint section is most visible */
+      let best = 0;
+      waypoints.forEach((wp, i) => {
+        const el = document.getElementById(wp.sectionId);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        /* trigger when section top crosses 60% of viewport */
+        if (rect.top < window.innerHeight * 0.6) best = i;
+      });
+      return best;
+    }
+
+    window.addEventListener('scroll', () => {
+      const active = getActiveWP();
+      if (active !== currentWP) {
+        const goingDown = active > currentWP;
+        currentWP = active;
+        jumpTo(waypoints[active], goingDown);
+      }
+    }, { passive: true });
+
+    /* ── BOOT ── */
+    /* place at first waypoint on load */
+    wrap.style.top = '0px';
+    wrap.style.left = '0px';
     wrap.style.bottom = 'auto';
-    enterState('sit');
-    tick();
+
+    /* wait for layout then snap to hero position */
+    setTimeout(() => {
+      snapTo(waypoints[0]);
+      loop();
+    }, 200);
+
   })();
 
   /* ── FORM ── */
