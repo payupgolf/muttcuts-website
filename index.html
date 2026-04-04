@@ -135,6 +135,26 @@
   }
   .hero-visual img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
+
+  /* ── PAGE TABS ── */
+  function showPage(page) {
+    const mainContent = document.getElementById('main-content');
+    const aboutPage = document.getElementById('page-about');
+    const navAbout = document.getElementById('nav-about');
+
+    if (page === 'about') {
+      mainContent.style.display = 'none';
+      aboutPage.classList.add('active');
+      navAbout.style.color = 'var(--accent)';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      mainContent.style.display = 'block';
+      aboutPage.classList.remove('active');
+      navAbout.style.color = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
   /* ── TICKER ── */
   .ticker {
     border-top: 1px solid #1a1a1a;
@@ -268,6 +288,11 @@
   .footer-links a { color: #6b7580; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+  #main-content { display: block; }
   /* ── TOAST ── */
   .toast {
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(6rem);
@@ -314,12 +339,12 @@
     <span>Mutt Cuts<small>by Emily Devereaux</small></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#booking">Booking</a></li>
+    <li><a href="#" onclick="showPage('main'); return false;">Services</a></li>
+    <li><a href="#" onclick="showPage('main'); return false;">Gallery</a></li>
+    <li><a href="#" onclick="showPage('about'); return false;" id="nav-about">About</a></li>
+    <li><a href="#" onclick="showPage('main'); return false;">Booking</a></li>
   </ul>
-  <a class="nav-cta" href="#booking">Book Now</a>
+  <a class="nav-cta" href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),50); return false;">Book Now</a>
 </nav>
 
 <!-- HERO -->
@@ -340,6 +365,7 @@
   </div>
 </section>
 
+<div id="main-content">
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track" id="ticker-track"></div>
@@ -425,7 +451,10 @@
   </div>
 </section>
 
+</div><!-- end main-content -->
+
 <!-- ABOUT -->
+<div class="page" id="page-about">
 <section class="about" id="about">
   <div class="about-inner">
     <div class="about-photo reveal">
@@ -445,6 +474,8 @@
     </div>
   </div>
 </section>
+
+</div><!-- end page-about -->
 
 <!-- BOOKING -->
 <section class="booking" id="booking">
@@ -518,6 +549,26 @@
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
 <script>
+
+  /* ── PAGE TABS ── */
+  function showPage(page) {
+    const mainContent = document.getElementById('main-content');
+    const aboutPage = document.getElementById('page-about');
+    const navAbout = document.getElementById('nav-about');
+
+    if (page === 'about') {
+      mainContent.style.display = 'none';
+      aboutPage.classList.add('active');
+      navAbout.style.color = 'var(--accent)';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      mainContent.style.display = 'block';
+      aboutPage.classList.remove('active');
+      navAbout.style.color = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
   /* ── TICKER ── */
   const dogs = ['Biscuit','Mango','Duke','Princess','Thor','Bella','Coco','Peanut','Moose','Daisy','Gizmo','Luna','Bruno','Rosie','Archie','Pepper','Zeus','Lola','Bear','Stella','Beau','Nala','Scout','Waffles','Pretzel','Pickles','Nugget','Maple'];
   const track = document.getElementById('ticker-track');
