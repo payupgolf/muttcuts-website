@@ -241,6 +241,7 @@
       <span class="hero-eyebrow">✂️ Professional Dog Grooming</span>
       <h1>Your pup<br/>deserves <em>fresh</em><br/>cuts.</h1>
       <p class="hero-sub">Every dog gets the royal treatment — bath, trim, and a whole lot of love. Locally owned, tail-waggingly good.</p>
+      <span id="dog-anchor-0" style="position:absolute;display:block;width:0;height:0;"></span>
       <div class="hero-actions">
         <a class="btn-primary" onclick="showPage('main', 'booking')">Book an Appointment</a>
         <a class="btn-secondary" onclick="showPage('main', 'gallery')">See Our Work</a>
@@ -261,7 +262,8 @@
   <!-- SERVICES -->
   <section class="services" id="services">
     <p class="section-label reveal">What We Offer</p>
-    <h2 class="section-title reveal reveal-delay-1">Services</h2>
+    <span id="dog-anchor-1" style="position:absolute;display:block;width:0;height:0;margin-left:-80px;"></span>
+  <h2 class="section-title reveal reveal-delay-1">Services</h2>
     <div class="services-grid">
       <div class="service-card reveal">
         <span class="service-icon">🛁</span>
@@ -293,7 +295,8 @@
   <!-- BEFORE & AFTER -->
   <section class="beforeafter" id="gallery">
     <p class="section-label reveal">Glow Ups</p>
-    <h2 class="section-title reveal reveal-delay-1">Before & After</h2>
+    <span id="dog-anchor-2" style="position:absolute;display:block;width:0;height:0;"></span>
+  <h2 class="section-title reveal reveal-delay-1">Before & After</h2>
     <p style="color:var(--muted); margin-bottom:2.5rem; font-size:0.9rem;" class="reveal reveal-delay-2">Drag the slider to reveal the transformation ✦</p>
     <div class="ba-grid">
       <div class="ba-card reveal">
@@ -333,7 +336,8 @@
   <section class="booking" id="booking">
     <div class="booking-info reveal">
       <p class="section-label">Ready to Book?</p>
-      <h2>Let's get your pup in.</h2>
+      <span id="dog-anchor-3" style="position:absolute;display:block;width:0;height:0;margin-left:-80px;"></span>
+    <h2>Let's get your pup in.</h2>
       <p>Fill out the form and we'll confirm your appointment within 24 hours. Have questions? Give us a call.</p>
       <div class="hours">
         <div class="hours-row"><span class="day">Monday – Thursday</span><span class="time">Closed</span></div>
@@ -606,14 +610,11 @@
     const setRot = (el, d) => { if(el) el.style.transform = `rotate(${d}deg)`; };
 
     /* ── WAYPOINTS ── */
-    /* Each waypoint: { sectionId, side, label }
-       side: 'right' = dog sits to the right of section heading
-             'left'  = dog sits to the left                      */
     const waypoints = [
-      { sectionId: 'home',     xRatio: 0.82, yOffset: 0.42  },  /* end of hero headline */
-      { sectionId: 'services', xRatio: 0.08, yOffset: 0.18  },  /* left of Services heading */
-      { sectionId: 'gallery',  xRatio: 0.88, yOffset: 0.15  },  /* right of Before & After */
-      { sectionId: 'booking',  xRatio: 0.06, yOffset: 0.22  },  /* left of Let's get your pup in */
+      { anchorId: 'dog-anchor-0', offsetX:  60, offsetY: 20  },
+      { anchorId: 'dog-anchor-1', offsetX: -90, offsetY: -20 },
+      { anchorId: 'dog-anchor-2', offsetX:  60, offsetY: -20 },
+      { anchorId: 'dog-anchor-3', offsetX: -90, offsetY: -20 },
     ];
 
     let currentWP = 0;
@@ -623,13 +624,13 @@
     let isJumping = false;
     let raf       = null;
 
-    /* compute absolute position for a waypoint */
+    /* compute fixed screen position for a waypoint anchor */
     function wpPos(wp) {
-      const el = document.getElementById(wp.sectionId);
-      if (!el) return { x: 80, y: window.innerHeight / 2 };
+      const el = document.getElementById(wp.anchorId);
+      if (!el) return { x: 80, y: window.innerHeight * 0.4 };
       const rect = el.getBoundingClientRect();
-      const x = window.innerWidth * wp.xRatio;
-      const y = rect.top + rect.height * wp.yOffset - 60;
+      const x = Math.max(10, Math.min(window.innerWidth - 120, rect.left + wp.offsetX));
+      const y = Math.max(80, Math.min(window.innerHeight - 130, rect.top + wp.offsetY));
       return { x, y };
     }
 
@@ -705,14 +706,12 @@
     const sectionIds = waypoints.map(w => w.sectionId);
 
     function getActiveWP() {
-      /* find which waypoint section is most visible */
       let best = 0;
       waypoints.forEach((wp, i) => {
-        const el = document.getElementById(wp.sectionId);
+        const el = document.getElementById(wp.anchorId);
         if (!el) return;
         const rect = el.getBoundingClientRect();
-        /* trigger when section top crosses 60% of viewport */
-        if (rect.top < window.innerHeight * 0.6) best = i;
+        if (rect.top < window.innerHeight * 0.65) best = i;
       });
       return best;
     }
