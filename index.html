@@ -167,6 +167,25 @@
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+
+  /* ── PIXEL DOG ── */
+  #pixel-dog {
+    position: fixed;
+    bottom: 24px;
+    left: 40px;
+    width: 64px;
+    height: 64px;
+    z-index: 9999;
+    pointer-events: none;
+    image-rendering: pixelated;
+    transition: transform 0.1s;
+  }
+  #pixel-dog.flip { transform: scaleX(-1); }
+  #pixel-dog canvas {
+    width: 64px;
+    height: 64px;
+    image-rendering: pixelated;
+  }
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
@@ -409,6 +428,9 @@
 
 </div><!-- end page-about -->
 
+
+<!-- PIXEL DOG -->
+<div id="pixel-dog"><canvas id="dog-canvas" width="16" height="16"></canvas></div>
 <!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
@@ -473,6 +495,251 @@
     window.addEventListener('mouseup', () => dragging = false);
     window.addEventListener('touchend', () => dragging = false);
   });
+
+
+  /* ── PIXEL DOG ── */
+  (function() {
+    const canvas = document.getElementById('dog-canvas');
+    const ctx = canvas.getContext('2d');
+    const el = document.getElementById('pixel-dog');
+
+    // Color palette
+    const _ = null;        // transparent
+    const B = '#1a1410';   // black outline
+    const T = '#c8a97a';   // tan body
+    const W = '#f0e8d8';   // white belly
+    const N = '#2a1a0a';   // dark nose/eye
+    const P = '#e88080';   // pink tongue/ear
+
+    // Frames: sit-wag (4 frames), run (4 frames)
+    // Each frame is 16x16 pixels
+    const frames = {
+      sit: [
+        // frame 0 - tail up
+        [
+          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,B,T,T,B,_,_,
+          _,_,_,B,B,_,_,_,_,B,T,T,T,T,B,_,
+          _,_,B,T,T,B,_,_,B,T,T,N,T,T,T,B,
+          _,_,B,T,W,T,B,_,B,T,T,T,P,T,T,B,
+          _,_,_,B,T,T,B,_,_,B,T,T,T,T,B,_,
+          _,_,_,_,B,B,_,_,_,_,B,B,B,B,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
+        ],
+        // frame 1 - tail mid
+        [
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
+          _,_,_,B,B,_,_,_,_,_,B,T,T,B,_,_,
+          _,_,B,T,T,B,_,_,_,B,T,T,T,T,B,_,
+          _,_,B,T,W,T,B,_,B,T,T,N,T,T,T,B,
+          _,_,_,B,T,T,B,_,B,T,T,T,P,T,T,B,
+          _,_,_,_,B,B,_,_,_,B,T,T,T,T,B,_,
+          _,_,_,_,_,_,_,_,_,_,B,B,B,B,_,_,
+          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
+        ],
+        // frame 2 - tail down
+        [
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,B,B,_,_,_,_,B,B,B,_,_,_,_,
+          _,_,B,T,T,B,_,_,B,T,T,T,B,_,_,_,
+          _,_,B,T,W,T,B,B,T,T,N,T,T,B,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,P,T,B,_,_,
+          _,_,_,_,B,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,_,_,_,B,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
+        ],
+        // frame 3 - tail mid (same as 1)
+        [
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
+          _,_,_,B,B,_,_,_,_,_,B,T,T,B,_,_,
+          _,_,B,T,T,B,_,_,_,B,T,T,T,T,B,_,
+          _,_,B,T,W,T,B,_,B,T,T,N,T,T,T,B,
+          _,_,_,B,T,T,B,_,B,T,T,T,P,T,T,B,
+          _,_,_,_,B,B,_,_,_,B,T,T,T,T,B,_,
+          _,_,_,_,_,_,_,_,_,_,B,B,B,B,_,_,
+          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
+          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
+        ],
+      ],
+      run: [
+        // run frame 0
+        [
+          _,_,_,_,_,_,_,_,_,_,B,B,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,B,T,T,B,_,_,_,
+          _,_,_,B,B,_,_,_,B,T,T,T,T,B,_,_,
+          _,_,B,T,T,B,_,B,T,T,N,T,T,T,B,_,
+          _,_,B,T,W,T,B,T,T,T,T,P,T,B,_,_,
+          _,_,_,B,B,B,B,T,T,T,T,T,B,_,_,_,
+          _,_,_,_,_,_,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,B,B,B,B,B,B,B,_,_,_,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,B,_,_,_,_,_,
+          _,B,T,T,T,T,T,T,T,T,T,B,_,_,_,_,
+          _,B,T,W,W,W,W,W,W,T,T,B,_,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,B,_,_,_,_,_,
+          _,_,_,B,T,B,_,B,T,B,_,_,_,_,_,_,
+          _,_,B,T,B,_,_,_,B,T,B,_,_,_,_,_,
+          _,_,B,B,_,_,_,_,_,B,B,_,_,_,_,_,
+        ],
+        // run frame 1
+        [
+          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,B,T,T,B,_,_,
+          _,_,_,B,B,_,_,_,_,B,T,T,T,T,B,_,
+          _,_,B,T,T,B,_,_,B,T,T,N,T,T,T,B,
+          _,_,B,T,W,T,B,_,T,T,T,T,P,T,B,_,
+          _,_,_,B,B,B,B,B,T,T,T,T,T,B,_,_,
+          _,_,_,_,_,_,_,B,B,B,B,B,B,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,_,B,B,B,B,B,B,B,_,_,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,B,_,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,W,W,W,W,W,W,T,T,B,_,_,_,
+          _,_,_,B,T,T,T,T,T,T,T,B,_,_,_,_,
+          _,_,_,_,B,T,B,_,B,T,B,_,_,_,_,_,
+          _,_,_,B,T,B,_,_,_,B,T,B,_,_,_,_,
+          _,_,_,B,B,_,_,_,_,_,B,B,_,_,_,_,
+        ],
+        // run frame 2
+        [
+          _,_,_,_,_,_,_,_,B,B,B,_,_,_,_,_,
+          _,_,_,_,_,_,_,B,T,T,T,B,_,_,_,_,
+          _,_,_,B,B,_,B,T,T,T,T,T,B,_,_,_,
+          _,_,B,T,T,B,T,T,N,T,T,T,T,B,_,_,
+          _,_,B,T,W,T,T,T,T,P,T,T,B,_,_,_,
+          _,_,_,B,B,B,B,T,T,T,T,B,_,_,_,_,
+          _,_,_,_,_,_,B,B,B,B,B,_,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,B,B,B,B,B,B,B,B,_,_,_,_,_,_,
+          _,B,T,T,T,T,T,T,T,T,B,_,_,_,_,_,
+          B,T,T,T,T,T,T,T,T,T,T,B,_,_,_,_,
+          B,T,W,W,W,W,W,W,T,T,T,B,_,_,_,_,
+          _,B,T,T,T,T,T,T,T,T,B,_,_,_,_,_,
+          _,_,_,B,T,B,B,T,B,_,_,_,_,_,_,_,
+          _,_,B,T,B,_,B,T,B,_,_,_,_,_,_,_,
+          _,_,B,B,_,_,_,B,B,_,_,_,_,_,_,_,
+        ],
+        // run frame 3
+        [
+          _,_,_,_,_,_,_,_,_,B,B,B,_,_,_,_,
+          _,_,_,_,_,_,_,_,B,T,T,T,B,_,_,_,
+          _,_,_,B,B,_,_,B,T,T,T,T,T,B,_,_,
+          _,_,B,T,T,B,_,T,T,N,T,T,T,T,B,_,
+          _,_,B,T,W,T,B,T,T,T,P,T,T,B,_,_,
+          _,_,_,B,B,B,B,T,T,T,T,T,B,_,_,_,
+          _,_,_,_,_,_,B,B,B,B,B,B,_,_,_,_,
+          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
+          _,_,_,B,B,B,B,B,B,B,B,_,_,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,B,_,_,_,_,
+          _,B,T,T,T,T,T,T,T,T,T,T,B,_,_,_,
+          _,B,T,W,W,W,W,W,W,T,T,T,B,_,_,_,
+          _,_,B,T,T,T,T,T,T,T,T,B,_,_,_,_,
+          _,_,_,_,B,T,B,B,T,B,_,_,_,_,_,_,
+          _,_,_,B,T,B,_,B,T,B,_,_,_,_,_,_,
+          _,_,_,B,B,_,_,_,B,B,_,_,_,_,_,_,
+        ],
+      ]
+    };
+
+    function drawFrame(frameData) {
+      ctx.clearRect(0, 0, 16, 16);
+      for (let y = 0; y < 16; y++) {
+        for (let x = 0; x < 16; x++) {
+          const color = frameData[y * 16 + x];
+          if (color) {
+            ctx.fillStyle = color;
+            ctx.fillRect(x, y, 1, 1);
+          }
+        }
+      }
+    }
+
+    let mode = 'sit'; // 'sit' or 'run'
+    let frame = 0;
+    let animInterval = null;
+    let runTimeout = null;
+    let dogX = 40;
+    let targetX = 40;
+    let lastScrollY = window.scrollY;
+    let isMoving = false;
+    let moveTimeout = null;
+    let direction = 1; // 1 = right, -1 = left
+
+    function startAnim(newMode) {
+      if (animInterval) clearInterval(animInterval);
+      mode = newMode;
+      frame = 0;
+      const fps = newMode === 'run' ? 100 : 220;
+      animInterval = setInterval(() => {
+        frame = (frame + 1) % frames[mode].length;
+        drawFrame(frames[mode][frame]);
+      }, fps);
+    }
+
+    // Initial sit + wag
+    startAnim('sit');
+    drawFrame(frames.sit[0]);
+
+    // On scroll - run!
+    window.addEventListener('scroll', () => {
+      const scrollDelta = window.scrollY - lastScrollY;
+      lastScrollY = window.scrollY;
+
+      if (!isMoving) {
+        isMoving = true;
+        startAnim('run');
+      }
+
+      // Move dog horizontally based on scroll
+      direction = scrollDelta > 0 ? 1 : -1;
+      el.classList.toggle('flip', direction < 0);
+      targetX = Math.min(Math.max(dogX + scrollDelta * 0.4, 20), window.innerWidth - 80);
+      dogX = targetX;
+      el.style.left = dogX + 'px';
+
+      // Stop running after scroll ends
+      clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => {
+        isMoving = false;
+        startAnim('sit');
+        el.classList.remove('flip');
+      }, 600);
+    });
+
+    // Draw first frame
+    drawFrame(frames.sit[0]);
+  })();
 
   /* ── FORM ── */
   function submitForm() {
