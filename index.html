@@ -270,10 +270,6 @@
   .footer-links a:hover { color: var(--accent); }
 
 
-  /* ── PAGES ── */
-  .page { display: none; }
-  .page.active { display: block; }
-  #main-content { display: block; }
   /* ── TOAST ── */
   .toast {
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(6rem);
@@ -309,6 +305,11 @@
     .ba-grid { grid-template-columns: 1fr; }
     footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
   }
+
+  /* ── TAB PAGES ── */
+  #page-main { display: block; }
+  #page-about { display: none; }
+  .nav-links a.active { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -320,12 +321,12 @@
     <span>Mutt Cuts<small>by Emily Devereaux</small></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('services').scrollIntoView({behavior:'smooth'}),50); return false;">Services</a></li>
-    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('gallery').scrollIntoView({behavior:'smooth'}),50); return false;">Gallery</a></li>
-    <li><a href="#" onclick="showPage('about'); return false;" id="nav-about">About</a></li>
-    <li><a href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),50); return false;">Booking</a></li>
+    <li><a href="#services" onclick="showMain('services')">Services</a></li>
+    <li><a href="#gallery" onclick="showMain('gallery')">Gallery</a></li>
+    <li><a href="#" id="nav-about" onclick="showAbout(); return false;">About</a></li>
+    <li><a href="#booking" onclick="showMain('booking')">Booking</a></li>
   </ul>
-  <a class="nav-cta" href="#" onclick="showPage('main'); setTimeout(()=>document.getElementById('booking').scrollIntoView({behavior:'smooth'}),50); return false;">Book Now</a>
+  <a class="nav-cta" href="#booking" onclick="showMain('booking')">Book Now</a>
 </nav>
 
 <!-- HERO -->
@@ -346,7 +347,7 @@
   </div>
 </section>
 
-<div id="main-content">
+<div id="page-main">
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track" id="ticker-track"></div>
@@ -432,8 +433,8 @@
   </div>
 </section>
 
+<div id="page-about">
 <!-- ABOUT -->
-<div class="page" id="page-about">
 <section class="about" id="about">
   <div class="about-inner">
     <div class="about-photo reveal">
@@ -454,7 +455,6 @@
   </div>
 </section>
 
-</div><!-- end page-about -->
 
 <!-- BOOKING -->
 <section class="booking" id="booking">
@@ -524,31 +524,13 @@
     <a href="#booking">Book</a>
   </div>
 </footer>
-</div><!-- end main-content -->
+</div><!-- end page-main -->
 
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
 <script>
 
   /* ── PAGE TABS ── */
-  /* ── PAGE TABS ── */
-  function showPage(page) {
-    const mainContent = document.getElementById('main-content');
-    const aboutPage = document.getElementById('page-about');
-    const navAbout = document.getElementById('nav-about');
-    if (page === 'about') {
-      mainContent.style.display = 'none';
-      aboutPage.classList.add('active');
-      navAbout.style.color = 'var(--accent)';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      mainContent.style.display = 'block';
-      aboutPage.classList.remove('active');
-      navAbout.style.color = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }
-
   /* ── TICKER ── */
   const dogs = ['Biscuit','Mango','Duke','Princess','Thor','Bella','Coco','Peanut','Moose','Daisy','Gizmo','Luna','Bruno','Rosie','Archie','Pepper','Zeus','Lola','Bear','Stella','Beau','Nala','Scout','Waffles','Pretzel','Pickles','Nugget','Maple'];
   const track = document.getElementById('ticker-track');
@@ -593,6 +575,26 @@
     const toast = document.getElementById('toast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  /* ── TAB SWITCHER ── */
+  function showAbout() {
+    document.getElementById('page-main').style.display = 'none';
+    document.getElementById('page-about').style.display = 'block';
+    document.getElementById('nav-about').style.color = 'var(--accent)';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showMain(section) {
+    document.getElementById('page-main').style.display = 'block';
+    document.getElementById('page-about').style.display = 'none';
+    document.getElementById('nav-about').style.color = '';
+    if (section) {
+      setTimeout(() => {
+        const el = document.getElementById(section);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    }
   }
 </script>
 </body>
