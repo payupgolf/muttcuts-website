@@ -168,24 +168,19 @@
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 
-  /* ── PIXEL DOG ── */
-  #pixel-dog {
+  /* ── SVG DOG ── */
+  #svg-dog {
     position: fixed;
-    bottom: 24px;
+    bottom: 20px;
     left: 40px;
-    width: 64px;
-    height: 64px;
+    width: 90px;
+    height: 90px;
     z-index: 9999;
     pointer-events: none;
-    image-rendering: pixelated;
-    transition: transform 0.1s;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    transition: left 0.15s ease-out;
   }
-  #pixel-dog.flip { transform: scaleX(-1); }
-  #pixel-dog canvas {
-    width: 64px;
-    height: 64px;
-    image-rendering: pixelated;
-  }
+  #svg-dog.flip { transform: scaleX(-1); }
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
@@ -429,8 +424,70 @@
 </div><!-- end page-about -->
 
 
-<!-- PIXEL DOG -->
-<div id="pixel-dog"><canvas id="dog-canvas" width="16" height="16"></canvas></div>
+<!-- SVG DOG -->
+<div id="svg-dog">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Shadow -->
+    <ellipse cx="50" cy="96" rx="28" ry="5" fill="rgba(0,0,0,0.15)"/>
+
+    <!-- Tail -->
+    <g id="dog-tail">
+      <ellipse cx="82" cy="58" rx="10" ry="6" rx="6" ry="10" fill="#555" transform="rotate(-30 82 58)"/>
+      <ellipse cx="88" cy="44" rx="5" ry="8" fill="#666" transform="rotate(-10 88 44)"/>
+    </g>
+
+    <!-- Body -->
+    <ellipse cx="50" cy="72" rx="28" ry="20" fill="#555"/>
+    <!-- White chest -->
+    <ellipse cx="50" cy="76" rx="16" ry="13" fill="#f0f0f0"/>
+
+    <!-- Back legs -->
+    <rect x="27" y="83" width="11" height="16" rx="5" fill="#555"/>
+    <rect x="62" y="83" width="11" height="16" rx="5" fill="#555"/>
+
+    <!-- Front legs -->
+    <rect x="35" y="85" width="11" height="15" rx="5" fill="#666" id="leg-left"/>
+    <rect x="54" y="85" width="11" height="15" rx="5" fill="#666" id="leg-right"/>
+
+    <!-- Neck -->
+    <ellipse cx="50" cy="58" rx="14" ry="12" fill="#555"/>
+
+    <!-- Head -->
+    <ellipse cx="50" cy="44" rx="22" ry="20" fill="#555"/>
+
+    <!-- Left ear (floppy) -->
+    <g id="ear-left">
+      <ellipse cx="31" cy="36" rx="9" ry="13" fill="#444" transform="rotate(15 31 36)"/>
+    </g>
+    <!-- Right ear -->
+    <ellipse cx="69" cy="36" rx="9" ry="13" fill="#444" transform="rotate(-15 69 36)"/>
+
+    <!-- White face patch -->
+    <ellipse cx="50" cy="48" rx="14" ry="11" fill="#e8e8e8"/>
+
+    <!-- Eyes -->
+    <circle cx="43" cy="42" r="4" fill="#1a1a1a"/>
+    <circle cx="57" cy="42" r="4" fill="#1a1a1a"/>
+    <!-- Eye shine -->
+    <circle cx="44.5" cy="40.5" r="1.2" fill="white"/>
+    <circle cx="58.5" cy="40.5" r="1.2" fill="white"/>
+
+    <!-- Nose -->
+    <ellipse cx="50" cy="50" rx="5" ry="3.5" fill="#1a1a1a"/>
+    <!-- Nose shine -->
+    <circle cx="48" cy="49" r="1" fill="rgba(255,255,255,0.4)"/>
+
+    <!-- Mouth -->
+    <path d="M46 54 Q50 58 54 54" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+    <!-- White stripe on head -->
+    <ellipse cx="50" cy="34" rx="5" ry="8" fill="#e8e8e8" opacity="0.7"/>
+
+    <!-- Tongue (hidden by default, shown on run) -->
+    <ellipse cx="50" cy="58" rx="4" ry="5" fill="#e07070" id="dog-tongue" opacity="0"/>
+  </svg>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
@@ -497,248 +554,86 @@
   });
 
 
-  /* ── PIXEL DOG ── */
+
+
+  /* ── SVG DOG ── */
   (function() {
-    const canvas = document.getElementById('dog-canvas');
-    const ctx = canvas.getContext('2d');
-    const el = document.getElementById('pixel-dog');
+    const dog = document.getElementById('svg-dog');
+    const tail = document.getElementById('dog-tail');
+    const tongue = document.getElementById('dog-tongue');
+    const earLeft = document.getElementById('ear-left');
+    const legLeft = document.getElementById('leg-left');
+    const legRight = document.getElementById('leg-right');
 
-    // Color palette
-    const _ = null;        // transparent
-    const B = '#1a1410';   // black outline
-    const T = '#c8a97a';   // tan body
-    const W = '#f0e8d8';   // white belly
-    const N = '#2a1a0a';   // dark nose/eye
-    const P = '#e88080';   // pink tongue/ear
+    let dogX = 40;
+    let isRunning = false;
+    let stopTimer = null;
+    let animFrame = null;
+    let tailAngle = 0;
+    let tailDir = 1;
+    let runPhase = 0;
+    let lastScrollY = window.scrollY;
 
-    // Frames: sit-wag (4 frames), run (4 frames)
-    // Each frame is 16x16 pixels
-    const frames = {
-      sit: [
-        // frame 0 - tail up
-        [
-          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,B,T,T,B,_,_,
-          _,_,_,B,B,_,_,_,_,B,T,T,T,T,B,_,
-          _,_,B,T,T,B,_,_,B,T,T,N,T,T,T,B,
-          _,_,B,T,W,T,B,_,B,T,T,T,P,T,T,B,
-          _,_,_,B,T,T,B,_,_,B,T,T,T,T,B,_,
-          _,_,_,_,B,B,_,_,_,_,B,B,B,B,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
-        ],
-        // frame 1 - tail mid
-        [
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
-          _,_,_,B,B,_,_,_,_,_,B,T,T,B,_,_,
-          _,_,B,T,T,B,_,_,_,B,T,T,T,T,B,_,
-          _,_,B,T,W,T,B,_,B,T,T,N,T,T,T,B,
-          _,_,_,B,T,T,B,_,B,T,T,T,P,T,T,B,
-          _,_,_,_,B,B,_,_,_,B,T,T,T,T,B,_,
-          _,_,_,_,_,_,_,_,_,_,B,B,B,B,_,_,
-          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
-        ],
-        // frame 2 - tail down
-        [
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,B,B,_,_,_,_,B,B,B,_,_,_,_,
-          _,_,B,T,T,B,_,_,B,T,T,T,B,_,_,_,
-          _,_,B,T,W,T,B,B,T,T,N,T,T,B,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,P,T,B,_,_,
-          _,_,_,_,B,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,_,_,_,B,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
-        ],
-        // frame 3 - tail mid (same as 1)
-        [
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
-          _,_,_,B,B,_,_,_,_,_,B,T,T,B,_,_,
-          _,_,B,T,T,B,_,_,_,B,T,T,T,T,B,_,
-          _,_,B,T,W,T,B,_,B,T,T,N,T,T,T,B,
-          _,_,_,B,T,T,B,_,B,T,T,T,P,T,T,B,
-          _,_,_,_,B,B,_,_,_,B,T,T,T,T,B,_,
-          _,_,_,_,_,_,_,_,_,_,B,B,B,B,_,_,
-          _,_,_,_,B,B,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,B,T,W,W,W,W,W,W,W,T,T,B,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,T,B,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,B,T,B,_,_,_,_,B,T,B,_,_,_,
-          _,_,_,_,B,B,_,_,_,_,_,B,B,_,_,_,
-        ],
-      ],
-      run: [
-        // run frame 0
-        [
-          _,_,_,_,_,_,_,_,_,_,B,B,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,B,T,T,B,_,_,_,
-          _,_,_,B,B,_,_,_,B,T,T,T,T,B,_,_,
-          _,_,B,T,T,B,_,B,T,T,N,T,T,T,B,_,
-          _,_,B,T,W,T,B,T,T,T,T,P,T,B,_,_,
-          _,_,_,B,B,B,B,T,T,T,T,T,B,_,_,_,
-          _,_,_,_,_,_,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,B,B,B,B,B,B,B,_,_,_,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,B,_,_,_,_,_,
-          _,B,T,T,T,T,T,T,T,T,T,B,_,_,_,_,
-          _,B,T,W,W,W,W,W,W,T,T,B,_,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,B,_,_,_,_,_,
-          _,_,_,B,T,B,_,B,T,B,_,_,_,_,_,_,
-          _,_,B,T,B,_,_,_,B,T,B,_,_,_,_,_,
-          _,_,B,B,_,_,_,_,_,B,B,_,_,_,_,_,
-        ],
-        // run frame 1
-        [
-          _,_,_,_,_,_,_,_,_,_,_,B,B,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,B,T,T,B,_,_,
-          _,_,_,B,B,_,_,_,_,B,T,T,T,T,B,_,
-          _,_,B,T,T,B,_,_,B,T,T,N,T,T,T,B,
-          _,_,B,T,W,T,B,_,T,T,T,T,P,T,B,_,
-          _,_,_,B,B,B,B,B,T,T,T,T,T,B,_,_,
-          _,_,_,_,_,_,_,B,B,B,B,B,B,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,_,B,B,B,B,B,B,B,_,_,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,B,_,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,W,W,W,W,W,W,T,T,B,_,_,_,
-          _,_,_,B,T,T,T,T,T,T,T,B,_,_,_,_,
-          _,_,_,_,B,T,B,_,B,T,B,_,_,_,_,_,
-          _,_,_,B,T,B,_,_,_,B,T,B,_,_,_,_,
-          _,_,_,B,B,_,_,_,_,_,B,B,_,_,_,_,
-        ],
-        // run frame 2
-        [
-          _,_,_,_,_,_,_,_,B,B,B,_,_,_,_,_,
-          _,_,_,_,_,_,_,B,T,T,T,B,_,_,_,_,
-          _,_,_,B,B,_,B,T,T,T,T,T,B,_,_,_,
-          _,_,B,T,T,B,T,T,N,T,T,T,T,B,_,_,
-          _,_,B,T,W,T,T,T,T,P,T,T,B,_,_,_,
-          _,_,_,B,B,B,B,T,T,T,T,B,_,_,_,_,
-          _,_,_,_,_,_,B,B,B,B,B,_,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,B,B,B,B,B,B,B,B,_,_,_,_,_,_,
-          _,B,T,T,T,T,T,T,T,T,B,_,_,_,_,_,
-          B,T,T,T,T,T,T,T,T,T,T,B,_,_,_,_,
-          B,T,W,W,W,W,W,W,T,T,T,B,_,_,_,_,
-          _,B,T,T,T,T,T,T,T,T,B,_,_,_,_,_,
-          _,_,_,B,T,B,B,T,B,_,_,_,_,_,_,_,
-          _,_,B,T,B,_,B,T,B,_,_,_,_,_,_,_,
-          _,_,B,B,_,_,_,B,B,_,_,_,_,_,_,_,
-        ],
-        // run frame 3
-        [
-          _,_,_,_,_,_,_,_,_,B,B,B,_,_,_,_,
-          _,_,_,_,_,_,_,_,B,T,T,T,B,_,_,_,
-          _,_,_,B,B,_,_,B,T,T,T,T,T,B,_,_,
-          _,_,B,T,T,B,_,T,T,N,T,T,T,T,B,_,
-          _,_,B,T,W,T,B,T,T,T,P,T,T,B,_,_,
-          _,_,_,B,B,B,B,T,T,T,T,T,B,_,_,_,
-          _,_,_,_,_,_,B,B,B,B,B,B,_,_,_,_,
-          _,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,
-          _,_,_,B,B,B,B,B,B,B,B,_,_,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,B,_,_,_,_,
-          _,B,T,T,T,T,T,T,T,T,T,T,B,_,_,_,
-          _,B,T,W,W,W,W,W,W,T,T,T,B,_,_,_,
-          _,_,B,T,T,T,T,T,T,T,T,B,_,_,_,_,
-          _,_,_,_,B,T,B,B,T,B,_,_,_,_,_,_,
-          _,_,_,B,T,B,_,B,T,B,_,_,_,_,_,_,
-          _,_,_,B,B,_,_,_,B,B,_,_,_,_,_,_,
-        ],
-      ]
-    };
+    // WAG animation
+    function wagTail() {
+      tailAngle += tailDir * 4;
+      if (tailAngle > 28 || tailAngle < -28) tailDir *= -1;
+      tail.setAttribute('transform', `rotate(${tailAngle}, 75, 65)`);
+      earLeft.setAttribute('transform', `rotate(${15 + Math.sin(tailAngle * 0.1) * 3} 31 36)`);
+      if (!isRunning) animFrame = requestAnimationFrame(wagTail);
+    }
 
-    function drawFrame(frameData) {
-      ctx.clearRect(0, 0, 16, 16);
-      for (let y = 0; y < 16; y++) {
-        for (let x = 0; x < 16; x++) {
-          const color = frameData[y * 16 + x];
-          if (color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(x, y, 1, 1);
-          }
-        }
+    // RUN animation
+    function runDog() {
+      runPhase += 0.25;
+      const legSwing = Math.sin(runPhase) * 10;
+      legLeft.setAttribute('transform', `rotate(${legSwing}, 40, 85)`);
+      legRight.setAttribute('transform', `rotate(${-legSwing}, 60, 85)`);
+      tail.setAttribute('transform', `rotate(${20 + Math.sin(runPhase) * 15}, 75, 65)`);
+      tongue.setAttribute('opacity', '0.9');
+      if (isRunning) animFrame = requestAnimationFrame(runDog);
+    }
+
+    function startWag() {
+      isRunning = false;
+      tongue.setAttribute('opacity', '0');
+      legLeft.setAttribute('transform', '');
+      legRight.setAttribute('transform', '');
+      cancelAnimationFrame(animFrame);
+      wagTail();
+    }
+
+    function startRun() {
+      if (!isRunning) {
+        isRunning = true;
+        cancelAnimationFrame(animFrame);
+        runDog();
       }
     }
 
-    let mode = 'sit'; // 'sit' or 'run'
-    let frame = 0;
-    let animInterval = null;
-    let runTimeout = null;
-    let dogX = 40;
-    let targetX = 40;
-    let lastScrollY = window.scrollY;
-    let isMoving = false;
-    let moveTimeout = null;
-    let direction = 1; // 1 = right, -1 = left
+    // Start with wag
+    startWag();
 
-    function startAnim(newMode) {
-      if (animInterval) clearInterval(animInterval);
-      mode = newMode;
-      frame = 0;
-      const fps = newMode === 'run' ? 100 : 220;
-      animInterval = setInterval(() => {
-        frame = (frame + 1) % frames[mode].length;
-        drawFrame(frames[mode][frame]);
-      }, fps);
-    }
-
-    // Initial sit + wag
-    startAnim('sit');
-    drawFrame(frames.sit[0]);
-
-    // On scroll - run!
+    // Scroll handler
     window.addEventListener('scroll', () => {
-      const scrollDelta = window.scrollY - lastScrollY;
+      const delta = window.scrollY - lastScrollY;
       lastScrollY = window.scrollY;
 
-      if (!isMoving) {
-        isMoving = true;
-        startAnim('run');
-      }
+      startRun();
 
-      // Move dog horizontally based on scroll
-      direction = scrollDelta > 0 ? 1 : -1;
-      el.classList.toggle('flip', direction < 0);
-      targetX = Math.min(Math.max(dogX + scrollDelta * 0.4, 20), window.innerWidth - 80);
-      dogX = targetX;
-      el.style.left = dogX + 'px';
+      // Move dog horizontally
+      const dir = delta > 0 ? 1 : -1;
+      dog.style.transform = dir < 0 ? 'scaleX(-1)' : 'scaleX(1)';
+      dogX = Math.min(Math.max(dogX + delta * 0.35, 10), window.innerWidth - 100);
+      dog.style.left = dogX + 'px';
 
       // Stop running after scroll ends
-      clearTimeout(moveTimeout);
-      moveTimeout = setTimeout(() => {
-        isMoving = false;
-        startAnim('sit');
-        el.classList.remove('flip');
-      }, 600);
+      clearTimeout(stopTimer);
+      stopTimer = setTimeout(() => {
+        dog.style.transform = 'scaleX(1)';
+        startWag();
+      }, 500);
     });
-
-    // Draw first frame
-    drawFrame(frames.sit[0]);
   })();
 
   /* ── FORM ── */
