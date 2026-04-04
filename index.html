@@ -168,18 +168,18 @@
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 
-  /* ── SVG DOG ── */
-  #svg-dog {
+  /* ── DOG ── */
+  #site-dog {
     position: fixed;
-    bottom: 18px;
+    bottom: 0px;
     left: 40px;
-    width: 88px;
-    height: 88px;
+    width: 100px;
+    height: 100px;
     z-index: 9999;
     pointer-events: none;
-    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-    will-change: transform, left, bottom;
+    will-change: left;
   }
+  #site-dog svg { overflow: visible; }
   /* ── RESPONSIVE ── */
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
@@ -424,84 +424,89 @@
 
 
 
-<!-- SVG DOG -->
-<div id="svg-dog">
-<svg id="dog-svg" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-  <g id="dog-root">
-    <!-- Shadow -->
-    <ellipse id="dog-shadow" cx="50" cy="107" rx="22" ry="4" fill="rgba(0,0,0,0.18)"/>
+<!-- DOG -->
+<div id="site-dog">
+<svg id="dog-svg" viewBox="0 0 100 100" width="100" height="100" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
 
-    <!-- Tail -->
-    <g id="dog-tail-grp" style="transform-origin:72px 68px">
-      <ellipse cx="78" cy="58" rx="7" ry="5" fill="#4a4a4a" transform="rotate(-35 78 58)"/>
-      <ellipse cx="84" cy="46" rx="5" ry="7" fill="#555" transform="rotate(-15 84 46)"/>
-    </g>
+  <!-- shadow -->
+  <ellipse id="d-shadow" cx="50" cy="98" rx="20" ry="4" fill="rgba(0,0,0,0.2)"/>
 
-    <!-- Back legs -->
-    <g id="dog-leg-bl" style="transform-origin:38px 85px">
-      <rect x="31" y="84" width="13" height="18" rx="6" fill="#4a4a4a"/>
-      <ellipse cx="37" cy="102" rx="7" ry="4" fill="#3a3a3a"/>
-    </g>
-    <g id="dog-leg-br" style="transform-origin:62px 85px">
-      <rect x="56" y="84" width="13" height="18" rx="6" fill="#4a4a4a"/>
-      <ellipse cx="62" cy="102" rx="7" ry="4" fill="#3a3a3a"/>
-    </g>
-
-    <!-- Body -->
-    <ellipse cx="50" cy="74" rx="26" ry="19" fill="#555"/>
-    <!-- Chest -->
-    <ellipse cx="50" cy="79" rx="15" ry="12" fill="#e8e8e8"/>
-
-    <!-- Front legs -->
-    <g id="dog-leg-fl" style="transform-origin:40px 85px">
-      <rect x="33" y="84" width="13" height="18" rx="6" fill="#5a5a5a"/>
-      <ellipse cx="39" cy="102" rx="7" ry="4" fill="#4a4a4a"/>
-    </g>
-    <g id="dog-leg-fr" style="transform-origin:60px 85px">
-      <rect x="54" y="84" width="13" height="18" rx="6" fill="#5a5a5a"/>
-      <ellipse cx="60" cy="102" rx="7" ry="4" fill="#4a4a4a"/>
-    </g>
-
-    <!-- Neck -->
-    <ellipse cx="50" cy="60" rx="13" ry="11" fill="#555"/>
-
-    <!-- Head -->
-    <ellipse cx="50" cy="44" rx="21" ry="19" fill="#555"/>
-
-    <!-- Ears -->
-    <g id="dog-ear-l" style="transform-origin:30px 38px">
-      <ellipse cx="30" cy="34" rx="9" ry="13" fill="#444" transform="rotate(12 30 34)"/>
-    </g>
-    <ellipse cx="70" cy="34" rx="9" ry="13" fill="#444" transform="rotate(-12 70 34)"/>
-
-    <!-- Face patch -->
-    <ellipse cx="50" cy="48" rx="13" ry="10" fill="#e0e0e0"/>
-
-    <!-- Head stripe -->
-    <ellipse cx="50" cy="33" rx="5" ry="8" fill="#e0e0e0" opacity="0.6"/>
-
-    <!-- Eyes -->
-    <circle cx="43" cy="42" r="4.5" fill="#1a1a1a"/>
-    <circle cx="57" cy="42" r="4.5" fill="#1a1a1a"/>
-    <circle cx="44.5" cy="40.5" r="1.4" fill="white"/>
-    <circle cx="58.5" cy="40.5" r="1.4" fill="white"/>
-
-    <!-- Nose -->
-    <ellipse cx="50" cy="51" rx="5" ry="3.5" fill="#1a1a1a"/>
-    <circle cx="48.5" cy="50" r="1" fill="rgba(255,255,255,0.35)"/>
-
-    <!-- Mouth -->
-    <path d="M46 55 Q50 59 54 55" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-
-    <!-- Tongue -->
-    <g id="dog-tongue-grp" opacity="0">
-      <ellipse cx="50" cy="60" rx="4.5" ry="5.5" fill="#e07080"/>
-      <ellipse cx="50" cy="62" rx="4.5" ry="3" fill="#d06070"/>
-    </g>
+  <!-- tail group - pivots from base -->
+  <g id="d-tail" style="transform-origin:68px 62px">
+    <ellipse cx="74" cy="52" rx="6" ry="10" fill="#3d3d3d" transform="rotate(20 74 52)"/>
+    <ellipse cx="80" cy="42" rx="4.5" ry="7" fill="#4a4a4a" transform="rotate(10 80 42)"/>
   </g>
+
+  <!-- back left leg -->
+  <g id="d-leg-bl" style="transform-origin:36px 78px">
+    <rect x="30" y="78" width="12" height="20" rx="6" fill="#3a3a3a"/>
+    <ellipse cx="36" cy="98" rx="8" ry="3.5" fill="#2e2e2e"/>
+  </g>
+
+  <!-- back right leg -->
+  <g id="d-leg-br" style="transform-origin:60px 78px">
+    <rect x="54" y="78" width="12" height="20" rx="6" fill="#3a3a3a"/>
+    <ellipse cx="60" cy="98" rx="8" ry="3.5" fill="#2e2e2e"/>
+  </g>
+
+  <!-- body -->
+  <ellipse cx="50" cy="70" rx="25" ry="18" fill="#4a4a4a"/>
+  <!-- belly patch -->
+  <ellipse cx="50" cy="74" rx="14" ry="11" fill="#d8d8d8"/>
+
+  <!-- front left leg -->
+  <g id="d-leg-fl" style="transform-origin:38px 78px">
+    <rect x="32" y="78" width="12" height="20" rx="6" fill="#525252"/>
+    <ellipse cx="38" cy="98" rx="8" ry="3.5" fill="#3e3e3e"/>
+  </g>
+
+  <!-- front right leg -->
+  <g id="d-leg-fr" style="transform-origin:62px 78px">
+    <rect x="56" y="78" width="12" height="20" rx="6" fill="#525252"/>
+    <ellipse cx="62" cy="98" rx="8" ry="3.5" fill="#3e3e3e"/>
+  </g>
+
+  <!-- neck -->
+  <ellipse cx="50" cy="57" rx="13" ry="10" fill="#4a4a4a"/>
+
+  <!-- head -->
+  <ellipse cx="50" cy="40" rx="20" ry="19" fill="#4a4a4a"/>
+
+  <!-- left ear - floppy -->
+  <g id="d-ear-l" style="transform-origin:31px 30px">
+    <ellipse cx="31" cy="32" rx="9" ry="14" fill="#383838" transform="rotate(8 31 32)"/>
+  </g>
+  <!-- right ear -->
+  <ellipse cx="69" cy="32" rx="9" ry="14" fill="#383838" transform="rotate(-8 69 32)"/>
+
+  <!-- face patch -->
+  <ellipse cx="50" cy="44" rx="13" ry="11" fill="#d0d0d0"/>
+
+  <!-- head stripe -->
+  <ellipse cx="50" cy="28" rx="5" ry="9" fill="#d8d8d8" opacity="0.55"/>
+
+  <!-- eyes -->
+  <circle cx="43" cy="38" r="4.5" fill="#111"/>
+  <circle cx="57" cy="38" r="4.5" fill="#111"/>
+  <circle cx="44.5" cy="36.8" r="1.5" fill="white"/>
+  <circle cx="58.5" cy="36.8" r="1.5" fill="white"/>
+
+  <!-- nose -->
+  <ellipse cx="50" cy="47" rx="5" ry="3.5" fill="#111"/>
+  <ellipse cx="48.5" cy="46" rx="1.2" ry="0.8" fill="rgba(255,255,255,0.35)"/>
+
+  <!-- mouth -->
+  <path d="M46 51 Q50 56 54 51" stroke="#222" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- tongue (hidden at rest) -->
+  <g id="d-tongue" opacity="0">
+    <ellipse cx="50" cy="56" rx="4" ry="5" fill="#d96878"/>
+    <ellipse cx="50" cy="58.5" rx="4" ry="3" fill="#c05060"/>
+    <line x1="50" y1="53" x2="50" y2="61" stroke="#b04050" stroke-width="0.8"/>
+  </g>
+
 </svg>
 </div>
-
 <!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
@@ -571,145 +576,155 @@
 
 
 
-  /* ── SVG DOG ── */
+
+  /* ── DOG ENGINE ── */
   (function() {
-    const dogEl    = document.getElementById('svg-dog');
-    const root     = document.getElementById('dog-root');
-    const tail     = document.getElementById('dog-tail-grp');
-    const tongue   = document.getElementById('dog-tongue-grp');
-    const earL     = document.getElementById('dog-ear-l');
-    const legFL    = document.getElementById('dog-leg-fl');
-    const legFR    = document.getElementById('dog-leg-fr');
-    const legBL    = document.getElementById('dog-leg-bl');
-    const legBR    = document.getElementById('dog-leg-br');
-    const shadow   = document.getElementById('dog-shadow');
+    const wrap   = document.getElementById('site-dog');
+    const svg    = document.getElementById('dog-svg');
+    const shadow = document.getElementById('d-shadow');
+    const tail   = document.getElementById('d-tail');
+    const tongue = document.getElementById('d-tongue');
+    const earL   = document.getElementById('d-ear-l');
+    const legFL  = document.getElementById('d-leg-fl');
+    const legFR  = document.getElementById('d-leg-fr');
+    const legBL  = document.getElementById('d-leg-bl');
+    const legBR  = document.getElementById('d-leg-br');
 
-    let dogX       = 40;
-    let dogBottom  = 18;
-    let isRunning  = false;
-    let phase      = 0;
-    let tailPhase  = 0;
-    let stopTimer  = null;
-    let raf        = null;
-    let lastScroll = window.scrollY;
+    /* state */
+    let posX        = 40;
+    let velX        = 0;
+    let isRunning   = false;
     let facingRight = true;
+    let phase       = 0;
+    let wagPhase    = 0;
+    let bodyBob     = 0;
+    let stopTimer   = null;
+    let raf         = null;
+    let lastScroll  = window.scrollY;
 
-    /* ── WAG LOOP ── */
-    function wagLoop() {
-      tailPhase += 0.08;
-      const wag = Math.sin(tailPhase) * 32;
-      tail.style.transform = `rotate(${wag}deg)`;
-      earL.style.transform = `rotate(${Math.sin(tailPhase * 0.5) * 6}deg)`;
-      // Gentle body bob while sitting
-      const bob = Math.sin(tailPhase * 0.4) * 1.2;
-      root.style.transform = `translateY(${bob}px)`;
-      // Reset legs to standing
-      legFL.style.transform = 'rotate(0deg)';
-      legFR.style.transform = 'rotate(0deg)';
-      legBL.style.transform = 'rotate(0deg)';
-      legBR.style.transform = 'rotate(0deg)';
+    /* helpers */
+    function setRot(el, deg) { el.style.transform = `rotate(${deg}deg)`; }
+    function setTranslate(el, x, y) { el.style.transform = `translate(${x}px,${y}px)`; }
+
+    /* SIT & WAG */
+    function wagTick() {
+      wagPhase += 0.07;
+      const wag = Math.sin(wagPhase) * 35;
+      setRot(tail, wag);
+      setRot(earL, Math.sin(wagPhase * 0.5) * 5);
+      /* tiny sit bob */
+      const bob = Math.sin(wagPhase * 0.4) * 0.8;
+      svg.style.transform = `translateY(${bob}px)`;
+      /* legs at rest */
+      setRot(legFL, 0); setRot(legFR, 0);
+      setRot(legBL, 0); setRot(legBR, 0);
       tongue.setAttribute('opacity', '0');
-      if (!isRunning) raf = requestAnimationFrame(wagLoop);
+      shadow.setAttribute('rx', '20');
+      if (!isRunning) raf = requestAnimationFrame(wagTick);
     }
 
-    /* ── RUN LOOP ── */
-    function runLoop() {
-      phase += 0.22;
+    /* RUN */
+    function runTick() {
+      phase += 0.18;
 
-      // Leg cycling — opposite pairs move together
-      const frontSwing = Math.sin(phase) * 30;
-      const backSwing  = Math.sin(phase + Math.PI) * 28;
-      legFL.style.transform = `rotate(${frontSwing}deg)`;
-      legFR.style.transform = `rotate(${-frontSwing}deg)`;
-      legBL.style.transform = `rotate(${backSwing}deg)`;
-      legBR.style.transform = `rotate(${-backSwing}deg)`;
+      /* leg gait — diagonal pairs */
+      const s = Math.sin(phase) * 32;
+      setRot(legFL, s);
+      setRot(legBR, s);
+      setRot(legFR, -s);
+      setRot(legBL, -s);
 
-      // Body bounce up and down
-      const bounce = Math.abs(Math.sin(phase * 2)) * 5;
-      dogBottom = 18 + bounce;
-      dogEl.style.bottom = dogBottom + 'px';
-      root.style.transform = `translateY(0px)`;
+      /* body bounce */
+      bodyBob = Math.abs(Math.sin(phase * 2)) * 6;
+      svg.style.transform = `translateY(${-bodyBob}px)`;
 
-      // Tail streams back while running
-      tail.style.transform = `rotate(${-20 + Math.sin(phase) * 10}deg)`;
+      /* shadow shrinks on upswing */
+      shadow.setAttribute('rx', 20 - bodyBob * 0.8);
 
-      // Ear flap
-      earL.style.transform = `rotate(${Math.sin(phase) * 8}deg)`;
+      /* tail streams back */
+      setRot(tail, -25 + Math.sin(phase) * 12);
 
-      // Tongue out while running
+      /* ears flap */
+      setRot(earL, -8 + Math.sin(phase) * 6);
+
+      /* tongue flaps */
       tongue.setAttribute('opacity', '1');
+      tongue.style.transform = `translateY(${Math.sin(phase * 2) * 1.5}px)`;
 
-      // Shadow shrinks/grows with bounce
-      const shadowScale = 1 - bounce * 0.04;
-      shadow.setAttribute('rx', 22 * shadowScale);
+      /* drift position toward target */
+      posX += velX * 0.12;
+      posX = Math.max(10, Math.min(window.innerWidth - 110, posX));
+      wrap.style.left = posX + 'px';
 
-      if (isRunning) raf = requestAnimationFrame(runLoop);
+      if (isRunning) raf = requestAnimationFrame(runTick);
     }
 
     function startWag() {
       isRunning = false;
       cancelAnimationFrame(raf);
+      svg.style.transform = '';
       tongue.setAttribute('opacity', '0');
-      dogEl.style.bottom = '18px';
-      wagLoop();
+      setRot(legFL,0); setRot(legFR,0);
+      setRot(legBL,0); setRot(legBR,0);
+      wagTick();
     }
 
     function startRun() {
       if (!isRunning) {
         isRunning = true;
         cancelAnimationFrame(raf);
-        runLoop();
+        runTick();
       }
     }
 
-    // Boot up wagging
-    startWag();
+    /* trot back home */
+    function trotHome() {
+      if (posX <= 40) { posX = 40; wrap.style.left = '40px'; startWag(); return; }
+      velX = -180;
+      facingRight = false;
+      wrap.style.transform = 'scaleX(-1)';
+      startRun();
+      const check = setInterval(() => {
+        if (posX <= 40) {
+          clearInterval(check);
+          posX = 40;
+          wrap.style.left = '40px';
+          wrap.style.transform = 'scaleX(1)';
+          facingRight = true;
+          velX = 0;
+          startWag();
+        }
+      }, 50);
+    }
 
+    /* scroll handler */
     window.addEventListener('scroll', () => {
       const delta = window.scrollY - lastScroll;
       lastScroll  = window.scrollY;
+      if (Math.abs(delta) < 1) return;
+
+      /* velocity from scroll speed */
+      velX = delta * 3.5;
+      velX = Math.max(-320, Math.min(320, velX));
+
+      /* flip direction */
+      const goRight = delta > 0;
+      if (goRight !== facingRight) {
+        facingRight = goRight;
+        wrap.style.transform = goRight ? 'scaleX(1)' : 'scaleX(-1)';
+      }
 
       startRun();
 
-      // Direction flip
-      const goingRight = delta > 0;
-      if (goingRight !== facingRight) {
-        facingRight = goingRight;
-        dogEl.style.transform = facingRight ? 'scaleX(1)' : 'scaleX(-1)';
-      }
-
-      // Move dog — speed tied to scroll velocity
-      const speed = Math.min(Math.abs(delta) * 0.5, 12);
-      dogX += facingRight ? speed : -speed;
-      dogX  = Math.max(10, Math.min(window.innerWidth - 100, dogX));
-      dogEl.style.left = dogX + 'px';
-
-      // Stop after scroll ends
       clearTimeout(stopTimer);
       stopTimer = setTimeout(() => {
-        // Trot back to resting spot near left
-        facingRight = false;
-        dogEl.style.transform = 'scaleX(-1)';
-        isRunning = true;
-        cancelAnimationFrame(raf);
-        runLoop();
-
-        const returnInterval = setInterval(() => {
-          dogX -= 4;
-          dogEl.style.left = dogX + 'px';
-          if (dogX <= 40) {
-            dogX = 40;
-            dogEl.style.left = dogX + 'px';
-            clearInterval(returnInterval);
-            facingRight = true;
-            dogEl.style.transform = 'scaleX(1)';
-            startWag();
-          }
-        }, 16);
-
-        stopTimer = null;
-      }, 400);
+        velX = 0;
+        trotHome();
+      }, 350);
     });
+
+    /* boot */
+    startWag();
   })();
 
   /* ── FORM ── */
