@@ -551,24 +551,6 @@
 <script>
 
   /* ── PAGE TABS ── */
-  function showPage(page) {
-    const mainContent = document.getElementById('main-content');
-    const aboutPage = document.getElementById('page-about');
-    const navAbout = document.getElementById('nav-about');
-
-    if (page === 'about') {
-      mainContent.style.display = 'none';
-      aboutPage.classList.add('active');
-      navAbout.style.color = 'var(--accent)';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      mainContent.style.display = 'block';
-      aboutPage.classList.remove('active');
-      navAbout.style.color = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }
-
   /* ── TICKER ── */
   const dogs = ['Biscuit','Mango','Duke','Princess','Thor','Bella','Coco','Peanut','Moose','Daisy','Gizmo','Luna','Bruno','Rosie','Archie','Pepper','Zeus','Lola','Bear','Stella','Beau','Nala','Scout','Waffles','Pretzel','Pickles','Nugget','Maple'];
   const track = document.getElementById('ticker-track');
