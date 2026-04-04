@@ -167,32 +167,6 @@
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-
-  /* ── DOG ── */
-  #site-dog {
-    position: fixed;
-    bottom: 20px;
-    left: 40px;
-    width: 110px;
-    height: 110px;
-    z-index: 9999;
-    pointer-events: none;
-    will-change: left, bottom, transform;
-    transition: none;
-  }
-  #site-dog svg { overflow: visible; }
-
-  /* ── DOG ── */
-  #site-dog {
-    position: fixed;
-    width: 110px;
-    height: 110px;
-    z-index: 9999;
-    pointer-events: none;
-    will-change: left, top, transform;
-    transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1), top 0.6s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  #site-dog svg { overflow: visible; }
   #site-dog.jump {
     transition: left 0.5s cubic-bezier(0.34,1.56,0.64,1), top 0.45s cubic-bezier(0.22,1.8,0.36,1);
   }
@@ -241,7 +215,6 @@
       <span class="hero-eyebrow">✂️ Professional Dog Grooming</span>
       <h1>Your pup<br/>deserves <em>fresh</em><br/>cuts.</h1>
       <p class="hero-sub">Every dog gets the royal treatment — bath, trim, and a whole lot of love. Locally owned, tail-waggingly good.</p>
-      <span id="dog-anchor-0" style="position:absolute;display:block;width:0;height:0;"></span>
       <div class="hero-actions">
         <a class="btn-primary" onclick="showPage('main', 'booking')">Book an Appointment</a>
         <a class="btn-secondary" onclick="showPage('main', 'gallery')">See Our Work</a>
@@ -262,7 +235,6 @@
   <!-- SERVICES -->
   <section class="services" id="services">
     <p class="section-label reveal">What We Offer</p>
-    <span id="dog-anchor-1" style="position:absolute;display:block;width:0;height:0;margin-left:-80px;"></span>
   <h2 class="section-title reveal reveal-delay-1">Services</h2>
     <div class="services-grid">
       <div class="service-card reveal">
@@ -295,7 +267,6 @@
   <!-- BEFORE & AFTER -->
   <section class="beforeafter" id="gallery">
     <p class="section-label reveal">Glow Ups</p>
-    <span id="dog-anchor-2" style="position:absolute;display:block;width:0;height:0;"></span>
   <h2 class="section-title reveal reveal-delay-1">Before & After</h2>
     <p style="color:var(--muted); margin-bottom:2.5rem; font-size:0.9rem;" class="reveal reveal-delay-2">Drag the slider to reveal the transformation ✦</p>
     <div class="ba-grid">
@@ -336,7 +307,6 @@
   <section class="booking" id="booking">
     <div class="booking-info reveal">
       <p class="section-label">Ready to Book?</p>
-      <span id="dog-anchor-3" style="position:absolute;display:block;width:0;height:0;margin-left:-80px;"></span>
     <h2>Let's get your pup in.</h2>
       <p>Fill out the form and we'll confirm your appointment within 24 hours. Have questions? Give us a call.</p>
       <div class="hours">
@@ -440,87 +410,7 @@
     </div>
   </footer>
 
-</div><!-- end page-about -->
-<!-- DOG -->
-<div id="site-dog">
-<svg id="dog-svg" viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
-  <defs>
-    <radialGradient id="g-body" cx="38%" cy="30%" r="62%"><stop offset="0%" stop-color="#6a6a6a"/><stop offset="100%" stop-color="#2c2c2c"/></radialGradient>
-    <radialGradient id="g-belly" cx="50%" cy="38%" r="56%"><stop offset="0%" stop-color="#f0f0f0"/><stop offset="100%" stop-color="#bebebe"/></radialGradient>
-    <radialGradient id="g-head" cx="36%" cy="28%" r="60%"><stop offset="0%" stop-color="#686868"/><stop offset="100%" stop-color="#2a2a2a"/></radialGradient>
-    <radialGradient id="g-ear" cx="38%" cy="28%" r="66%"><stop offset="0%" stop-color="#545454"/><stop offset="100%" stop-color="#1e1e1e"/></radialGradient>
-    <radialGradient id="g-leg" cx="32%" cy="18%" r="72%"><stop offset="0%" stop-color="#5e5e5e"/><stop offset="100%" stop-color="#262626"/></radialGradient>
-    <radialGradient id="g-face" cx="44%" cy="33%" r="62%"><stop offset="0%" stop-color="#e8e8e8"/><stop offset="100%" stop-color="#b6b6b6"/></radialGradient>
-    <radialGradient id="g-nose" cx="33%" cy="28%" r="62%"><stop offset="0%" stop-color="#3a3a3a"/><stop offset="100%" stop-color="#0e0e0e"/></radialGradient>
-    <radialGradient id="g-eye" cx="33%" cy="28%" r="66%"><stop offset="0%" stop-color="#383838"/><stop offset="100%" stop-color="#080808"/></radialGradient>
-  </defs>
-  <ellipse id="d-shadow" cx="55" cy="107" rx="24" ry="5" fill="rgba(0,0,0,0.22)"/>
-  <g id="d-tail" style="transform-origin:72px 65px">
-    <ellipse cx="76" cy="54" rx="6.5" ry="11" fill="url(#g-body)" transform="rotate(25 76 54)"/>
-    <ellipse cx="83" cy="42" rx="5" ry="8" fill="url(#g-ear)" transform="rotate(10 83 42)"/>
-    <ellipse cx="85" cy="37" rx="2.5" ry="3.5" fill="#888" opacity="0.5" transform="rotate(5 85 37)"/>
-  </g>
-  <g id="d-leg-bl" style="transform-origin:38px 80px">
-    <ellipse cx="38" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
-    <ellipse cx="35" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
-    <ellipse cx="38" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-  </g>
-  <g id="d-leg-br" style="transform-origin:68px 80px">
-    <ellipse cx="68" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
-    <ellipse cx="65" cy="87" rx="2.5" ry="5" fill="#888" opacity="0.25"/>
-    <ellipse cx="68" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-  </g>
-  <ellipse cx="53" cy="73" rx="27" ry="20" fill="url(#g-body)"/>
-  <ellipse cx="46" cy="62" rx="12" ry="6" fill="#888" opacity="0.16"/>
-  <ellipse cx="53" cy="78" rx="16" ry="13" fill="url(#g-belly)"/>
-  <ellipse cx="50" cy="74" rx="7" ry="5" fill="white" opacity="0.28"/>
-  <g id="d-leg-fl" style="transform-origin:40px 80px">
-    <ellipse cx="40" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
-    <ellipse cx="37" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
-    <ellipse cx="40" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-  </g>
-  <g id="d-leg-fr" style="transform-origin:66px 80px">
-    <ellipse cx="66" cy="91" rx="7" ry="13" fill="url(#g-leg)"/>
-    <ellipse cx="63" cy="86" rx="2.5" ry="5" fill="#aaa" opacity="0.2"/>
-    <ellipse cx="66" cy="103" rx="9" ry="5" fill="url(#g-leg)"/>
-  </g>
-  <ellipse cx="53" cy="59" rx="13" ry="11" fill="url(#g-body)"/>
-  <g id="d-head-grp" style="transform-origin:53px 40px">
-    <ellipse cx="53" cy="40" rx="22" ry="21" fill="url(#g-head)"/>
-    <ellipse cx="46" cy="26" rx="10" ry="7" fill="#999" opacity="0.2"/>
-    <g id="d-ear-l" style="transform-origin:32px 28px">
-      <ellipse cx="32" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(10 32 30)"/>
-      <ellipse cx="29" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.22" transform="rotate(10 29 24)"/>
-    </g>
-    <ellipse cx="74" cy="30" rx="10" ry="15" fill="url(#g-ear)" transform="rotate(-10 74 30)"/>
-    <ellipse cx="71" cy="24" rx="3.5" ry="5" fill="#777" opacity="0.22" transform="rotate(-10 71 24)"/>
-    <ellipse cx="53" cy="45" rx="14" ry="12" fill="url(#g-face)"/>
-    <ellipse cx="49" cy="39" rx="6" ry="4" fill="white" opacity="0.22"/>
-    <ellipse cx="53" cy="27" rx="5.5" ry="9" fill="#d8d8d8" opacity="0.42"/>
-    <circle cx="45" cy="39" r="5" fill="url(#g-eye)"/>
-    <circle cx="61" cy="39" r="5" fill="url(#g-eye)"/>
-    <circle cx="45" cy="39" r="3" fill="#1a1a1a"/>
-    <circle cx="61" cy="39" r="3" fill="#1a1a1a"/>
-    <circle cx="46.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
-    <circle cx="62.5" cy="37.5" r="1.8" fill="white" opacity="0.9"/>
-    <circle cx="43.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
-    <circle cx="59.8" cy="41" r="0.8" fill="white" opacity="0.5"/>
-    <ellipse cx="53" cy="49" rx="5.5" ry="4" fill="url(#g-nose)"/>
-    <ellipse cx="51" cy="47.5" rx="1.8" ry="1.2" fill="white" opacity="0.38"/>
-    <path d="M48 53 Q53 58.5 58 53" stroke="#2a2a2a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-    <ellipse cx="41" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.14"/>
-    <ellipse cx="65" cy="46" rx="5" ry="3" fill="#e08080" opacity="0.14"/>
-    <g id="d-tongue" opacity="0">
-      <ellipse cx="53" cy="58" rx="5" ry="6.5" fill="#d96878"/>
-      <ellipse cx="53" cy="61" rx="5" ry="4" fill="#c05060"/>
-      <ellipse cx="53" cy="56" rx="5" ry="3" fill="#e07888"/>
-      <line x1="53" y1="53" x2="53" y2="64" stroke="#b04050" stroke-width="1"/>
-      <ellipse cx="51" cy="56" rx="1.5" ry="2.5" fill="white" opacity="0.2"/>
-    </g>
-  </g>
-</svg>
-</div>
-<!-- TOAST -->
+</div><!-- end page-about --><!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
 <script>
@@ -592,152 +482,6 @@
 
 
 
-
-  /* ── DOG ENGINE ── */
-  (function() {
-    const wrap    = document.getElementById('site-dog');
-    const svg     = document.getElementById('dog-svg');
-    const shadow  = document.getElementById('d-shadow');
-    const tail    = document.getElementById('d-tail');
-    const tongue  = document.getElementById('d-tongue');
-    const earL    = document.getElementById('d-ear-l');
-    const legFL   = document.getElementById('d-leg-fl');
-    const legFR   = document.getElementById('d-leg-fr');
-    const legBL   = document.getElementById('d-leg-bl');
-    const legBR   = document.getElementById('d-leg-br');
-    const headGrp = document.getElementById('d-head-grp');
-
-    const setRot = (el, d) => { if(el) el.style.transform = `rotate(${d}deg)`; };
-
-    /* ── WAYPOINTS ── */
-    const waypoints = [
-      { anchorId: 'dog-anchor-0', offsetX:  60, offsetY: 20  },
-      { anchorId: 'dog-anchor-1', offsetX: -90, offsetY: -20 },
-      { anchorId: 'dog-anchor-2', offsetX:  60, offsetY: -20 },
-      { anchorId: 'dog-anchor-3', offsetX: -90, offsetY: -20 },
-    ];
-
-    let currentWP = 0;
-    let wagPhase  = 0;
-    let runPhase  = 0;
-    let isRunning = false;
-    let isJumping = false;
-    let raf       = null;
-
-    /* compute fixed screen position for a waypoint anchor */
-    function wpPos(wp) {
-      const el = document.getElementById(wp.anchorId);
-      if (!el) return { x: 80, y: window.innerHeight * 0.4 };
-      const rect = el.getBoundingClientRect();
-      const x = Math.max(10, Math.min(window.innerWidth - 120, rect.left + wp.offsetX));
-      const y = Math.max(80, Math.min(window.innerHeight - 130, rect.top + wp.offsetY));
-      return { x, y };
-    }
-
-    /* place dog at waypoint instantly (no transition) */
-    function snapTo(wp) {
-      const {x, y} = wpPos(wp);
-      wrap.style.transition = 'none';
-      wrap.style.left = x + 'px';
-      wrap.style.top  = y + 'px';
-    }
-
-    /* jump dog to waypoint with bouncy CSS transition */
-    function jumpTo(wp, facingRight) {
-      const {x, y} = wpPos(wp);
-      isJumping = true;
-      wrap.classList.add('jump');
-      wrap.style.transition = '';
-      wrap.style.transform  = facingRight ? 'scaleX(1)' : 'scaleX(-1)';
-
-      /* quick run anim before landing */
-      isRunning = true;
-      setTimeout(() => {
-        wrap.style.left = x + 'px';
-        wrap.style.top  = y + 'px';
-      }, 20);
-
-      setTimeout(() => {
-        isJumping  = false;
-        isRunning  = false;
-        wrap.classList.remove('jump');
-      }, 650);
-    }
-
-    /* ── WAG TICK ── */
-    function wagTick() {
-      wagPhase += 0.07;
-      tail.style.transform   = `rotate(${Math.sin(wagPhase) * 42}deg)`;
-      setRot(earL, Math.sin(wagPhase * 0.45) * 6);
-      headGrp.style.transform = `rotate(${Math.sin(wagPhase * 0.3) * 4}deg)`;
-      svg.style.transform    = `translateY(${Math.sin(wagPhase * 0.38) * 1.8}px)`;
-      setRot(legFL,0); setRot(legFR,0); setRot(legBL,0); setRot(legBR,0);
-      tongue.setAttribute('opacity','0');
-      shadow.setAttribute('rx','24');
-    }
-
-    /* ── RUN TICK ── */
-    function runTick() {
-      runPhase += 0.22;
-      const s = Math.sin(runPhase) * 34;
-      setRot(legFL, s); setRot(legBR, s);
-      setRot(legFR,-s); setRot(legBL,-s);
-      const bounce = Math.abs(Math.sin(runPhase * 2)) * 7;
-      svg.style.transform = `translateY(${-bounce}px)`;
-      shadow.setAttribute('rx', 24 - bounce * 0.9);
-      tail.style.transform = `rotate(${-28 + Math.sin(runPhase) * 14}deg)`;
-      setRot(earL, -6 + Math.sin(runPhase) * 9);
-      headGrp.style.transform = '';
-      tongue.setAttribute('opacity','0.8');
-      tongue.style.transform = `translateY(${Math.sin(runPhase * 2) * 2}px)`;
-    }
-
-    /* ── MAIN LOOP ── */
-    function loop() {
-      raf = requestAnimationFrame(loop);
-      if (isRunning || isJumping) {
-        runTick();
-      } else {
-        wagTick();
-      }
-    }
-
-    /* ── SCROLL WATCHER ── */
-    const sectionIds = waypoints.map(w => w.sectionId);
-
-    function getActiveWP() {
-      let best = 0;
-      waypoints.forEach((wp, i) => {
-        const el = document.getElementById(wp.anchorId);
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.65) best = i;
-      });
-      return best;
-    }
-
-    window.addEventListener('scroll', () => {
-      const active = getActiveWP();
-      if (active !== currentWP) {
-        const goingDown = active > currentWP;
-        currentWP = active;
-        jumpTo(waypoints[active], goingDown);
-      }
-    }, { passive: true });
-
-    /* ── BOOT ── */
-    /* place at first waypoint on load */
-    wrap.style.top = '0px';
-    wrap.style.left = '0px';
-    wrap.style.bottom = 'auto';
-
-    /* wait for layout then snap to hero position */
-    setTimeout(() => {
-      snapTo(waypoints[0]);
-      loop();
-    }, 200);
-
-  })();
 
   /* ── FORM ── */
   function submitForm() {
