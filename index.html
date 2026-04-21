@@ -171,6 +171,30 @@
     transition: left 0.5s cubic-bezier(0.34,1.56,0.64,1), top 0.45s cubic-bezier(0.22,1.8,0.36,1);
   }
   /* ── RESPONSIVE ── */
+  /* ── GALLERY PAGE ── */
+  .gallery-page { padding: 8rem 3rem 6rem; max-width: 1200px; margin: 0 auto; }
+  .gallery-page .section-label { margin-bottom: 0.75rem; }
+  .gallery-page .section-title { margin-bottom: 0.5rem; }
+  .gallery-intro { color: var(--mid); font-size: 0.95rem; margin-bottom: 3rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .gallery-item { border-radius: 0.75rem; overflow: hidden; aspect-ratio: 3/4; position: relative; background: var(--bg2); cursor: pointer; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.4s ease; display: block; }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item .g-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.6rem 0.8rem; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: var(--white); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; opacity: 0; transition: opacity 0.3s; }
+  .gallery-item:hover .g-label { opacity: 1; }
+  /* Lightbox */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 500; align-items: center; justify-content: center; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 0.75rem; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--white); font-size: 2rem; cursor: pointer; line-height: 1; }
+  @media (max-width: 860px) {
+    .gallery-page { padding: 6rem 1.5rem 4rem; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  }
+  @media (max-width: 500px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── HAMBURGER ── */
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 200; }
   .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
@@ -209,7 +233,7 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
   <a onclick="mobileNav('main', 'services')">Services</a>
-  <a onclick="mobileNav('main', 'gallery')">Gallery</a>
+  <a onclick="mobileNav('gallery')">Gallery</a>
   <a onclick="mobileNav('about')">Meet Your Groomer</a>
   <a onclick="mobileNav('main', 'booking')">Booking</a>
   <a class="mobile-cta" onclick="mobileNav('main', 'booking')">Book Now</a>
@@ -223,7 +247,7 @@
   </a>
   <ul class="nav-links">
     <li><a onclick="showPage('main', 'services')" id="nav-services">Services</a></li>
-    <li><a onclick="showPage('main', 'gallery')" id="nav-gallery">Gallery</a></li>
+    <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
     <li><a onclick="showPage('about')" id="nav-about">Meet Your Groomer</a></li>
     <li><a onclick="showPage('main', 'booking')" id="nav-booking">Booking</a></li>
   </ul>
@@ -244,7 +268,7 @@
       <p class="hero-sub">Every dog gets the royal treatment — bath, trim, and a whole lot of love. Locally owned, tail-waggingly good.</p>
       <div class="hero-actions">
         <a class="btn-primary" onclick="showPage('main', 'booking')">Book an Appointment</a>
-        <a class="btn-secondary" onclick="showPage('main', 'gallery')">See Our Work</a>
+        <a class="btn-secondary" onclick="showPage('gallery')">See Our Work</a>
       </div>
     </div>
     <div class="hero-visual">
@@ -437,7 +461,7 @@
     <p>© 2026 Mutt Cuts. All rights reserved.</p>
     <div class="footer-links">
       <a onclick="showPage('main', 'services')">Services</a>
-      <a onclick="showPage('main', 'gallery')">Gallery</a>
+      <a onclick="showPage('gallery')">Gallery</a>
       <a onclick="showPage('main', 'booking')">Book</a>
     </div>
   </footer>
@@ -480,7 +504,59 @@
     </div>
   </footer>
 
-</div><!-- end page-about --><!-- TOAST -->
+</div><!-- end page-about -->
+
+<!-- ═══════════════════════════════ GALLERY PAGE ═══════════════════════════════ -->
+<div id="page-gallery" class="page">
+  <div class="gallery-page">
+    <p class="section-label">Our Work</p>
+    <h2 class="section-title">Fresh Cuts Gallery</h2>
+    <p class="gallery-intro">Every pup that comes through our doors leaves looking — and feeling — their best. ✦</p>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox('after1.jpeg')">
+        <img src="after1.jpeg" alt="Havanese"/>
+        <div class="g-label">Havanese</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('after2.jpeg')">
+        <img src="after2.jpeg" alt="Yorkie Poo"/>
+        <div class="g-label">Yorkie Poo</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('gallery1.jpeg')">
+        <img src="gallery1.jpeg" alt="Golden Retriever"/>
+        <div class="g-label">Golden Retriever</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('gallery2.jpeg')">
+        <img src="gallery2.jpeg" alt="Basset Hound"/>
+        <div class="g-label">Basset Hound</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('gallery3.jpeg')">
+        <img src="gallery3.jpeg" alt="Goldendoodle"/>
+        <div class="g-label">Goldendoodle</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">
+      <img src="logo.png" alt="Mutt Cuts"/>
+      <span>Mutt Cuts</span>
+    </div>
+    <p>© 2026 Mutt Cuts. All rights reserved.</p>
+    <div class="footer-links">
+      <a onclick="showPage('main', 'services')">Services</a>
+      <a onclick="showPage('gallery')">Gallery</a>
+      <a onclick="showPage('main', 'booking')">Book</a>
+    </div>
+  </footer>
+</div><!-- end page-gallery -->
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
+<!-- TOAST -->
 <div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
 
 <script>
@@ -488,17 +564,26 @@
   function showPage(page, section) {
     const main = document.getElementById('page-main');
     const about = document.getElementById('page-about');
+    const gallery = document.getElementById('page-gallery');
     const navAbout = document.getElementById('nav-about');
+    const navGallery = document.getElementById('nav-gallery');
+
+    main.classList.remove('active');
+    about.classList.remove('active');
+    gallery.classList.remove('active');
+    navAbout.classList.remove('active');
+    navGallery.classList.remove('active');
 
     if (page === 'about') {
-      main.classList.remove('active');
       about.classList.add('active');
       navAbout.classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (page === 'gallery') {
+      gallery.classList.add('active');
+      navGallery.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      about.classList.remove('active');
       main.classList.add('active');
-      navAbout.classList.remove('active');
       if (section) {
         setTimeout(() => {
           const el = document.getElementById(section);
@@ -508,6 +593,17 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
+  }
+
+  /* ── LIGHTBOX ── */
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
   }
 
   /* ── TICKER ── */
