@@ -217,7 +217,7 @@
     .hero-visual { display: none; }
     .services, .beforeafter, .booking, .about { padding: 4rem 1.5rem; }
     .booking { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
-    .booking-form { padding: 1.5rem; }
+    .booking-form { padding: 1.5rem; padding-bottom: 3rem; }
     .form-row { grid-template-columns: 1fr; gap: 0; }
     .booking-info h2 { font-size: 2.8rem; }
     .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -234,7 +234,6 @@
 <div class="mobile-menu" id="mobile-menu">
   <a onclick="mobileNav('main', 'services')">Services</a>
   <a onclick="mobileNav('gallery')">Gallery</a>
-  <a onclick="mobileNav('about')">Meet Your Groomer</a>
   <a onclick="mobileNav('main', 'booking')">Booking</a>
   <a class="mobile-cta" onclick="mobileNav('main', 'booking')">Book Now</a>
 </div>
@@ -248,7 +247,6 @@
   <ul class="nav-links">
     <li><a onclick="showPage('main', 'services')" id="nav-services">Services</a></li>
     <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
-    <li><a onclick="showPage('about')" id="nav-about">Meet Your Groomer</a></li>
     <li><a onclick="showPage('main', 'booking')" id="nav-booking">Booking</a></li>
   </ul>
   <a class="nav-cta" onclick="showPage('main', 'booking')">Book Now</a>
@@ -376,13 +374,14 @@
         <div class="form-group"><label>Dog's Name</label><input id="f-dog" type="text" placeholder="Biscuit"/></div>
         <div class="form-group"><label>Breed</label><input id="f-breed" type="text" placeholder="Golden Retriever"/></div>
       </div>
+      <div class="form-group"><label>How much does your dog weigh?</label><input id="f-weight" type="text" placeholder="e.g. 25 lbs"/></div>
       <div class="form-group">
         <label>Service</label>
         <select id="f-service">
           <option value="">Select a service…</option>
           <option>Standard Bath & Blow Dry</option>
           <option>Bath, Blow Dry & Hand Scissor</option>
-          <option>Full Groom</option>
+          <option>Full Groom (Small, Med, or Large)</option>
         </select>
       </div>
       <div class="form-group"><label>Preferred Date</label><input id="f-date" type="date"/></div>
@@ -621,6 +620,7 @@
     const phone   = document.getElementById('f-phone').value.trim();
     const dog     = document.getElementById('f-dog').value.trim();
     const breed   = document.getElementById('f-breed').value.trim();
+    const weight  = document.getElementById('f-weight').value.trim();
     const service = document.getElementById('f-service').value;
     const date    = document.getElementById('f-date').value;
     const temp    = document.getElementById('f-temp').value;
@@ -644,6 +644,7 @@
           'Phone': phone,
           "Dog's Name": dog,
           'Breed': breed,
+          'Weight': weight,
           'Service': service,
           'Preferred Date': date,
           'Temperament': temp,
@@ -654,7 +655,7 @@
         const toast = document.getElementById('toast');
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 4000);
-        ['f-name','f-phone','f-dog','f-breed','f-notes'].forEach(id => document.getElementById(id).value = '');
+        ['f-name','f-phone','f-dog','f-breed','f-weight','f-notes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('f-service').selectedIndex = 0;
         document.getElementById('f-temp').selectedIndex = 0;
         document.getElementById('f-date').value = '';
