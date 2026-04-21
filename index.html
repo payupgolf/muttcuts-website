@@ -171,9 +171,24 @@
     transition: left 0.5s cubic-bezier(0.34,1.56,0.64,1), top 0.45s cubic-bezier(0.22,1.8,0.36,1);
   }
   /* ── RESPONSIVE ── */
+  /* ── HAMBURGER ── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; z-index: 200; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s ease; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(28,31,35,0.98); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; animation: pageFade 0.25s ease both; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: var(--white); text-decoration: none; font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.1em; cursor: pointer; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-menu .mobile-cta { background: var(--accent); color: var(--bg); padding: 0.75rem 2.5rem; border-radius: 3rem; font-size: 1.4rem; margin-top: 1rem; }
+
   @media (max-width: 860px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
     .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
     .hero-visual { display: none; }
     .services, .beforeafter, .booking, .about { padding: 4rem 1.5rem; }
@@ -191,6 +206,15 @@
 </head>
 <body>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="mobileNav('main', 'services')">Services</a>
+  <a onclick="mobileNav('main', 'gallery')">Gallery</a>
+  <a onclick="mobileNav('about')">Meet Your Groomer</a>
+  <a onclick="mobileNav('main', 'booking')">Booking</a>
+  <a class="mobile-cta" onclick="mobileNav('main', 'booking')">Book Now</a>
+</div>
+
 <!-- NAV -->
 <nav>
   <a class="nav-logo" onclick="showPage('main')">
@@ -204,6 +228,9 @@
     <li><a onclick="showPage('main', 'booking')" id="nav-booking">Booking</a></li>
   </ul>
   <a class="nav-cta" onclick="showPage('main', 'booking')">Book Now</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ═══════════════════════════════ MAIN PAGE ═══════════════════════════════ -->
@@ -285,7 +312,7 @@
           <div class="ba-handle">⇔</div>
           <div class="ba-labels"><span class="ba-label before">Before</span><span class="ba-label after">After</span></div>
         </div>
-        <div class="ba-info"><h4>Shih Tzu Mix</h4><p>Full Groom · Fresh cut & bandana</p></div>
+        <div class="ba-info"><h4>Havanese</h4><p>Full Groom · Fresh cut & bandana</p></div>
       </div>
       <div class="ba-card reveal reveal-delay-1">
         <div class="ba-slider" data-slider>
@@ -295,7 +322,7 @@
           <div class="ba-handle">⇔</div>
           <div class="ba-labels"><span class="ba-label before">Before</span><span class="ba-label after">After</span></div>
         </div>
-        <div class="ba-info"><h4>Black Doodle</h4><p>Full Groom · Fresh cut & bandana</p></div>
+        <div class="ba-info"><h4>Yorkie Poo</h4><p>Full Groom · Fresh cut & bandana</p></div>
       </div>
       <div class="ba-card reveal reveal-delay-2">
         <div class="ba-slider" data-slider>
@@ -328,16 +355,16 @@
     <div class="booking-form reveal reveal-delay-2">
       <h3>Request an Appointment</h3>
       <div class="form-row">
-        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Jane Smith"/></div>
-        <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="(555) 000-0000"/></div>
+        <div class="form-group"><label>Your Name</label><input id="f-name" type="text" placeholder="Jane Smith"/></div>
+        <div class="form-group"><label>Phone Number</label><input id="f-phone" type="tel" placeholder="(555) 000-0000"/></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label>Dog's Name</label><input type="text" placeholder="Biscuit"/></div>
-        <div class="form-group"><label>Breed</label><input type="text" placeholder="Golden Retriever"/></div>
+        <div class="form-group"><label>Dog's Name</label><input id="f-dog" type="text" placeholder="Biscuit"/></div>
+        <div class="form-group"><label>Breed</label><input id="f-breed" type="text" placeholder="Golden Retriever"/></div>
       </div>
       <div class="form-group">
         <label>Service</label>
-        <select>
+        <select id="f-service">
           <option value="">Select a service…</option>
           <option>Standard Bath & Blow Dry — $50</option>
           <option>Bath, Blow Dry & Hand Scissor — $55–$75</option>
@@ -346,10 +373,10 @@
           <option>Full Groom (Large) — $75–$80</option>
         </select>
       </div>
-      <div class="form-group"><label>Preferred Date</label><input type="date"/></div>
+      <div class="form-group"><label>Preferred Date</label><input id="f-date" type="date"/></div>
       <div class="form-group">
         <label>Dog's Temperament</label>
-        <select>
+        <select id="f-temp">
           <option value="">How does your pup do with grooming?</option>
           <option>😊 Calm & easy — total pro</option>
           <option>😬 A little nervous — needs extra patience</option>
@@ -360,7 +387,7 @@
       </div>
       <div class="form-group">
         <label>Notes (optional)</label>
-        <textarea placeholder="Any special requests or things we should know about your pup?"></textarea>
+        <textarea id="f-notes" placeholder="Any special requests or things we should know about your pup?"></textarea>
       </div>
       <button class="form-submit" onclick="submitForm()">Request Booking ✦</button>
     </div>
@@ -491,11 +518,71 @@
 
 
 
-  /* ── FORM ── */
-  function submitForm() {
-    const toast = document.getElementById('toast');
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 4000);
+  /* ── HAMBURGER MENU ── */
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+  function mobileNav(page, section) {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    showPage(page, section);
+  }
+
+  /* ── FORM SUBMIT → EMAIL ── */
+  async function submitForm() {
+    const name    = document.getElementById('f-name').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const dog     = document.getElementById('f-dog').value.trim();
+    const breed   = document.getElementById('f-breed').value.trim();
+    const service = document.getElementById('f-service').value;
+    const date    = document.getElementById('f-date').value;
+    const temp    = document.getElementById('f-temp').value;
+    const notes   = document.getElementById('f-notes').value.trim();
+
+    if (!name || !phone || !dog || !service) {
+      alert("Please fill in your name, phone, dog's name, and service before submitting.");
+      return;
+    }
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch('https://formspree.io/f/mwpbvgkv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          'Owner Name': name,
+          'Phone': phone,
+          "Dog's Name": dog,
+          'Breed': breed,
+          'Service': service,
+          'Preferred Date': date,
+          'Temperament': temp,
+          'Notes': notes
+        })
+      });
+      if (res.ok) {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+        ['f-name','f-phone','f-dog','f-breed','f-notes'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('f-service').selectedIndex = 0;
+        document.getElementById('f-temp').selectedIndex = 0;
+        document.getElementById('f-date').value = '';
+      } else {
+        alert('Something went wrong. Please try again or call us directly.');
+      }
+    } catch(e) {
+      alert('Could not send — please check your connection and try again.');
+    }
+
+    btn.textContent = 'Request Booking ✦';
+    btn.disabled = false;
   }
 </script>
 </body>
