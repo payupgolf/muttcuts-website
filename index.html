@@ -374,42 +374,7 @@
         <div class="hours-row"><span class="day">Sunday</span><span class="time">Closed</span></div>
       </div>
       <br/>
-      <p style="font-size:0.85rem; color:var(--muted);">📞 <a href="tel:9892927253" style="color:var(--accent); text-decoration:none; font-weight:500;">(989) 292-7253</a></p>
-      <br/>
-      <!-- APPROXIMATE LOCATION MAP -->
-      <a href="javascript:void(0)" onclick="openMaps()" title="Get directions" style="display:block; border-radius:0.75rem; overflow:hidden; border:1px solid var(--border); cursor:pointer; position:relative;">
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; display:block;">
-          <!-- Map background -->
-          <rect width="400" height="220" fill="#2a3540"/>
-          <!-- Fields -->
-          <rect x="0" y="0" width="160" height="110" fill="#3a4a35" opacity="0.7"/>
-          <rect x="170" y="0" width="120" height="100" fill="#3d4f38" opacity="0.6"/>
-          <rect x="300" y="0" width="100" height="120" fill="#384835" opacity="0.5"/>
-          <rect x="0" y="120" width="150" height="100" fill="#3a4a35" opacity="0.6"/>
-          <rect x="160" y="110" width="130" height="110" fill="#2e3d2a" opacity="0.8"/>
-          <rect x="300" y="130" width="100" height="90" fill="#3d4f38" opacity="0.5"/>
-          <!-- Road horizontal (Green Rd) -->
-          <rect x="0" y="108" width="400" height="6" fill="#4a5568"/>
-          <rect x="0" y="110" width="400" height="2" fill="#5a6578" opacity="0.5"/>
-          <!-- Road vertical (S Krepps Rd) -->
-          <rect x="195" y="0" width="6" height="220" fill="#4a5568"/>
-          <rect x="197" y="0" width="2" height="220" fill="#5a6578" opacity="0.5"/>
-          <!-- Road vertical (US-127) -->
-          <rect x="55" y="0" width="8" height="220" fill="#5a6040"/>
-          <rect x="58" y="0" width="2" height="220" fill="#d4a843" opacity="0.4"/>
-          <!-- Road labels -->
-          <text x="100" y="104" fill="#8899aa" font-size="7" font-family="sans-serif" text-anchor="middle">Green Rd</text>
-          <text x="204" y="70" fill="#8899aa" font-size="7" font-family="sans-serif" writing-mode="tb">S Krepps Rd</text>
-          <!-- Approximate area circle -->
-          <circle cx="198" cy="111" r="38" fill="rgba(212,130,10,0.15)" stroke="#d4820a" stroke-width="1.5" stroke-dasharray="4 3"/>
-          <!-- Center pin -->
-          <circle cx="198" cy="111" r="7" fill="#d4820a"/>
-          <circle cx="198" cy="111" r="3.5" fill="white"/>
-          <!-- "Approximate Area" label -->
-          <rect x="130" y="155" width="136" height="18" rx="9" fill="rgba(0,0,0,0.55)"/>
-          <text x="198" y="167" fill="#f0f2f4" font-size="8.5" font-family="sans-serif" text-anchor="middle" font-weight="500">📍 Approximate Area · Tap for Directions</text>
-        </svg>
-      </a>
+      <p style="font-size:0.85rem; color:var(--muted);">📍 Just 10 minutes southeast of St. Johns &nbsp;|&nbsp; 📞 <a href="tel:9892927253" style="color:var(--accent); text-decoration:none; font-weight:500;">(989) 292-7253</a></p>
     </div>
     <div class="booking-form reveal reveal-delay-2">
       <h3>Request an Appointment</h3>
@@ -648,18 +613,6 @@
 
 
 
-
-  /* ── MAPS ── */
-  function openMaps() {
-    const lat = 42.9069, lng = -84.5012;
-    const label = 'Mutt Cuts by Emily Devereaux';
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    if (isIOS) {
-      window.open(`maps://maps.apple.com/?ll=${lat},${lng}&q=${encodeURIComponent(label)}`, '_blank');
-    } else {
-      window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
-    }
-  }
 
   /* ── HAMBURGER MENU ── */
   function toggleMenu() {
