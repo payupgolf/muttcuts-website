@@ -510,7 +510,7 @@
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">🐾 Booking request sent! We'll be in touch soon.</div>
+
 
 <script>
   /* ── PAGE SWITCHER ── */
@@ -650,9 +650,7 @@
         })
       });
       if (res.ok) {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 4000);
+        alert('🐾 Booking request sent! We\'ll be in touch soon.');
         ['f-name','f-phone','f-dog','f-breed','f-weight','f-notes'].forEach(id => document.getElementById(id).value = '');
         document.getElementById('f-service').selectedIndex = 0;
         document.getElementById('f-temp').selectedIndex = 0;
